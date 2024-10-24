@@ -21,19 +21,18 @@ namespace backend.Controllers
             }
             // Update RiotService with new settings
             _riotService.UpdateSettings(settings);
-            _riotService.GetSummonerPuuID_GameName();
+            _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
             _riotService.GetSummonerAccount_SummonerID();
 
             return Ok(_riotService._settings);
         }
-
         [HttpPost("matchhistory")]
         public IActionResult GetPlayerMatchHistory([FromBody] RiotSettings? settings, [FromQuery] int? idStartList, [FromQuery] int? idEndList)
         {
             if (settings != null)
             {
                 _riotService.UpdateSettings(settings);
-                _riotService.GetSummonerPuuID_GameName();
+                _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
                 _riotService.GetSummonerAccount_SummonerID();
             }
             if (idStartList == null || idEndList == null)
@@ -49,11 +48,17 @@ namespace backend.Controllers
             }
             return Ok(matchInfos);
         } 
-        [HttpGet("matchinfo")]
-        public IActionResult GetMatchInfos([FromQuery] string matchId)
+        [HttpPost("summonerInfo")]
+        public IActionResult GetSummonerInfos([FromBody] RiotSettings? settings)
         {
-            var matchInfo = _riotService.GetMatchInfos(matchId);
-            return Ok(matchInfo);
-        }       
+            if (settings != null)
+            {
+                _riotService.UpdateSettings(settings);
+                _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
+                _riotService.GetSummonerAccount_SummonerID();
+            }
+            var summonerInfos = _riotService.GetSummonerInfos();
+            return Ok(summonerInfos);
+        } 
     }
 }

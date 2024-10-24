@@ -11,3 +11,9 @@ Post request body
   "regionTag": "na1",
   "tagLine": "7797"
 }
+
+{
+  "summonerName": "choukakoch",
+  "region": "europe",
+  "regionTag": "euw1"
+}

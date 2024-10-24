@@ -40,13 +40,13 @@ export default function SearchSummonerBar() {
     const fetchSummonerData = async () => {
         const settings = {
             SummonerName: gameName,
-            RegionTag: regionTag,
+            RegionTag: regionTag.toLowerCase(),
             TagLine: tagLine,
-            Region: regionRoute
+            Region: regionRoute.toLowerCase()
         }
-        let url = `http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`;
-        console.log(JSON.stringify(settings));
-        const response = await fetch(url, {
+
+        let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;
+        let response = await fetch(url, {
             method:'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -54,10 +54,27 @@ export default function SearchSummonerBar() {
             body: JSON.stringify(settings)
         });
         if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
+            console.error(`Error: ${response.statusText}`);
+        } else {
+            const summonerInfo = await response.json();
+            console.log(summonerInfo);
         }
-        const matchhistory = await response.json();
-        console.log(matchhistory);
+
+        url = `http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`;
+        response = await fetch(url, {
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify(settings)
+        });
+        if (!response.ok) {
+            console.error(`Error: ${response.statusText}`);
+        }
+        else {
+            const matchhistory = await response.json();
+            console.log(matchhistory);
+        }
     };
     return(
         <div id='search_summoner_bar'>

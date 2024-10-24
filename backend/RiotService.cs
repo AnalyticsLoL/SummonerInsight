@@ -14,6 +14,8 @@ namespace backend
         public string? GameName { get; set; }
         public string? AccountId { get; set; }
         public string? SummonerId { get; set; }
+        public string? ProfileIconId { get; set; }
+        public long? SummonerLevel { get; set; }
     }
     public class RiotService
     {
@@ -29,6 +31,10 @@ namespace backend
         public void UpdateSettings(RiotSettings settings)
         {
             _settings = settings;
+            if (string.IsNullOrEmpty(_settings.TagLine))
+            {
+                _settings.TagLine = _settings.RegionTag;
+            }
         }
         private static JsonNode GetData(string url, Dictionary<string,string> queries)
         {
@@ -41,13 +47,19 @@ namespace backend
             }
             Console.WriteLine("Sending request to :"+url);
             var response = client.Execute(request);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                throw new Exception($"Request failed with status code {response.Content}");
+                // Handle 404 Not Found error
+                throw new InvalidOperationException("404 Not Found");
+            }
+            else if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                // Handle other non-OK status codes
+                throw new InvalidOperationException("Error: "+response.StatusCode);
             }
             return JsonNode.Parse(response.Content);
         }
-        public backend.RiotSettings GetSummonerPuuID_GameName()
+        public backend.RiotSettings GetSummonerPuuID_GameName_ProfileIcon_Level()
         {
             if (string.IsNullOrEmpty(_settings.SummonerName) || string.IsNullOrEmpty(_settings.Region) || string.IsNullOrEmpty(_settings.RegionTag))
             {
@@ -57,15 +69,7 @@ namespace backend
             {
                 {"api_key", apiKey}
             };
-            var tag = "";
-            if(_settings.TagLine!=null)
-            {
-                tag = _settings.TagLine;
-            }
-            else 
-            {
-                tag = _settings.RegionTag;
-            }
+            var tag = _settings.TagLine;
             // Start by getting the puuid and game name
             var summoner = GetData($"https://{_settings.Region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{_settings.SummonerName}/{tag}", queries);
             if (summoner == null)
@@ -102,10 +106,14 @@ namespace backend
             }
             string summonerId = accountInfos.AsObject()["id"].ToString();
             string accoundId = accountInfos.AsObject()["accountId"].ToString();
+            var profileIconId = accountInfos.AsObject()["profileIconId"]?.ToString();
+            var summonerLevel = accountInfos.AsObject()["summonerLevel"]?.GetValue<long>();
             if (!string.IsNullOrEmpty(summonerId) && !string.IsNullOrEmpty(accoundId))
             {
                 _settings.SummonerId = summonerId;
                 _settings.AccountId = accoundId;
+                _settings.ProfileIconId = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/profileicon/"+profileIconId+".png";
+                _settings.SummonerLevel = summonerLevel;
             }
             else
             {
@@ -165,6 +173,36 @@ namespace backend
                 throw new ArgumentNullException(nameof(matchData));
             }
             return matchData;
+        }
+        public JsonNode GetSummonerInfos()
+        {
+            if(string.IsNullOrEmpty(_settings.SummonerId)|| string.IsNullOrEmpty(_settings.RegionTag))
+            {
+                throw new InvalidOperationException("SummonerId must be set.");
+            }
+            var queries= new Dictionary<string,string>
+            {
+                {"api_key", apiKey}
+            };
+            var summonerStats=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/league/v4/entries/by-summoner/{_settings.SummonerId}",queries);
+            if (summonerStats is JsonArray jsonArray && jsonArray.Count > 0)
+            {
+                summonerStats = summonerStats[0];
+            }
+            else
+            {
+                // In the case where the summoner has no ranked stats
+                summonerStats = new JsonObject();
+            }
+            summonerStats["profileIconId"] = _settings.ProfileIconId;
+            summonerStats["summonerLevel"] = _settings.SummonerLevel;
+            summonerStats["gameName"] = _settings.GameName;
+            summonerStats["tagLine"] = _settings.TagLine;
+            if (_settings.TagLine != _settings.RegionTag)
+            {
+                summonerStats["regionTag"] = _settings.RegionTag;
+            }
+            return summonerStats;
         }
     }
 }
