@@ -1,0 +1,79 @@
+#search_summoner_bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #C8AA6E, #E0C68A, #A88945);
+    border-radius: 50px;
+    padding: 2px 10px;
+    width:800px;
+    height:70px;
+    color: #4A3C2C;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+#search_summoner_bar textarea{
+    margin: 0px 30px 0px 5px;
+    background-color: transparent;
+    border: none;
+    width:300px;
+    height: 25px;
+    color: #2C2C2C;
+    font-size: 18px;
+    resize: none; 
+    outline: none;
+}
+#search_summoner_bar button{
+    background-color: transparent;
+    color: #2C2C2C;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#search_summoner_bar button:hover{
+    filter: opacity(0.85);
+    color: #B87333;
+    transition: filter 0.5s, color 0.5s;
+}
+#search_summoner_bar .region_dropdown, #search_summoner_bar .gameName_input {
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#search_summoner_bar span, .search_button{
+    font-size: 14px;
+    font-family: 'Merriweather-Regular';
+}
+#search_summoner_bar .search_button{
+    background-color: #A88945;
+    border-radius: 20px;
+    padding: 10px 30px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+#search_summoner_bar .region_dropdown button, span {
+    padding:0px 4px;
+}
+#search_summoner_bar .region_dropdown .open_dropdown{
+    width: 175px;
+    text-align: left;
+}
+#search_summoner_bar .dropdown-menu{
+    position:absolute;
+    width: 175px;
+    top: 100%;
+    left: 20%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+#search_summoner_bar .dropdown-menu button{
+    text-align: left;
+    background-color: #A88945;
+    margin:0.5px 0px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+}

@@ -21,8 +21,7 @@ namespace backend
     {
         private readonly HttpClient _httpClient;
         public RiotSettings _settings;
-        private static readonly string apiKey = Environment.GetEnvironmentVariable("API_KEY");
-        private string _baseUrl;
+        private static readonly string apiKey = new ApiKey().key;
         public RiotService(HttpClient httpClient, RiotSettings settings)
         {
             _httpClient = httpClient;

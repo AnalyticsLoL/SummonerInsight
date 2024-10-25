@@ -1,25 +1,28 @@
 import React from 'react';
 import {regions} from '../constants.js';
+import '../assets/css/components/SearchSummonerBar.css';
 
-function RegionDropdown({setRegionTag,setRegionRoute}){
+function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     const handleDropdownClick = (region) => {
         console.log(`Selected: ${region.regionName}`);
         setDropdownOpen(false);
         setRegionTag(region.regionTag);
+        setRegionName(region.regionName);
         setRegionRoute(region.regionRoute);
     };
 
     return(
         <div className='region_dropdown'>
-            <button onClick={() => setDropdownOpen(!dropdownOpen)}>Region</button>
+            <span>Region:</span>
+            <button className='open_dropdown' onClick={() => setDropdownOpen(!dropdownOpen)}>{regionName}</button>
             {dropdownOpen && (
-                <ul className="dropdown-menu">
+                <div className="dropdown-menu">
                     {regions.map((region, index) => (
-                        <li key={index} onClick={() => handleDropdownClick(region)}>{region.regionName}</li>
+                        <button key={index} onClick={() => handleDropdownClick(region)}>{region.regionName}</button>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
@@ -27,6 +30,7 @@ function RegionDropdown({setRegionTag,setRegionRoute}){
 
 export default function SearchSummonerBar() {
     const [regionTag, setRegionTag] = React.useState('NA1');
+    const [regionName, setRegionName] = React.useState('North America');
     const [gameName, setGameName] = React.useState('');
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
@@ -78,9 +82,19 @@ export default function SearchSummonerBar() {
     };
     return(
         <div id='search_summoner_bar'>
-            <RegionDropdown setRegionTag={setRegionTag} setRegionRoute={setRegionRoute}/>
-            <input type="text" onChange={(event)=> HandleGameNameandGameTag(event)} placeholder={`Game Name + #${regionTag}`}></input>
-            <button onClick={()=>fetchSummonerData()?gameName!=='':null}>Submit</button>
+            <RegionDropdown setRegionTag={setRegionTag} regionName={regionName} setRegionName={setRegionName} setRegionRoute={setRegionRoute}/>
+            <div className='gameName_input'>
+                <span>Game Name:</span>
+                <textarea 
+                    type="text" 
+                    onChange={(event)=> HandleGameNameandGameTag(event)} 
+                    placeholder={`Game Name + #${regionTag}`}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"   
+                />
+            </div>
+            <button className="search_button" onClick={()=>fetchSummonerData()?gameName!=='':null}>Search</button>
         </div>
     );
 }

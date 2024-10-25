@@ -1,0 +1,94 @@
+#home .section{
+    display: flex;
+    justify-content: center;
+}
+#home .section .home-intro{
+    height: 850px;
+    min-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#home .home-intro .title{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    margin: 150px 0;
+}
+#home .splash_art{
+    position: absolute;
+    left:0;
+    z-index: -1;
+    width: 100%;
+    height: 850px;
+}
+#home .splash_art img{
+    position: absolute;
+    width: 100%;
+    height: 850px;
+    bottom:0;
+    object-fit: none;
+    filter: brightness(0.8);
+}
+#home .home-intro h1{
+    color: #E0C68A;
+    font-size: 40px;
+}
+
+#home .section .home-about-us{
+    position: relative;
+    margin: 150px 0px;
+    min-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#home .section .home-about-us h2, p{
+    text-align: center;
+}
+#home .section .home-about-us .content {
+    max-width: 1200px;
+    text-align: center;
+}
+#home .section .home-about-us .content .team{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+#home .section .home-about-us .content .team .team-member{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+#home .section .home-about-us .content .team .team-member .team-member-img{
+    width: 200px;
+    height: 275px;
+    overflow: hidden;
+}
+#home .section .home-about-us .content .team .team-member .team-member-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#home .section .home-about-us .content .team .team-member figcaption{
+    text-align: center;
+}
+#home .section .home-about-us .content .team .team-member figcaption h5{
+    font-size: 18px;
+    margin: 5px 0px;
+}
+#home .section .home-about-us .content .team .team-member figcaption .social a{
+    margin: 0 5px;
+}
+#home .section .home-about-us .content .team .team-member figcaption .social a svg{
+    color:#3D3D3D;
+    font-size: 30px;
+}
+#home .section .home-about-us .content .team .team-member figcaption .social a svg:hover{
+    color:#b6a170;
+    transition: color 0.5s;
+}
