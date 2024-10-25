@@ -20,7 +20,7 @@ function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute
             }
         };
         const handleClickOutside = (event) => {
-            if (event.target.className !== 'dropdown_button') {
+            if (event.target.className !== 'dropdown_button' && event.target.className !== 'open_dropdown') {
                 setDropdownOpen(false);
             }
         };
