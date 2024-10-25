@@ -32,7 +32,7 @@
 }
 #search_summoner_bar button:hover{
     filter: opacity(0.85);
-    color: #B87333;
+    color: #756644;
     transition: filter 0.5s, color 0.5s;
 }
 #search_summoner_bar .region_dropdown, #search_summoner_bar .gameName_input {

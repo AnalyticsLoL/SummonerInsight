@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {regions} from '../constants.js';
 import '../assets/css/components/SearchSummonerBar.css';
 
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
+    const dropdownRef = useRef(null);
 
     const handleDropdownClick = (region) => {
-        console.log(`Selected: ${region.regionName}`);
         setDropdownOpen(false);
         setRegionTag(region.regionTag);
         setRegionName(region.regionName);
         setRegionRoute(region.regionRoute);
     };
+
+    useEffect(() => {
+        const handleEscPress = (event) => {
+            if (event.key === 'Escape') {
+                setDropdownOpen(false);
+            }
+        };
+        const handleClickOutside = (event) => {
+            if (event.target.className !== 'dropdown_button') {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener('keydown', handleEscPress);
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('keydown', handleEscPress);
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    },[]);
+
 
     return(
         <div className='region_dropdown'>
@@ -20,7 +40,7 @@ function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute
             {dropdownOpen && (
                 <div className="dropdown-menu">
                     {regions.map((region, index) => (
-                        <button key={index} onClick={() => handleDropdownClick(region)}>{region.regionName}</button>
+                        <button key={index} className='dropdown_button' onClick={() => handleDropdownClick(region)}>{region.regionName}</button>
                     ))}
                 </div>
             )}
@@ -45,7 +65,7 @@ export default function SearchSummonerBar() {
         const settings = {
             SummonerName: gameName,
             RegionTag: regionTag.toLowerCase(),
-            TagLine: tagLine,
+            TagLine: tagLine ? tagLine!=='' : regionTag,
             Region: regionRoute.toLowerCase()
         }
 
@@ -58,7 +78,12 @@ export default function SearchSummonerBar() {
             body: JSON.stringify(settings)
         });
         if (!response.ok) {
-            console.error(`Error: ${response.statusText}`);
+            console.log(settings);
+            if (settings.TagLine.toLowerCase()===settings.RegionTag) {
+                console.log('You must enter your tags using the format #0000 or select the right region')
+            } else {
+                console.error(`Error: ${response.statusText}`);
+            }
         } else {
             const summonerInfo = await response.json();
             console.log(summonerInfo);
@@ -91,7 +116,15 @@ export default function SearchSummonerBar() {
                     placeholder={`Game Name + #${regionTag}`}
                     autoComplete="off"
                     autoCorrect="off"
-                    spellCheck="false"   
+                    spellCheck="false"
+                    onKeyDown={(event)=>{
+                        if (event.key == 'Enter') {
+                            event.preventDefault();
+                            if (gameName !== '') {
+                                fetchSummonerData();
+                            }
+                        }
+                    }} 
                 />
             </div>
             <button className="search_button" onClick={()=>fetchSummonerData()?gameName!=='':null}>Search</button>
