@@ -38,7 +38,7 @@ namespace backend.Controllers
             if (idStartList == null || idEndList == null)
             {
                 idStartList = 0;
-                idEndList = 2;
+                idEndList = 1;
             }
             var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idEndList);
             var matchInfos = new List<object>();

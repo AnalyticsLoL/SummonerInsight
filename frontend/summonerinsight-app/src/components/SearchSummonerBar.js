@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {regions} from '../constants.js';
 import '../assets/css/components/SearchSummonerBar.css';
 
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
-    const dropdownRef = useRef(null);
 
     const handleDropdownClick = (region) => {
         setDropdownOpen(false);
@@ -54,6 +53,7 @@ export default function SearchSummonerBar() {
     const [gameName, setGameName] = React.useState('');
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
+    const [isLoading,setIsLoading] = React.useState(false);
 
     const HandleGameNameandGameTag=(event)=>{
         const text = event.target.value.split("#");
@@ -62,47 +62,50 @@ export default function SearchSummonerBar() {
     }
 
     const fetchSummonerData = async () => {
-        const settings = {
-            SummonerName: gameName,
-            RegionTag: regionTag.toLowerCase(),
-            TagLine: tagLine ? tagLine!=='' : regionTag,
-            Region: regionRoute.toLowerCase()
-        }
-
-        let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;
-        let response = await fetch(url, {
-            method:'POST',
-            headers: {
-                "Content-Type": "application/json",
-              },
-            body: JSON.stringify(settings)
-        });
-        if (!response.ok) {
-            console.log(settings);
-            if (settings.TagLine.toLowerCase()===settings.RegionTag) {
-                console.log('You must enter your tags using the format #0000 or select the right region')
+        if(!isLoading){
+            setIsLoading(true);
+            const settings = {
+                SummonerName: gameName,
+                RegionTag: regionTag.toLowerCase(),
+                TagLine: tagLine ? tagLine!=='' : regionTag,
+                Region: regionRoute.toLowerCase()
+            }
+            let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;
+            let response = await fetch(url, {
+                method:'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(settings)
+            });
+            if (!response.ok) {
+                console.log(settings);
+                if (settings.TagLine.toLowerCase()===settings.RegionTag) {
+                    console.log('You must enter your tags using the format #0000 or select the right region')
+                } else {
+                    console.error(`Error: ${response.statusText}`);
+                }
             } else {
+                const summonerInfo = await response.json();
+                console.log(summonerInfo);
+            }
+
+            url = `http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`;
+            response = await fetch(url, {
+                method:'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(settings)
+            });
+            if (!response.ok) {
                 console.error(`Error: ${response.statusText}`);
             }
-        } else {
-            const summonerInfo = await response.json();
-            console.log(summonerInfo);
-        }
-
-        url = `http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`;
-        response = await fetch(url, {
-            method:'POST',
-            headers: {
-                "Content-Type": "application/json",
-              },
-            body: JSON.stringify(settings)
-        });
-        if (!response.ok) {
-            console.error(`Error: ${response.statusText}`);
-        }
-        else {
-            const matchhistory = await response.json();
-            console.log(matchhistory);
+            else {
+                const matchhistory = await response.json();
+                console.log(matchhistory);
+            }
+            setIsLoading(false);
         }
     };
     return(
@@ -118,7 +121,7 @@ export default function SearchSummonerBar() {
                     autoCorrect="off"
                     spellCheck="false"
                     onKeyDown={(event)=>{
-                        if (event.key == 'Enter') {
+                        if (event.key === 'Enter') {
                             event.preventDefault();
                             if (gameName !== '') {
                                 fetchSummonerData();
