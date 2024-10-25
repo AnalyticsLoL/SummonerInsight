@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SearchSummonerBar from "../components/SearchSummonerBar";
 import "../assets/css/pages/Home.css";
 
