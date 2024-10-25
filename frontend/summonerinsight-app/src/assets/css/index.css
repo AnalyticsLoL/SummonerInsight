@@ -22,7 +22,7 @@ h4, h5, h6, span {
     font-family: 'Merriweather-Regular';
     color:#3D3D3D;
 }
-button, input, textarea, p {
+button, input, textarea, p, figcaption{
     font-family: 'Roboto-Regular';
     color:#3D3D3D;
 }

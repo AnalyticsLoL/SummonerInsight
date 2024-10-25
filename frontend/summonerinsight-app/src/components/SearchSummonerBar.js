@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {regions} from '../constants.js';
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/components/SearchSummonerBar.css';
 
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
@@ -54,6 +55,7 @@ export default function SearchSummonerBar() {
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
     const [isLoading,setIsLoading] = React.useState(false);
+    const navigate = useNavigate();
 
     const HandleGameNameandGameTag=(event)=>{
         const text = event.target.value.split("#");
@@ -67,9 +69,11 @@ export default function SearchSummonerBar() {
             const settings = {
                 SummonerName: gameName,
                 RegionTag: regionTag.toLowerCase(),
-                TagLine: tagLine ? tagLine!=='' : regionTag,
+                TagLine: tagLine !== '' ? tagLine : regionTag.toLowerCase(),
                 Region: regionRoute.toLowerCase()
             }
+            let summonerInfo=null;
+            let matchhistory=null;
             let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;
             let response = await fetch(url, {
                 method:'POST',
@@ -79,14 +83,14 @@ export default function SearchSummonerBar() {
                 body: JSON.stringify(settings)
             });
             if (!response.ok) {
-                console.log(settings);
+                console.log(settings)
                 if (settings.TagLine.toLowerCase()===settings.RegionTag) {
                     console.log('You must enter your tags using the format #0000 or select the right region')
                 } else {
                     console.error(`Error: ${response.statusText}`);
                 }
             } else {
-                const summonerInfo = await response.json();
+                summonerInfo = await response.json();
                 console.log(summonerInfo);
             }
 
@@ -102,10 +106,19 @@ export default function SearchSummonerBar() {
                 console.error(`Error: ${response.statusText}`);
             }
             else {
-                const matchhistory = await response.json();
+                matchhistory = await response.json();
                 console.log(matchhistory);
             }
             setIsLoading(false);
+            if (summonerInfo && matchhistory){
+                navigate(
+                    `/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.SummonerName}/${settings.TagLine}`,
+                    {state: {
+                        summonerInfo: summonerInfo,
+                        matchhistory: matchhistory
+                    }}
+                );
+            }
         }
     };
     return(

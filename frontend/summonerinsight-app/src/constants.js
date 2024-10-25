@@ -1,3 +1,13 @@
+import ironImage from "./assets/img/ranks/Iron.png";
+import bronzeImage from "./assets/img/ranks/Bronze.png";
+import silverImage from "./assets/img/ranks/Silver.png";
+import goldImage from "./assets/img/ranks/Gold.png";
+import platinumImage from "./assets/img/ranks/Platinum.png";
+import diamondImage from "./assets/img/ranks/Diamond.png";
+import masterImage from "./assets/img/ranks/Master.png";
+import grandmasterImage from "./assets/img/ranks/Grandmaster.png";
+import challengerImage from "./assets/img/ranks/Challenger.png";
+
 export const regions = [
     {regionName: "North America", regionTag: "NA1", regionRoute: "Americas"},
     {regionName: "Middle East", regionTag: "ME1", regionRoute: "Asia"}, 
@@ -16,4 +26,16 @@ export const regions = [
     {regionName: "Taiwan", regionTag: "TW2", regionRoute: "Asia"}, 
     {regionName: "Vietnam", regionTag: "VN2", regionRoute: "Asia"}, 
     {regionName: "Thailand", regionTag: "TH2", regionRoute: "Asia"}
+];
+
+export const ranks = [
+    {tier: "Iron", rankEmbleme: ironImage},
+    {tier: "Bronze", rankEmbleme: bronzeImage},
+    {tier: "Silver", rankEmbleme: silverImage},
+    {tier: "Gold", rankEmbleme: goldImage},
+    {tier: "Platinum", rankEmbleme: platinumImage},
+    {tier: "Diamond", rankEmbleme: diamondImage},
+    {tier: "Master", rankEmbleme: masterImage},
+    {tier: "Grandmaster", rankEmbleme: grandmasterImage},
+    {tier: "Challenger", rankEmbleme: challengerImage},
 ];

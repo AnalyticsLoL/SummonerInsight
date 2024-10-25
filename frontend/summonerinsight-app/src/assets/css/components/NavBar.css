@@ -1,0 +1,21 @@
+#navbar{
+    position: fixed;
+    width: 100%;
+    display: flex; /* Use flexbox for navbar */
+    justify-content: center; /* Center items horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for visibility */
+    z-index: 1000;
+    height:auto;
+    background-color: #FAEBD7;
+    margin-top: -55px;
+}
+#navbar .content a{
+    text-decoration: none;
+}
+#navbar .content a h3{
+    margin: 15px 0px;
+}
+#navbar .content a h3:hover{
+    color: #756644;
+    transition: color 0.5s;
+}

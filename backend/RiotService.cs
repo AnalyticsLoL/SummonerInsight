@@ -190,6 +190,7 @@ namespace backend
             foreach (var participant in participantsArray)
             {
                 var participantData = new JsonObject();
+                participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
                 participantData["championName"] = participant.AsObject()?["championName"]?.DeepClone();
                 participantData["summonerName"] = participant.AsObject()?["summonerName"]?.DeepClone();
                 participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
