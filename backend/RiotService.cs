@@ -65,7 +65,7 @@ namespace backend
         {
             if (string.IsNullOrEmpty(_settings.GameName) || string.IsNullOrEmpty(_settings.Region) || string.IsNullOrEmpty(_settings.RegionTag))
             {
-                throw new InvalidOperationException("Summoner name and region tag must be set.");
+                throw new InvalidOperationException("Game name, region tag and region must be set.");
             }
             var queries= new Dictionary<string,string>
             {

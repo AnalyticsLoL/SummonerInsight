@@ -1,7 +1,10 @@
 import React from "react";
 import { useParams, useLocation } from 'react-router-dom';
+
 import "../assets/css/pages/Summoner.css";
+
 import {ranks, gameModes} from "../constants";
+import {fetchData} from "../fetchData";
 
 function RankedSection({rankedStats, emblems}){
     emblems=ranks.find(rank => rank.tier.toUpperCase() === rankedStats.tier);
@@ -176,11 +179,28 @@ function Match({match}){
 }
 
 function MatchHistory({matchhistory}){
+    const { regionTag, gameName, tagLine } = useParams();
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [matches, setMatches] = React.useState(matchhistory);
+    const fetchSummonerData = async () => {
+        if(isLoading) return;
+        const settings = {
+            GameName: gameName,
+            RegionTag: regionTag.toLowerCase(),
+            TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
+        }
+        setIsLoading(true);
+        const fetchedMatches = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=${matches.length}&idEndList=5`, settings);
+        setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
+        setIsLoading(false);
+        console.log(matches);
+    };
     return(
         <div className="match-history">
-            {matchhistory.map((match, index) => (
+            {matches.map((match, index) => (
                 <Match key={index} match={match}/>
             ))}
+            <button onClick={fetchSummonerData}>Load More</button>
         </div>
     );
 }

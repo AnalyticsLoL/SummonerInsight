@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {regions} from '../constants.js';
+import { fetchData } from '../fetchData.js';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/components/SearchSummonerBar.css';
 
@@ -64,62 +65,24 @@ export default function SearchSummonerBar() {
     }
 
     const fetchSummonerData = async () => {
-        if(!isLoading){
-            setIsLoading(true);
-            const settings = {
-                GameName: gameName,
-                RegionTag: regionTag.toLowerCase(),
-                TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
-                Region: regionRoute.toLowerCase()
-            }
-            console.log(settings);
-            let summonerInfo=null;
-            let matchhistory=null;
-            let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;
-            let response = await fetch(url, {
-                method:'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(settings)
-            });
-            if (!response.ok) {
-                console.log(settings)
-                if (settings.TagLine.toLowerCase()===settings.RegionTag) {
-                    console.log('You must enter your tags using the format #0000 or select the right region')
-                } else {
-                    console.error(`Error: ${response.statusText}`);
-                }
-            } else {
-                summonerInfo = await response.json();
-                console.log(summonerInfo);
-            }
+        const settings = {
+            GameName: gameName,
+            RegionTag: regionTag.toLowerCase(),
+            TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
+            Region: regionRoute.toLowerCase()
+        }
+        console.log(settings);
+        const summonerInfo=await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings, isLoading, setIsLoading);
+        const matchhistory=await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`, settings, isLoading, setIsLoading);
 
-            url = `http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`;
-            response = await fetch(url, {
-                method:'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(settings)
-            });
-            if (!response.ok) {
-                console.error(`Error: ${response.statusText}`);
-            }
-            else {
-                matchhistory = await response.json();
-                console.log(matchhistory);
-            }
-            setIsLoading(false);
-            if (summonerInfo && matchhistory){
-                navigate(
-                    `/summoner/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.GameName}/${settings.TagLine}`,
-                    {state: {
-                        summonerInfo: summonerInfo,
-                        matchhistory: matchhistory
-                    }}
-                );
-            }
+        if (summonerInfo && matchhistory){
+            navigate(
+                `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
+                {state: {
+                    summonerInfo: summonerInfo,
+                    matchhistory: matchhistory
+                }}
+            );
         }
     };
     return(
