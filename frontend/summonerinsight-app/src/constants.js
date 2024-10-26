@@ -39,3 +39,13 @@ export const ranks = [
     {tier: "Grandmaster", rankEmbleme: grandmasterImage},
     {tier: "Challenger", rankEmbleme: challengerImage},
 ];
+
+export const gameModes = [
+    {gameMode: "CLASSIC", gameModeName: "Summoner's Rift"},
+    {gameMode: "ARAM", gameModeName: "ARAM"},
+    {gameMode: "URF", gameModeName: "URF"},
+    {gameMode: "ONEFORALL", gameModeName: "One For All"},
+    {gameMode: "NEXUSBLITZ", gameModeName: "Nexus Blitz"},
+    {gameMode: "TUTORIAL", gameModeName: "Tutorial"},
+    {gameMode: "ULTBOOK", gameModeName: "Ultimate Spellbook"},
+]

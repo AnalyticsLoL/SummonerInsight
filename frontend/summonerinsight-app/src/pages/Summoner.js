@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useLocation } from 'react-router-dom';
 import "../assets/css/pages/Summoner.css";
-import {ranks} from "../constants";
+import {ranks, gameModes} from "../constants";
 
 function RankedSection({rankedStats, emblems}){
     emblems=ranks.find(rank => rank.tier.toUpperCase() === rankedStats.tier);
@@ -21,10 +21,10 @@ function RankedSection({rankedStats, emblems}){
                         <p>{rankedStats.leaguePoints} LP</p>
                     </figcaption>
                 </figure>
-                <span>
+                <div className="ranked-stats">
                     <p>{rankedStats.wins}W {rankedStats.losses}L</p>
-                    <p>Winrate: {(rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100}%</p>
-                </span>
+                    <p>Winrate: {((rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100).toFixed(2)}%</p>
+                </div>
             </div>
         </div>
     );
@@ -56,6 +56,7 @@ function SummonerInfo({summonerInfo}){
 
 function Match({match}){
     const { gameName } = useParams();
+    console.log(match);
     const getGameDuration = (gameDuration) => {
         const minutes = Math.floor(gameDuration / 60);
         const seconds = gameDuration % 60;
@@ -76,34 +77,99 @@ function Match({match}){
             }
         }
     }
+    console.log(match);
+    console.log(gameName);
     const playerStats = match.participants.find(participant => participant.gameName === gameName);
-    console.log(playerStats);
+    const maxDealt = match.participants.reduce((max, player) => {
+        return Math.max(max, player.damage.totalDamageDealtToChampions);
+    }, 0);
+    const maxTaken = match.participants.reduce((max, player) => {
+        return Math.max(max, player.damage.totalDamageTaken);
+    }, 0);
+    const damageFillBar = (damage, maxDamage) => {
+        const damagePercentage = (damage/maxDamage)*100;
+        return `${damagePercentage}%`;
+    }
     return(
         <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
-            <div className="gameStatus">
-                <p>{match.metadata.gameMode}</p>
+            <div className="game-status">
+                <p>{gameModes.find(gameMode => gameMode.gameMode === match.metadata.gameMode).gameModeName}</p>
                 <p>{getTimeDifference(match.metadata.gameStart)}</p>
                 <hr/>
                 <p>{playerStats.win ? 'Victory' : 'Defeat'}</p>
                 <p>{getGameDuration(match.metadata.gameDuration)}</p>
             </div>
-            <figure className="champion-summoner">
-                <img src={playerStats.championIcon} alt="Champion Icon" />
-                <figcaption>{playerStats.champLevel}</figcaption>
-            </figure>
-            <figure className="items">
-                {playerStats.items.map((item, index) => 
-                item.itemId !== 0 ? (
-                    <img key={index} className={`item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`} src={item.itemIcon} alt="Item Icon" />
-                )
-                : (
-                    <div key={index} className={`empty item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`}/>
-                )
-                )}
-            </figure>
-            <div className="kda">
-                <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
-                <p className="ratio">{((playerStats.kda.kills+playerStats.kda.assists)/playerStats.kda.deaths).toFixed(2)}:1 KDA</p>
+            <div className="player-infos">
+                <div className="player-champion-items">
+                    <figure className="champion-summoner">
+                        <img src={playerStats.championIcon} alt="Champion Icon" />
+                        <figcaption>{playerStats.champLevel}</figcaption>
+                    </figure>
+                    <figure className="items">
+                        {playerStats.items.map((item, index) => 
+                        item.itemId !== 0 ? (
+                            <img key={index} className={`item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`} src={item.itemIcon} alt="Item Icon" />
+                        )
+                        : (
+                            <div key={index} className={`empty item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`}/>
+                        )
+                        )}
+                    </figure>
+                </div>
+                <div className="player-stats">
+                    <div className="kda">
+                        <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
+                        <p className="ratio">{((playerStats.kda.kills+playerStats.kda.assists)/playerStats.kda.deaths).toFixed(2)}:1 KDA</p>
+                    </div>
+                    <div className="damage">
+                        <div className="damage-section">
+                            <p>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
+                            <div className="progress">
+                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageDealtToChampions, maxDealt)}}/>
+                            </div>
+                            <p>Dealt</p>
+                        </div>
+                        <div className="damage-section">
+                            <p>{playerStats.damage.totalDamageTaken.toLocaleString()}</p>
+                            <div className="progress">
+                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageTaken, maxTaken)}}/>
+                            </div>
+                            <p>Taken</p>
+                        </div>
+                    </div>
+                    <div className="cs">
+                        <p>{playerStats.gold.totalMinionsKilled}</p>
+                        <p>{playerStats.gold.csPerMinute.toFixed(0)}/m</p>
+                        <p>CS</p>
+                    </div>
+                    <div className="vision">
+                        <p>{playerStats.vision.controlWardsPlaced ? playerStats.vision.controlWardsPlaced : 0}</p>
+                        <p>{playerStats.vision.wardsPlaced}/{playerStats.vision.wardsKilled}</p>
+                        <p>Vision</p>
+                    </div>
+                </div>
+            </div>
+            <div className="team-composition">
+                <div className="team">
+                    {match.participants
+                        .filter(participant => participant.teamId === 100)
+                        .map((participant, index) => (
+                            <figure key={index} className="player">
+                                <img src={participant.championIcon} alt="Champion Icon" />
+                                <figcaption style={{fontWeight: participant.gameName===gameName?'bold':null}}>{participant.gameName}</figcaption>
+                            </figure>
+                        ))}
+                </div>
+                <div className="team">
+                    {match.participants
+                        .filter(participant => participant.teamId === 200)
+                        .map((participant, index) => (
+                            <figure key={index} className="player">
+                                <img src={participant.championIcon} alt="Champion Icon" />
+                                <figcaption style={{fontWeight: participant.gameName===gameName?'bold':null}}>{participant.gameName}</figcaption>
+                            </figure>
+                        ))}
+                </div>
             </div>
         </div>
     );

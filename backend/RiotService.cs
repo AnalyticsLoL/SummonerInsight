@@ -226,7 +226,7 @@ namespace backend
                 gold["totalMinionsKilled"] = participant.AsObject()?["totalMinionsKilled"]?.DeepClone();
                 gold["csPerMinute"] = gold["totalMinionsKilled"]?.GetValue<float>() / (metadata["gameDuration"]?.GetValue<float>() / 60);
                 gold["goldEarned"] = participant.AsObject()?["goldEarned"]?.DeepClone();
-                gold["goldPerMinute"] = participant.AsObject()?["goldPerMinute"]?.DeepClone();
+                gold["goldPerMinute"] = participant.AsObject()?["challenges"]?.AsObject()["goldPerMinute"]?.DeepClone();
                 participantData["gold"] = gold;
 
                 var kda = new JsonObject();

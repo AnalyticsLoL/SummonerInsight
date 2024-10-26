@@ -113,7 +113,7 @@ export default function SearchSummonerBar() {
             setIsLoading(false);
             if (summonerInfo && matchhistory){
                 navigate(
-                    `/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.GameName}/${settings.TagLine}`,
+                    `/summoner/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.GameName}/${settings.TagLine}`,
                     {state: {
                         summonerInfo: summonerInfo,
                         matchhistory: matchhistory

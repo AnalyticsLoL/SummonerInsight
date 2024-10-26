@@ -77,9 +77,16 @@
     width: 100%;
     height: auto;
 }
-#summoner .section .summoner-info .ranked-section span {
-    margin: 30px 25px 0px auto;
+#summoner .section .summoner-info .ranked-section .ranked-stats {
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+#summoner .section .summoner-info .ranked-section .ranked-stats p{
+    margin:0;
 }
 #summoner .match-history{
     position: absolute;
@@ -87,13 +94,15 @@
     flex-direction: column;
     left: 500px;
     right:0;
+    width: 1000px;
 }
 #summoner .match-history .match{
     display: flex;
     flex-direction: row;
     margin: 10px 20px;
+    padding: 25px;
     border: 1px solid #C8AA6E;
-    width: auto;
+    min-width: 600px;
     border-radius: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -105,19 +114,39 @@
 #summoner .match-history .loss{
     background-color: #C57D7D;
 }
-#summoner .match-history .match .champion-summoner{
+#summoner .match-history .match .game-status{
+    width: 100px;
+    margin: 0 20px;
+    gap: 10px;
+    font-size: 15px;
+}
+#summoner .match-history .match .player-infos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+    gap: 20px;
+}
+#summoner .match-history .match .player-champion-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 20px;
+    gap: 10px;
+}
+#summoner .match-history .match .player-champion-items .champion-summoner{
     width: 100px;
     height: 100px;
     align-items: center;
-    margin-right: 10px;
+    margin: 0;
 }
-#summoner .match-history .match .champion-summoner img{
+#summoner .match-history .match .player-champion-items .champion-summoner img{
     width: 90%;
     height: auto;
     border-radius: 50%;
     border: 5px solid #53472f;
 }
-#summoner .match-history .match .champion-summoner figcaption{
+#summoner .match-history .match .player-champion-items .champion-summoner figcaption{
     position: relative;
     background-color: #53472f;
     width:30px;
@@ -129,37 +158,126 @@
     bottom:25px;
     left: 75px;
 }
-#summoner .match-history .match .items{
+#summoner .match-history .match .player-champion-items .items{
     display: grid;
     grid-template-columns: repeat(3, auto) 1fr;
     grid-template-rows: repeat(2, 40px);
     gap: 5px;
     height: 85px;
-    margin-left: 10px;
+    margin: 0;
 }
-#summoner .match-history .match .items .item{
+#summoner .match-history .match .player-champion-items .items .item{
     width: 40px;
     height: 40px;
     border-radius: 30%;
 }
-#summoner .match-history .match .items .empty{
+#summoner .match-history .match .player-champion-items .items .empty{
     background-color: rgba(224, 198, 138, 0.3);
     filter: blur(1px);
 }
-#summoner .match-history .match .items .last-item{
+#summoner .match-history .match .player-champion-items .items .last-item{
     position: relative;
     border-radius: 50%;
     grid-column: 4;
     grid-row: 1 / span 2;
     bottom: -20px;
 }
-#summoner .match-history .match .kda {
+#summoner .match-history .match .player-stats{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 20px;
+    gap: 10px;
+    font-size: 12px;
+}
+#summoner .match-history .match .player-stats .kda {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 10px;
     font-size: 12px;
+    gap: 10px;
 }
-#summoner .match-history .match .kda .kill_death_assists{
-    font-size: 16px;
+#summoner .match-history .match .player-stats .kda .kill_death_assists{
+    font-size: 14px;
+    margin: 0;
+}
+#summoner .match-history .match .player-stats .kda .ratio{
+    font-size: 12px;
+    margin: 0;
+}
+#summoner .match-history .match .player-stats .damage{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 150px;
+}
+#summoner .match-history .match .player-stats .damage .damage-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+#summoner .match-history .match .player-stats .damage p{
+    font-size: 12px;
+    margin: 0;
+    width:50px;
+}
+#summoner .match-history .match .player-stats .damage .progress {
+    width: 100%;
+    height: 8px;
+    background-color:rgba(224, 198, 138, 0.3);
+}
+#summoner .match-history .match .player-stats .damage .progress .fill {
+    height: 100%;
+    background-color: #C8AA6E;
+}
+#summoner .match-history .match .player-stats .cs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+#summoner .match-history .match .player-stats .cs p{
+    margin: 0;
+}
+#summoner .match-history .match .player-stats .vision {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+#summoner .match-history .match .player-stats .vision p{
+    margin: 0;
+}
+#summoner .match-history .match .team-composition{
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    gap: 10px;
+    width: 300px;
+}
+#summoner .match-history .match .team-composition .team {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+#summoner .match-history .match .team-composition .team .player{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 0;
+}
+#summoner .match-history .match .team-composition .team .player img{
+    width: 30px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #53472f;
+}
+#summoner .match-history .match .team-composition .team .player figcaption{
+    margin-top: 10px;
 }
