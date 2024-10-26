@@ -67,12 +67,11 @@ export default function SearchSummonerBar() {
         if(!isLoading){
             setIsLoading(true);
             const settings = {
-                SummonerName: gameName,
+                GameName: gameName,
                 RegionTag: regionTag.toLowerCase(),
                 TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
                 Region: regionRoute.toLowerCase()
             }
-            console.log(tagLine);
             console.log(settings);
             let summonerInfo=null;
             let matchhistory=null;
@@ -114,7 +113,7 @@ export default function SearchSummonerBar() {
             setIsLoading(false);
             if (summonerInfo && matchhistory){
                 navigate(
-                    `/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.SummonerName}/${settings.TagLine}`,
+                    `/${settings.RegionTag.replace(/[0-9]/g, '')}/${settings.GameName}/${settings.TagLine}`,
                     {state: {
                         summonerInfo: summonerInfo,
                         matchhistory: matchhistory

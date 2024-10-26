@@ -12,7 +12,7 @@ root.render(
     <NavBar />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path='/:regionTag/:summonerName/:tagLine' element={<Summoner />} />
+      <Route path='/:regionTag/:gameName/:tagLine' element={<Summoner />} />
     </Routes>
   </Router>
 );

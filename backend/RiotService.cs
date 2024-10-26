@@ -6,12 +6,11 @@ namespace backend
 {
     public class RiotSettings
     {
-        public string? SummonerName { get; set; }
+        public string? GameName { get; set; }
         public string? Region { get; set; }
         public string? RegionTag { get; set; }
         public string? TagLine { get; set; }
         public string? Puuid { get; set; }
-        public string? GameName { get; set; }
         public string? AccountId { get; set; }
         public string? SummonerId { get; set; }
         public string? ProfileIconId { get; set; }
@@ -63,7 +62,7 @@ namespace backend
         }
         public backend.RiotSettings GetSummonerPuuID_GameName_ProfileIcon_Level()
         {
-            if (string.IsNullOrEmpty(_settings.SummonerName) || string.IsNullOrEmpty(_settings.Region) || string.IsNullOrEmpty(_settings.RegionTag))
+            if (string.IsNullOrEmpty(_settings.GameName) || string.IsNullOrEmpty(_settings.Region) || string.IsNullOrEmpty(_settings.RegionTag))
             {
                 throw new InvalidOperationException("Summoner name and region tag must be set.");
             }
@@ -73,7 +72,7 @@ namespace backend
             };
             var tag = _settings.TagLine;
             // Start by getting the puuid and game name
-            var summoner = GetData($"https://{_settings.Region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{_settings.SummonerName}/{tag}", queries);
+            var summoner = GetData($"https://{_settings.Region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{_settings.GameName}/{tag}", queries);
             if (summoner == null)
             {
                 throw new ArgumentNullException(nameof(summoner));
@@ -196,7 +195,7 @@ namespace backend
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
                 participantData["championName"] = participant.AsObject()?["championName"]?.DeepClone();
                 participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/"+participant.AsObject()?["championName"]?.ToString()+".png";
-                participantData["summonerName"] = participant.AsObject()?["summonerName"]?.DeepClone();
+                participantData["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone();
                 participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
                 participantData["championId"] = participant.AsObject()?["championId"]?.DeepClone();
                 participantData["tagLine"] = participant.AsObject()?["riotIdTagline"]?.DeepClone();
@@ -236,14 +235,14 @@ namespace backend
                 kda["assists"] = participant.AsObject()?["assists"]?.DeepClone();
                 participantData["kda"] = kda;
 
-                var objects = new JsonObject();
-                objects["item0"] = participant.AsObject()?["item0"]?.DeepClone();
-                objects["item1"] = participant.AsObject()?["item1"]?.DeepClone();
-                objects["item2"] = participant.AsObject()?["item2"]?.DeepClone();
-                objects["item3"] = participant.AsObject()?["item3"]?.DeepClone();
-                objects["item4"] = participant.AsObject()?["item4"]?.DeepClone();
-                objects["item5"] = participant.AsObject()?["item5"]?.DeepClone();
-                objects["item6"] = participant.AsObject()?["item6"]?.DeepClone();
+                var objects = new JsonArray();
+                for(int i=0;i<7;i++)
+                {   
+                    var item = new JsonObject();
+                    item["itemId"] = participant.AsObject()?["item"+i]?.DeepClone();
+                    item["itemIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/"+item["itemId"]+".png";
+                    objects.Add(item);
+                }
                 participantData["items"] = objects;
 
                 participants.Add(participantData);
