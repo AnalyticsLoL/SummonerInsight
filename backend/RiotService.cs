@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using System.Globalization;
 
 namespace backend
 {
@@ -194,7 +195,19 @@ namespace backend
                 var participantData = new JsonObject();
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
                 participantData["championName"] = participant.AsObject()?["championName"]?.DeepClone();
-                participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/"+participant.AsObject()?["championName"]?.ToString()+".png";
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+                // Some champion names are not correctly formatted for the image icons url
+                var erroneousChampionUrls = new[] { "FiddleSticks" };
+                var championName = participant.AsObject()?["championName"]?.ToString();
+                if (championName != null && erroneousChampionUrls.Contains(championName))
+                {
+                    participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/" + textInfo.ToTitleCase(championName) + ".png";
+                }
+                else
+                {
+                    participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/" + championName + ".png";
+                };
                 participantData["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone();
                 participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
                 participantData["championId"] = participant.AsObject()?["championId"]?.DeepClone();
