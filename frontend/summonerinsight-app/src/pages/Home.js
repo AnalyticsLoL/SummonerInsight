@@ -76,7 +76,7 @@ export default function Home() {
                                 name="Noe Jager"
                                 img={noe}
                                 description="Master student in Computer Science at University of Montréal"
-                                linkedinUrl="https://www.linkedin.com/in/noe-merlevede/"
+                                linkedinUrl="https://www.linkedin.com/in/no%C3%A9-jager-2b4866236/"
                                 githubUrl="https://github.com/elnukakujo"
                                 mail="noe.p.jager@gmail.com"
                                 websiteUrl="https://elnukakujo.github.io/"
