@@ -35,14 +35,17 @@ namespace backend
                 _settings.TagLine = _settings.RegionTag;
             }
         }
-        private static JsonNode GetData(string url, Dictionary<string,string> queries)
+        private static JsonNode GetData(string url, Dictionary<string,string>? queries)
         {
             var options = new RestClientOptions(url);
             var client = new RestClient(options);
             var request = new RestRequest("");
-            foreach (var query in queries)
+            if (queries != null)
             {
-                request.AddParameter(query.Key, query.Value);
+                foreach (var query in queries)
+                {
+                    request.AddParameter(query.Key, query.Value);
+                }
             }
             Console.WriteLine("Sending request to :"+url);
             var response = client.Execute(request);
@@ -192,6 +195,7 @@ namespace backend
                 var participantData = new JsonObject();
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
                 participantData["championName"] = participant.AsObject()?["championName"]?.DeepClone();
+                participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/"+participant.AsObject()?["championName"]?.ToString()+".png";
                 participantData["summonerName"] = participant.AsObject()?["summonerName"]?.DeepClone();
                 participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
                 participantData["championId"] = participant.AsObject()?["championId"]?.DeepClone();
@@ -241,6 +245,7 @@ namespace backend
                 objects["item5"] = participant.AsObject()?["item5"]?.DeepClone();
                 objects["item6"] = participant.AsObject()?["item6"]?.DeepClone();
                 participantData["items"] = objects;
+
                 participants.Add(participantData);
             }
             matchData["participants"] = participants;

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home.js';
-import MatchHistory from './pages/MatchHistory.js';
+import Summoner from './pages/Summoner.js';
 import NavBar from './components/NavBar.js';
 import './assets/css/index.css';
 
@@ -12,7 +12,7 @@ root.render(
     <NavBar />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path='/:regionTag/:summonerName/:tagLine' element={<MatchHistory />} />
+      <Route path='/:regionTag/:summonerName/:tagLine' element={<Summoner />} />
     </Routes>
   </Router>
 );
