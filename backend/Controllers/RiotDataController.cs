@@ -27,20 +27,16 @@ namespace backend.Controllers
             return Ok(_riotService._settings);
         }
         [HttpPost("matchhistory")]
-        public IActionResult GetPlayerMatchHistory([FromBody] RiotSettings? settings, [FromQuery] int? idStartList, [FromQuery] int? idEndList)
+        public IActionResult GetPlayerMatchHistory([FromBody] RiotSettings settings, [FromQuery] int? idStartList, [FromQuery] int? idCount)
         {
-            if (settings != null)
-            {
-                _riotService.UpdateSettings(settings);
-                _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
-                _riotService.GetSummonerAccount_SummonerID();
-            }
-            if (idStartList == null || idEndList == null)
-            {
-                idStartList = 0;
-                idEndList = 1;
-            }
-            var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idEndList);
+            _riotService.UpdateSettings(settings);
+            _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
+            _riotService.GetSummonerAccount_SummonerID();
+
+            // Retrieve match IDs for the player
+            var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idCount);
+            
+            // Retrieve match information for each match ID
             var matchInfos = new List<object>();
             foreach (var matchId in matchIds)
             {

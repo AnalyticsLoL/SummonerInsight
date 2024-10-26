@@ -281,3 +281,32 @@
 #summoner .match-history .match .team-composition .team .player figcaption{
     margin-top: 10px;
 }
+#summoner .match-history .load-more {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px 0;
+}
+#summoner .match-history .load-more span{
+    width: 100px;
+    background-color: #E0C68A;
+    cursor: pointer;
+}
+#summoner .match-history .load-more span:hover{
+    background-color: #C8AA6E;
+    transition: background-color 0.5s;
+}
+#summoner .match-history .loading {
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5; /* Fades out to 50% opacity */
+    }
+    100% {
+        opacity: 1; /* Fades back to full opacity */
+    }
+}

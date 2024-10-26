@@ -65,24 +65,32 @@ export default function SearchSummonerBar() {
     }
 
     const fetchSummonerData = async () => {
+        if (isLoading) return;
         const settings = {
             GameName: gameName,
             RegionTag: regionTag.toLowerCase(),
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
             Region: regionRoute.toLowerCase()
-        }
-        console.log(settings);
-        const summonerInfo=await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings, isLoading, setIsLoading);
-        const matchhistory=await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idEndList=5`, settings, isLoading, setIsLoading);
-
-        if (summonerInfo && matchhistory){
-            navigate(
-                `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
-                {state: {
-                    summonerInfo: summonerInfo,
-                    matchhistory: matchhistory
-                }}
-            );
+        };
+        setIsLoading(true);
+        try {
+            const summonerInfo = await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings);
+            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=5`, settings);
+            if (summonerInfo && matchhistory) {
+                navigate(
+                    `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
+                    {
+                        state: {
+                            summonerInfo: summonerInfo,
+                            matchhistory: matchhistory
+                        }
+                    }
+                );
+            }
+        } catch (error) {
+            console.error('Error fetching summoner data:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
     return(
@@ -107,7 +115,7 @@ export default function SearchSummonerBar() {
                     }} 
                 />
             </div>
-            <button className="search_button" onClick={()=>fetchSummonerData()?gameName!=='':null}>Search</button>
+            <button className={`search_button ${isLoading?'loading':''}`} onClick={()=>fetchSummonerData()?gameName!=='':null}>Search</button>
         </div>
     );
 }

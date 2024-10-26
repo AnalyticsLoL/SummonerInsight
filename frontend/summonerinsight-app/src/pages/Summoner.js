@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import "../assets/css/pages/Summoner.css";
 
-import {ranks, gameModes} from "../constants";
+import {ranks, gameTypes} from "../constants";
 import {fetchData} from "../fetchData";
 
 function RankedSection({rankedStats, emblems}){
@@ -96,7 +96,7 @@ function Match({match}){
     return(
         <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
             <div className="game-status">
-                <p>{gameModes.find(gameMode => gameMode.gameMode === match.metadata.gameMode).gameModeName}</p>
+                <p>{gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId)?gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId).description:match.metadata.gameTypeId}</p>
                 <p>{getTimeDifference(match.metadata.gameStart)}</p>
                 <hr/>
                 <p>{playerStats.win ? 'Victory' : 'Defeat'}</p>
@@ -190,17 +190,21 @@ function MatchHistory({matchhistory}){
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
         }
         setIsLoading(true);
-        const fetchedMatches = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=${matches.length}&idEndList=5`, settings);
+        console.log(matches.length+1);
+        const fetchedMatches = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=${matches.length}&idCount=5`, settings);
         setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
         setIsLoading(false);
-        console.log(matches);
     };
     return(
         <div className="match-history">
             {matches.map((match, index) => (
                 <Match key={index} match={match}/>
             ))}
-            <button onClick={fetchSummonerData}>Load More</button>
+            <div className="load-more">
+                <span className={isLoading? 'loading':''} onClick={fetchSummonerData}>
+                    <p>Load More</p>
+                </span>
+            </div>
         </div>
     );
 }

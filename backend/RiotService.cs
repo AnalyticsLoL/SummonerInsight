@@ -123,32 +123,18 @@ namespace backend
             }
             return _settings;
         }
-        public string[] GetMatchHistoryGameIds([FromQuery] int? idStartList, [FromQuery] int? idEndList)
+        public string[] GetMatchHistoryGameIds([FromQuery] int? idStartList, [FromQuery] int? idCount)
         {
             if(string.IsNullOrEmpty(_settings.Region) || string.IsNullOrEmpty(_settings.Puuid))
             {
                 throw new InvalidOperationException("Region and the puuid must be set.");
             }
-            var queries= new Dictionary<string,string>
+            var queries = new Dictionary<string, string>
             {
-                {"api_key", apiKey}
+                {"api_key", apiKey},
+                {"start", idStartList?.ToString() ?? "0"},
+                {"count", idCount?.ToString() ?? "0"}
             };
-            if(idStartList!=null && idStartList>0 )
-            {
-                if(idEndList!=null && idStartList<=idEndList)
-                {
-                    queries.Add("start",idStartList.ToString());
-                    queries.Add("count",idEndList.ToString());
-                }
-                else if(idEndList==null)
-                {
-                    queries.Add("start",idStartList.ToString());
-                }
-            }
-            else if(idEndList!=null && idEndList>0)
-            {
-                queries.Add("count",idEndList.ToString());
-            }
             var matchIds = GetData($"https://{_settings.Region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{_settings.Puuid}/ids",queries);
             if (matchIds == null)
             {
@@ -182,6 +168,7 @@ namespace backend
             metadata["gameDuration"] = result.AsObject()?["info"]?.AsObject()["gameDuration"]?.DeepClone();
             metadata["gameStart"] = result.AsObject()?["info"]?["gameStartTimestamp"]?.DeepClone();
             metadata["gameMode"] = result.AsObject()?["info"]?["gameMode"]?.DeepClone();
+            metadata["gameTypeId"] = result.AsObject()?["info"]?["queueId"]?.DeepClone();
             matchData["metadata"] = metadata;
 
             var participants = new JsonArray();
