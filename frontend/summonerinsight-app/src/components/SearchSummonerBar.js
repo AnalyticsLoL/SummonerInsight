@@ -60,7 +60,7 @@ export default function SearchSummonerBar() {
     const HandleGameNameandGameTag=(event)=>{
         const text = event.target.value.split("#");
         setGameName(text[0]);
-        setTagLine(text[1]);
+        setTagLine(text[1]||null);
     }
 
     const fetchSummonerData = async () => {
@@ -69,9 +69,11 @@ export default function SearchSummonerBar() {
             const settings = {
                 SummonerName: gameName,
                 RegionTag: regionTag.toLowerCase(),
-                TagLine: tagLine !== '' ? tagLine : regionTag.toLowerCase(),
+                TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
                 Region: regionRoute.toLowerCase()
             }
+            console.log(tagLine);
+            console.log(settings);
             let summonerInfo=null;
             let matchhistory=null;
             let url = `http://127.0.0.1:5151/api/RiotData/summonerInfo`;

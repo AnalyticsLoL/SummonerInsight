@@ -256,24 +256,38 @@ namespace backend
             {
                 {"api_key", apiKey}
             };
-            var summonerStats=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/league/v4/entries/by-summoner/{_settings.SummonerId}",queries);
-            if (summonerStats is JsonArray jsonArray && jsonArray.Count > 0)
+            var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/league/v4/entries/by-summoner/{_settings.SummonerId}",queries);
+            
+            var summonerStats = new JsonObject();
+            var rankedStats = new JsonArray();
+            foreach(var stats in data.AsArray())
             {
-                summonerStats = summonerStats[0];
+                var queue = new JsonObject();
+                queue["queueName"] = stats.AsObject()["queueType"]?.DeepClone();
+                queue["tier"] = stats.AsObject()["tier"]?.DeepClone();
+                queue["rank"] = stats.AsObject()["rank"]?.DeepClone();
+                queue["leaguePoints"] = stats.AsObject()["leaguePoints"]?.DeepClone();
+                queue["wins"] = stats.AsObject()["wins"]?.DeepClone();
+                queue["losses"] = stats.AsObject()["losses"]?.DeepClone();
+                queue["veteran"] = stats.AsObject()["veteran"]?.DeepClone();
+                queue["inactive"] = stats.AsObject()["inactive"]?.DeepClone();
+                queue["freshBlood"] = stats.AsObject()["freshBlood"]?.DeepClone();
+                queue["hotStreak"] = stats.AsObject()["hotStreak"]?.DeepClone();
+                rankedStats.Add(queue);
             }
-            else
-            {
-                // In the case where the summoner has no ranked stats
-                summonerStats = new JsonObject();
-            }
-            summonerStats["profileIconId"] = _settings.ProfileIconId;
-            summonerStats["summonerLevel"] = _settings.SummonerLevel;
-            summonerStats["gameName"] = _settings.GameName;
-            summonerStats["tagLine"] = _settings.TagLine;
+            summonerStats["rankedStats"] = rankedStats;
+
+            var summonerInfos = new JsonObject();
+            summonerInfos["profileIconId"] = _settings.ProfileIconId;
+            summonerInfos["summonerLevel"] = _settings.SummonerLevel;
+            summonerInfos["gameName"] = _settings.GameName;
+            summonerInfos["tagLine"] = _settings.TagLine;
             if (_settings.TagLine != _settings.RegionTag)
             {
-                summonerStats["regionTag"] = _settings.RegionTag;
+                summonerInfos["regionTag"] = _settings.RegionTag;
             }
+            summonerStats["summonerProfile"] = summonerInfos;
+            
             return summonerStats;
         }
     }
