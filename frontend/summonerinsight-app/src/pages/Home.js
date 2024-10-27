@@ -59,7 +59,7 @@ export default function Home() {
                     <SearchSummonerBar />
                 </div>
             </div>
-            <div className="section">
+            <div className="section" style={{boxShadow: "none"}}>
                 <div className="home-about-us">
                     <div className="title">
                         <h2>About Us</h2>

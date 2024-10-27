@@ -4,6 +4,8 @@ import { fetchData } from '../fetchData.js';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/components/SearchSummonerBar.css';
 
+import LoadButton, {LoadButon} from '../reusable/LoadButton.js';
+
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
@@ -65,6 +67,7 @@ export default function SearchSummonerBar() {
     }
 
     const fetchSummonerData = async () => {
+        if(gameName === '') return;
         if (isLoading) return;
         const settings = {
             GameName: gameName,
@@ -108,14 +111,12 @@ export default function SearchSummonerBar() {
                     onKeyDown={(event)=>{
                         if (event.key === 'Enter') {
                             event.preventDefault();
-                            if (gameName !== '') {
-                                fetchSummonerData();
-                            }
+                            fetchSummonerData();
                         }
                     }} 
                 />
             </div>
-            <button className={`search_button ${isLoading?'loading':''}`} onClick={()=>fetchSummonerData()?gameName!=='':null}>Search</button>
+            <LoadButton isLoading={isLoading} onClick={fetchSummonerData} text='Search'/>
         </div>
     );
 }
