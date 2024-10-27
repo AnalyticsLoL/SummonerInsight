@@ -2,7 +2,7 @@
     margin-top: 55px;
 }
 #summoner .section .summoner-info{
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +45,7 @@
     flex-direction: row;
     gap: 10px;
 }
-#summoner .section .summoner-info .ranked-section {
+#summoner .section .summoner-info .ranked-element {
     margin: 0px 30px;
     border: 1px solid #C8AA6E;
     border-radius: 10%;
@@ -53,31 +53,31 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
-#summoner .section .summoner-info .ranked-section .ranked-header span{
+#summoner .section .summoner-info .ranked-element .ranked-header span{
     margin: 0 0 10px;
 }
-#summoner .section .summoner-info .ranked-section .ranked-header hr{
+#summoner .section .summoner-info .ranked-element .ranked-header hr{
     margin-bottom: 0;
     color: #C8AA6E;
 }
-#summoner .section .summoner-info .ranked-section .ranked-info{
+#summoner .section .summoner-info .ranked-element .ranked-info{
     margin-top: -30px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-#summoner .section .summoner-info .ranked-section .rank-icon{
+#summoner .section .summoner-info .ranked-element .rank-icon{
     width: 150px;
     height: auto;
     overflow: hidden;
     margin: 15px 20px
 }
-#summoner .ranked-section .rank-icon .image-container img {
+#summoner .ranked-element .rank-icon .image-container img {
     width: 100%;
     height: auto;
 }
-#summoner .section .summoner-info .ranked-section .ranked-stats {
+#summoner .section .summoner-info .ranked-element .ranked-stats {
     font-size: 16px;
     display: flex;
     flex-direction: column;
@@ -85,228 +85,15 @@
     justify-content: center;
     gap: 20px;
 }
-#summoner .section .summoner-info .ranked-section .ranked-stats p{
+#summoner .section .summoner-info .ranked-element .ranked-stats p{
     margin:0;
 }
 #summoner .match-history{
     position: absolute;
     display: flex;
     flex-direction: column;
+    align-items: center;
     left: 500px;
     right:0;
     width: 1000px;
-}
-#summoner .match-history .match{
-    display: flex;
-    flex-direction: row;
-    margin: 10px 20px;
-    padding: 25px;
-    border: 1px solid #C8AA6E;
-    min-width: 600px;
-    border-radius: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    align-items: center;
-}
-#summoner .match-history .win{
-    background-color: #7DAFC5;
-}
-#summoner .match-history .loss{
-    background-color: #C57D7D;
-}
-#summoner .match-history .match .game-status{
-    width: 100px;
-    margin: 0 20px;
-    gap: 10px;
-    font-size: 15px;
-}
-#summoner .match-history .match .player-infos{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 20px;
-    gap: 20px;
-}
-#summoner .match-history .match .player-champion-items{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0 20px;
-    gap: 10px;
-}
-#summoner .match-history .match .player-champion-items .champion-summoner{
-    width: 100px;
-    height: 100px;
-    align-items: center;
-    margin: 0;
-}
-#summoner .match-history .match .player-champion-items .champion-summoner img{
-    width: 90%;
-    height: auto;
-    border-radius: 50%;
-    border: 5px solid #53472f;
-}
-#summoner .match-history .match .player-champion-items .champion-summoner figcaption{
-    position: relative;
-    background-color: #53472f;
-    width:30px;
-    padding: 5px 0px;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 15px;
-    color: #E0C68A;
-    bottom:25px;
-    left: 75px;
-}
-#summoner .match-history .match .player-champion-items .items{
-    display: grid;
-    grid-template-columns: repeat(3, auto) 1fr;
-    grid-template-rows: repeat(2, 40px);
-    gap: 5px;
-    height: 85px;
-    margin: 0;
-}
-#summoner .match-history .match .player-champion-items .items .item{
-    width: 40px;
-    height: 40px;
-    border-radius: 30%;
-}
-#summoner .match-history .match .player-champion-items .items .empty{
-    background-color: rgba(224, 198, 138, 0.3);
-    filter: blur(1px);
-}
-#summoner .match-history .match .player-champion-items .items .last-item{
-    position: relative;
-    border-radius: 50%;
-    grid-column: 4;
-    grid-row: 1 / span 2;
-    bottom: -20px;
-}
-#summoner .match-history .match .player-stats{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0 20px;
-    gap: 10px;
-    font-size: 12px;
-}
-#summoner .match-history .match .player-stats .kda {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-    gap: 10px;
-}
-#summoner .match-history .match .player-stats .kda .kill_death_assists{
-    font-size: 14px;
-    margin: 0;
-}
-#summoner .match-history .match .player-stats .kda .ratio{
-    font-size: 12px;
-    margin: 0;
-}
-#summoner .match-history .match .player-stats .damage{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    width: 150px;
-}
-#summoner .match-history .match .player-stats .damage .damage-section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-}
-#summoner .match-history .match .player-stats .damage p{
-    font-size: 12px;
-    margin: 0;
-    width:50px;
-}
-#summoner .match-history .match .player-stats .damage .progress {
-    width: 100%;
-    height: 8px;
-    background-color:rgba(224, 198, 138, 0.3);
-}
-#summoner .match-history .match .player-stats .damage .progress .fill {
-    height: 100%;
-    background-color: #C8AA6E;
-}
-#summoner .match-history .match .player-stats .cs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-}
-#summoner .match-history .match .player-stats .cs p{
-    margin: 0;
-}
-#summoner .match-history .match .player-stats .vision {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-}
-#summoner .match-history .match .player-stats .vision p{
-    margin: 0;
-}
-#summoner .match-history .match .team-composition{
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-    gap: 10px;
-    width: 300px;
-}
-#summoner .match-history .match .team-composition .team {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-#summoner .match-history .match .team-composition .team .player{
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin: 0;
-}
-#summoner .match-history .match .team-composition .team .player img{
-    width: 30px;
-    height: auto;
-    border-radius: 50%;
-    border: 2px solid #53472f;
-}
-#summoner .match-history .match .team-composition .team .player figcaption{
-    margin-top: 10px;
-}
-#summoner .match-history .load-more {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 20px 0;
-}
-#summoner .match-history .load-more span{
-    width: 100px;
-    background-color: #E0C68A;
-    cursor: pointer;
-}
-#summoner .match-history .load-more span:hover{
-    background-color: #C8AA6E;
-    transition: background-color 0.5s;
-}
-#summoner .match-history .loading {
-    animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5; /* Fades out to 50% opacity */
-    }
-    100% {
-        opacity: 1; /* Fades back to full opacity */
-    }
 }

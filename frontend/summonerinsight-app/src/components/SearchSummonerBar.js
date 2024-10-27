@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import {regions} from '../constants.js';
 import { fetchData } from '../fetchData.js';
 import { useNavigate } from 'react-router-dom';
+import { useGlobal } from '../Context.js';
 import '../assets/css/components/SearchSummonerBar.css';
 
-import LoadButton, {LoadButon} from '../reusable/LoadButton.js';
+import LoadButton from '../reusable/LoadButton.js';
 
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -57,7 +58,7 @@ export default function SearchSummonerBar() {
     const [gameName, setGameName] = React.useState('');
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
-    const [isLoading,setIsLoading] = React.useState(false);
+    const { isLoading, setIsLoading } = useGlobal();
     const navigate = useNavigate();
 
     const HandleGameNameandGameTag=(event)=>{
@@ -75,10 +76,9 @@ export default function SearchSummonerBar() {
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
             Region: regionRoute.toLowerCase()
         };
-        setIsLoading(true);
         try {
-            const summonerInfo = await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings);
-            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=5`, settings);
+            const summonerInfo = await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings, setIsLoading);
+            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=5`, settings, setIsLoading);
             if (summonerInfo && matchhistory) {
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
@@ -92,9 +92,7 @@ export default function SearchSummonerBar() {
             }
         } catch (error) {
             console.error('Error fetching summoner data:', error);
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
     return(
         <div id='search_summoner_bar'>

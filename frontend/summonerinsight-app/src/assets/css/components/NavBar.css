@@ -1,13 +1,13 @@
 #navbar{
     position: fixed;
     width: 100%;
-    display: flex; /* Use flexbox for navbar */
-    justify-content: center; /* Center items horizontally */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for visibility */
+    display: flex;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     height:auto;
     background-color: #FAEBD7;
     margin-top: -55px;
+    justify-content: center;
 }
 #navbar .content a{
     text-decoration: none;
