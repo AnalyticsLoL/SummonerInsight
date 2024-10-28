@@ -1,5 +1,8 @@
 import React from "react";
 import { useParams, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import "../assets/css/pages/Summoner.css";
 import { useGlobal } from "../Context.js";
@@ -11,28 +14,34 @@ import LoadButton from "../reusable/LoadButton";
 import Match from "../components/Match";
 
 function RankedSection({rankedStats, emblems}){
+    const [isClicked, setIsClicked] = React.useState(false);
+
     emblems=ranks.find(rank => rank.tier.toUpperCase() === rankedStats.tier);
     return(
         <div className="ranked-element">
-            <div className="ranked-header">
+            <div className="ranked-header" onClick={()=> setIsClicked(!isClicked)}>
                 <span>{rankedStats.queueName==="RANKED_SOLO_5x5"?"Ranked Solo/Duo":"Ranked Flex"}</span>
-                <hr />
+                <FontAwesomeIcon icon={isClicked?faChevronUp : faChevronDown} />
             </div>
-            <div className="ranked-info">
-                <figure className="rank-icon">
-                    <div className="image-container">
-                        <img src={emblems.rankEmbleme} alt="Ranked Icon" />
+            <hr/>
+            {isClicked && (
+                <div className="ranked-info">
+                    
+                    <figure className="rank-icon">
+                        <div className="image-container">
+                            <img src={emblems.rankEmbleme} alt="Ranked Icon" />
+                        </div>
+                        <figcaption>
+                            <p>{emblems.tier} {rankedStats.rank}</p>
+                            <p>{rankedStats.leaguePoints} LP</p>
+                        </figcaption>
+                    </figure>
+                    <div className="ranked-stats">
+                        <p>{rankedStats.wins}W {rankedStats.losses}L</p>
+                        <p>Winrate: {((rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100).toFixed(2)}%</p>
                     </div>
-                    <figcaption>
-                        <p>{emblems.tier} {rankedStats.rank}</p>
-                        <p>{rankedStats.leaguePoints} LP</p>
-                    </figcaption>
-                </figure>
-                <div className="ranked-stats">
-                    <p>{rankedStats.wins}W {rankedStats.losses}L</p>
-                    <p>Winrate: {((rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100).toFixed(2)}%</p>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

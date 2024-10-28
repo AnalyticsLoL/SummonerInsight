@@ -6,7 +6,6 @@
 }
 #home .section .home-intro{
     height: 850px;
-    min-width: 800px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,6 +17,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     margin: 150px 0;
+    padding: 0px 40px;
 }
 #home .splash_art{
     position: absolute;
@@ -34,6 +34,9 @@
     object-fit: none;
     filter: brightness(0.8);
 }
+#home .home-intro {
+    align-items: center;
+}
 #home .home-intro h1{
     color: #E0C68A;
     font-size: 40px;
@@ -47,7 +50,7 @@
     flex-direction: column;
     justify-content: center;
 }
-#home .section .home-about-us h2, p{
+#home .section .home-about-us h2, #home .section .home-about-us h2 p{
     text-align: center;
 }
 #home .section .home-about-us .content {

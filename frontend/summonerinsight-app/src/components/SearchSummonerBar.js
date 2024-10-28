@@ -3,12 +3,18 @@ import {regions} from '../constants.js';
 import { fetchData } from '../fetchData.js';
 import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../Context.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 import '../assets/css/components/SearchSummonerBar.css';
 
 import LoadButton from '../reusable/LoadButton.js';
 
 function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
+    const dropdownRef = React.useRef(null);
 
     const handleDropdownClick = (region) => {
         setDropdownOpen(false);
@@ -23,8 +29,9 @@ function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute
                 setDropdownOpen(false);
             }
         };
+        
         const handleClickOutside = (event) => {
-            if (event.target.className !== 'dropdown_button' && event.target.className !== 'open_dropdown') {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdownOpen(false);
             }
         };
@@ -36,15 +43,19 @@ function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute
         };
     },[]);
 
-
-    return(
-        <div className='region_dropdown'>
-            <span>Region:</span>
-            <button className='open_dropdown' onClick={() => setDropdownOpen(!dropdownOpen)}>{regionName}</button>
+    return (
+        <div ref={dropdownRef} id='region_dropdown' onClick={() => setDropdownOpen(!dropdownOpen)} style={{height: dropdownOpen? "300px":""}}>
+            <div className='dropdown-header'>
+                <span>Region:</span>
+                <FontAwesomeIcon icon={dropdownOpen?faChevronUp : faChevronDown} />
+                <p className='open_dropdown'>{regionName}</p>
+            </div>
             {dropdownOpen && (
                 <div className="dropdown-menu">
                     {regions.map((region, index) => (
-                        <button key={index} className='dropdown_button' onClick={() => handleDropdownClick(region)}>{region.regionName}</button>
+                        <div key={index} className='dropdown_item' onClick={() => handleDropdownClick(region)}>
+                            <p>{region.regionName}</p>
+                        </div>
                     ))}
                 </div>
             )}
@@ -59,6 +70,7 @@ export default function SearchSummonerBar() {
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
     const { isLoading, setIsLoading } = useGlobal();
+    const [message, setMessage] = React.useState('');
     const navigate = useNavigate();
 
     const HandleGameNameandGameTag=(event)=>{
@@ -91,30 +103,41 @@ export default function SearchSummonerBar() {
                 );
             }
         } catch (error) {
-            console.error('Error fetching summoner data:', error);
+            setMessage('Error: Please enter your tag numbers using the format #0000 or select the right region.');
+            setTimeout(() => setMessage(''), 8000);
         } 
     };
     return(
         <div id='search_summoner_bar'>
-            <RegionDropdown setRegionTag={setRegionTag} regionName={regionName} setRegionName={setRegionName} setRegionRoute={setRegionRoute}/>
-            <div className='gameName_input'>
-                <span>Game Name:</span>
-                <textarea 
-                    type="text" 
-                    onChange={(event)=> HandleGameNameandGameTag(event)} 
-                    placeholder={`Game Name + #${regionTag}`}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    spellCheck="false"
-                    onKeyDown={(event)=>{
-                        if (event.key === 'Enter') {
-                            event.preventDefault();
-                            fetchSummonerData();
-                        }
-                    }} 
-                />
+            <div className='search_summoner_bar_content'>
+                <RegionDropdown setRegionTag={setRegionTag} regionName={regionName} setRegionName={setRegionName} setRegionRoute={setRegionRoute}/>
+                <div className='vertical_line'/>
+                <div className='gameName_input'>
+                    <span>Game Name:</span>
+                    <textarea 
+                        type="text" 
+                        onChange={(event)=> HandleGameNameandGameTag(event)} 
+                        placeholder={`Game Name + #${regionTag}`}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck="false"
+                        onKeyDown={(event)=>{
+                            if (event.key === 'Enter') {
+                                event.preventDefault();
+                                fetchSummonerData();
+                            }
+                        }} 
+                    />
+                </div>
+                <LoadButton onClick={fetchSummonerData} text='Search'/>
             </div>
-            <LoadButton isLoading={isLoading} onClick={fetchSummonerData} text='Search'/>
+            {message && (
+                <div className="message">
+                    <div className="message-content">
+                        <p><FontAwesomeIcon icon={faInfoCircle} /> {message}</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

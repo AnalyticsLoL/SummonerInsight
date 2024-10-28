@@ -16,11 +16,7 @@ export const fetchData = async (url, settings, setIsLoading) => {
     });
     setIsLoading(false);
     if (!response.ok) {
-        if (settings.TagLine.toLowerCase()===settings.RegionTag) {
-            console.log('You must enter your tags using the format #0000 or select the right region')
-        } else {
-            console.error(`Error: ${response.statusText}`);
-        }
+        throw new Error(`Error: ${response.statusText}`);
     } else {
         return await response.json();
     }

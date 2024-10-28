@@ -73,7 +73,7 @@ function PlayerInfos({playerStats, match}){
             <div className="player-stats">
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
-                    <p className="ratio">{((playerStats.kda.kills+playerStats.kda.assists)/playerStats.kda.deaths).toFixed(2)}:1 KDA</p>
+                    <p className="ratio">{playerStats.kda.deaths > 0 ? ((playerStats.kda.kills+playerStats.kda.assists)/playerStats.kda.deaths).toFixed(2)+":1 KDA": "Unkillable"}</p>
                 </div>
                 <div className="damage">
                     <div className="damage-section">
