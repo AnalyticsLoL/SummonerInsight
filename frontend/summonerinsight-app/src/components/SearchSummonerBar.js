@@ -103,8 +103,8 @@ export default function SearchSummonerBar() {
                 );
             }
         } catch (error) {
-            setMessage('Error: Please enter your tag numbers using the format #0000 or select the right region.');
-            setTimeout(() => setMessage(''), 8000);
+            setMessage('Please enter your tag numbers using the format #0000 or select the right region.');
+            setTimeout(() => setMessage(''), 7800); // Reset the message a bit shorter than the animation to avoid rerendering visual error
         } 
     };
     return(
