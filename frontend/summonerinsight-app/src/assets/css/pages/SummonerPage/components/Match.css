@@ -75,13 +75,14 @@
     height: 85px;
     margin: 0;
 }
-.match .player-champion-items .items .item{
+.match .player-champion-items .items .item img{
     width: 40px;
     height: 40px;
     border-radius: 30%;
 }
 .match .player-champion-items .items .empty{
     background-color: rgba(224, 198, 138, 0.3);
+    border-radius: 30%;
     filter: blur(1px);
 }
 .match .player-champion-items .items .last-item{

@@ -20,6 +20,9 @@ import championMastery8 from "./assets/img/mastery/8.png";
 import championMastery9 from "./assets/img/mastery/9.png";
 import championMastery10 from "./assets/img/mastery/10.png";
 
+export const league_version = "14.21.1";
+export const api_url = "http://127.0.0.1:5151/api/RiotData";
+
 // All the regions of league of legends
 export const regions = [
     {regionName: "North America", regionTag: "NA1", regionRoute: "americas"},
@@ -100,3 +103,21 @@ export const championMasteries = [
     {masteryId: 9, masteryIcon: championMastery9},
     {masteryId: 10, masteryIcon: championMastery10}
 ]
+
+// Path to get item icons
+export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
+
+// Path to get champion splash arts
+export const championSplashPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash"; 
+
+// Path to get champion loading arts
+export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading";
+
+// Path to get champion icon
+export const championIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/champion`;
+
+// Path to get champion passives icons
+export const championPassivePath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/passive`;
+
+// Path to get champion spells icons
+export const championSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/spell`;

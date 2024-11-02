@@ -29,9 +29,9 @@ namespace backend
             _httpClient = httpClient;
             _settings = settings;
         }
-        public void loadJsonData(string path)
+        public void LoadChampionData()
         {
-            var json = File.ReadAllText(path);
+            var json = File.ReadAllText("data/champion.json");
             var doc = JsonNode.Parse(json) as JsonObject ?? throw new InvalidOperationException("Failed to parse JSON.");
             var data = doc["data"] as JsonObject ?? throw new InvalidOperationException("Data not found in JSON.");
 
@@ -51,6 +51,21 @@ namespace backend
                 }
             }
         }
+        private static Dictionary<string, JsonNode> _itemCache = new Dictionary<string, JsonNode>();
+        public void LoadItemData()
+        {
+            var json = File.ReadAllText("data/item.json");
+            var doc = JsonNode.Parse(json) as JsonObject ?? throw new InvalidOperationException("Failed to parse JSON.");
+            var data = doc["data"] as JsonObject ?? throw new InvalidOperationException("Data not found in JSON.");
+
+            _itemCache.Clear();
+            foreach (var property in data)
+            {
+                _itemCache[property.Key] = property.Value;
+                _itemCache[property.Key]["id"] = property.Key;
+            }
+        }
+
         public void UpdateSettings(RiotSettings settings)
         {
             _settings = settings;
@@ -184,6 +199,14 @@ namespace backend
             {
                 throw new ArgumentNullException(nameof(result));
             }
+            if (_championCache.Count == 0)
+            {
+                LoadChampionData();
+            }
+            if (_itemCache.Count == 0)
+            {
+                LoadItemData();
+            }
             var matchData = new JsonObject();
 
             var metadata = new JsonObject();
@@ -196,32 +219,17 @@ namespace backend
             matchData["metadata"] = metadata;
 
             var participants = new JsonArray();
-            var participantsArray = result.AsObject()?["info"]?["participants"]?.AsArray();
-            if (participantsArray == null)
-            {
-                throw new InvalidOperationException("Participants data not found in the response.");
-            }
+            var participantsArray = (result.AsObject()?["info"]?["participants"]?.AsArray()) ?? throw new InvalidOperationException("Participants data not found in the response.");
             foreach (var participant in participantsArray)
             {
                 var participantData = new JsonObject();
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
-                participantData["championName"] = participant.AsObject()?["championName"]?.DeepClone();
-                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
-                // Some champion names are not correctly formatted for the image icons url
-                var erroneousChampionUrls = new[] { "FiddleSticks" };
-                var championName = participant.AsObject()?["championName"]?.ToString();
-                if (championName != null && erroneousChampionUrls.Contains(championName))
-                {
-                    participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/" + textInfo.ToTitleCase(championName) + ".png";
-                }
-                else
-                {
-                    participantData["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/" + championName + ".png";
-                };
                 participantData["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone();
                 participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
-                participantData["championId"] = participant.AsObject()?["championId"]?.DeepClone();
+                if (!string.IsNullOrEmpty(participant["championId"]?.ToString()) && _championCache.TryGetValue(participant["championId"]?.ToString(), out var champion))
+                {
+                    participantData["champion"]= champion?.DeepClone();
+                }
                 participantData["tagLine"] = participant.AsObject()?["riotIdTagline"]?.DeepClone();
                 participantData["puuid"] = participant.AsObject()?["puuid"]?.DeepClone();
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
@@ -270,10 +278,11 @@ namespace backend
                 var objects = new JsonArray();
                 for(int i=0;i<7;i++)
                 {   
-                    var item = new JsonObject();
-                    item["itemId"] = participant.AsObject()?["item"+i]?.DeepClone();
-                    item["itemIcon"] = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/item/"+item["itemId"]+".png";
-                    objects.Add(item);
+                    var itemKey = participant.AsObject()?["item"+i]?.ToString();
+                    if (!string.IsNullOrEmpty(itemKey) && _itemCache.TryGetValue(itemKey, out var item))
+                    {
+                        objects.Add(item?.DeepClone());
+                    }
                 }
                 participantData["items"] = objects;
 
@@ -337,7 +346,7 @@ namespace backend
                 {"api_key", apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{_settings.Puuid}/top",queries);
-            loadJsonData("data/champion.json");
+            LoadChampionData();
             var championMastery = new JsonArray();
             foreach(var mastery in data.AsArray())
             {

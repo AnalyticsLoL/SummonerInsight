@@ -8,6 +8,8 @@ import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
 import { ranks, championMasteries } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
+import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
+import { championIconPath } from "../../../constants";
 
 function ProfileSection({summonerProfile}){
     return (
@@ -106,52 +108,6 @@ function MasterySection({championMastery}){
     );
 }
 
-const countTotalWins = (matches) => {
-    matches = matches.filter(match => match.win !== false);
-    return matches.length;
-}
-
-const getPlayerStats = (matches, gameName) => {
-    return matches.map(match => {
-        const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
-        return {
-            champion: {
-                name: playerStats.championName,
-                icon : playerStats.championIcon
-            },
-            win: playerStats.win,
-            kda: playerStats.kda.kda
-        };
-    });
-}
-
-const getMeanKDA = (playerStats) => {
-    const totalKda = playerStats.reduce((acc, match) => {
-        const { name, icon } = match.champion;
-        const { win, kda } = match;
-
-        if (!acc[name]) {
-            acc[name] = {
-                champion: { name, icon },
-                gamesPlayed: 0,
-                wins: 0,
-                totalKda: 0
-            };
-        }
-        acc[name].gamesPlayed += 1;
-        acc[name].wins += win ? 1 : 0;
-        acc[name].totalKda += kda;
-
-        return acc;
-    }, {});
-
-    console.log(totalKda);
-    return Object.values(totalKda).map(champion => ({
-        ... champion
-        ,meanKda: champion.totalKda / champion.gamesPlayed
-    }));
-}
-
 function SummonerStats({matchHistory}){
     const { gameName } = useParams();
     const playerStats = getPlayerStats(matchHistory, gameName);
@@ -185,7 +141,7 @@ function SummonerStats({matchHistory}){
                             console.log(champion);
                             return (
                                 <div key={index} className="champion-kda">
-                                    <img src={champion.champion.icon}/>
+                                    <img src={`${championIconPath}/${champion.championName}.png`}/>
                                     <div>
                                         <p className={`${champion.wins/champion.gamesPlayed>0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
                                         <p>({champion.wins}W/{champion.gamesPlayed-champion.wins}L)</p>

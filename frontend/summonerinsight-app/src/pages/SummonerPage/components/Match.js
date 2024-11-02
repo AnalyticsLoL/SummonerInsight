@@ -2,8 +2,9 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
-import {gameTypes} from "../../../constants";
+import {gameTypes, itemIconPath} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
+import { championIconPath } from "../../../constants";
 
 function GameStatus({playerStats, match}){
     return (
@@ -32,18 +33,20 @@ function PlayerInfos({playerStats, match}){
         <div className="player-infos">
             <div className="player-champion-items">
                 <figure className="champion-summoner">
-                    <img src={playerStats.championIcon} alt="Champion Icon" />
+                    <img src={`${championIconPath}/${playerStats.champion.image.full}`} alt="Champion Icon" />
                     <figcaption>{playerStats.champLevel}</figcaption>
                 </figure>
                 <figure className="items">
                     {playerStats.items.map((item, index) => 
-                    item.itemId !== 0 ? (
-                        <img key={index} className={`item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`} src={item.itemIcon} alt="Item Icon" />
-                    )
-                    : (
-                        <div key={index} className={`empty item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`}/>
-                    )
-                    )}
+                    (
+                        <div key={index} className={`item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`}>
+                            <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
+                        </div>
+                    ))}
+                    {playerStats.items.length < 7 &&
+                    Array.from({ length: 7 - playerStats.items.length }).map((_, i) => (
+                        <div key={i} className={`empty item ${i === 6 ? 'last-item' : ''}`}/>
+                    ))}
                 </figure>
             </div>
             <div className="player-stats">
@@ -89,7 +92,7 @@ function Team({match, id, gameName}){
                 .filter(participant => participant.teamId === id)
                 .map((participant, index) => (
                     <figure key={index} className="player">
-                        <img src={participant.championIcon} alt="Champion Icon" />
+                        <img src={`${championIconPath}/${participant.champion.image.full}`} alt="Champion Icon" />
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                     </figure>
                 ))}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {regions} from '../constants.js';
+import {api_url, regions} from '../constants.js';
 import { fetchData } from '../fetchData.js';
 import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../Context.js';
@@ -89,8 +89,8 @@ export default function SearchSummonerBar() {
             Region: regionRoute.toLowerCase()
         };
         try {
-            const summonerInfo = await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings, setIsLoading);
-            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
+            const summonerInfo = await fetchData(`${api_url}/summonerInfo`, settings, setIsLoading);
+            const matchhistory = await fetchData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
             if (summonerInfo && matchhistory) {
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
