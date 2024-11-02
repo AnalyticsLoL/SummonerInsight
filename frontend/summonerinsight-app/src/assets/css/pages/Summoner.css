@@ -14,11 +14,14 @@
     border:1px solid #C8AA6E;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     height: auto;
+    max-height: 80vh;
+    overflow-y: scroll;
+    gap: 20px;
 }
 #summoner .section .summoner-info .profile-icon{
     width: 150px;
     align-items: center;
-    margin-bottom: 10px;
+    margin: 0;
 }
 #summoner .section .summoner-info .profile-icon img{
     width: 100%;
@@ -36,10 +39,9 @@
     font-size: 15px;
     margin: -15px auto 0px;
     color: #4A3C2C;
-    z-index: 5;
+    z-index: 2;
 }
 #summoner .section .summoner-info span{
-    margin: 0 auto 10px;
     font-size: 18px;
     display: flex;
     flex-direction: row;
@@ -50,28 +52,39 @@
     flex-direction: column;
     gap: 10px;
     align-items: center;
-    margin: 20px 0px;
-    width: 350px;
 }
 #summoner .section .summoner-info .ranked-element {
-    margin: 0px 30px;
     border: 1px solid #C8AA6E;
     border-radius: 30px;
     background-color: #e4c68b;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#summoner .section .summoner-info .ranked-element hr{
+    width: 100%;
+    color: #C8AA6E;
+    margin: 0;
+}
+#summoner .section .summoner-info .ranked-element .ranked-info {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease;
+}
+#summoner .section .summoner-info .ranked-element.is-expanded .ranked-info {
+    max-height: 500px;
 }
 #summoner .section .summoner-info .ranked-element .ranked-header {
     display: flex;
     flex-direction: row;
     cursor: pointer;
-}
-#summoner .section .summoner-info .ranked-element hr{
-    color: #C8AA6E;
+    justify-content: space-between;
 }
 #summoner .section .summoner-info .ranked-element .ranked-info{
-    margin-top: -30px;
+    margin-top: -11px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -81,7 +94,10 @@
     width: 150px;
     height: auto;
     overflow: hidden;
-    margin: 15px 20px
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #summoner .ranked-element .rank-icon .image-container img {
     width: 100%;
@@ -98,6 +114,73 @@
 #summoner .section .summoner-info .ranked-element .ranked-stats p{
     margin:0;
 }
+#summoner .section .summoner-info .champion-masteries{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery {
+    position: relative;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #e4c68b;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    border: 2px solid #C8AA6E;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery figure .image-container{
+    width: 75px;
+    height: auto;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery figure .mastery-icon{
+    width: 50px;
+    height: auto;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery figure img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery .mastery-tooltip{
+    position: absolute;
+    bottom: 105%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #575757;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery .mastery-tooltip p{
+    color: #ffffff;
+    margin: 0;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery:hover .mastery-tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner .section .summoner-info .champion-masteries .champion-mastery .mastery-tooltip .mastery-grades{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
 #summoner .match-history{
     position: absolute;
     display: flex;

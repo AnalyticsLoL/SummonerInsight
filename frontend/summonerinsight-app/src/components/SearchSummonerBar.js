@@ -83,7 +83,7 @@ export default function SearchSummonerBar() {
         if(gameName === '') return;
         if (isLoading) return;
         const settings = {
-            GameName: gameName,
+            GameName: gameName.toLowerCase().replace(/\s/g, ''),
             RegionTag: regionTag.toLowerCase(),
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase(),
             Region: regionRoute.toLowerCase()

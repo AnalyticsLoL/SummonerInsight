@@ -7,7 +7,8 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import "../assets/css/pages/Summoner.css";
 import { useGlobal } from "../Context.js";
 
-import {ranks} from "../constants";
+import { ranks, championMasteries } from "../constants";
+import { getTimeDifference } from "../reusable/UnixTimeConvert.js";
 import {fetchData} from "../fetchData";
 
 import LoadButton from "../reusable/LoadButton";
@@ -18,30 +19,63 @@ function RankedSection({rankedStats, emblems}){
 
     emblems=ranks.find(rank => rank.tier.toUpperCase() === rankedStats.tier);
     return(
-        <div className="ranked-element">
+        <div className={`ranked-element ${isClicked ? "is-expanded" : ""}`}>
             <div className="ranked-header" onClick={()=> setIsClicked(!isClicked)}>
                 <span>{rankedStats.queueName==="RANKED_SOLO_5x5"?"Ranked Solo/Duo":"Ranked Flex"}</span>
                 <FontAwesomeIcon icon={isClicked?faChevronUp : faChevronDown} />
             </div>
             <hr/>
-            {isClicked && (
-                <div className="ranked-info">
-                    
-                    <figure className="rank-icon">
+            <div className="ranked-info">
+                <figure className="rank-icon">
+                    <div className="image-container">
+                        <img src={emblems.rankEmbleme} alt="Ranked Icon" />
+                    </div>
+                    <figcaption>
+                        <p>{emblems.tier} {rankedStats.rank}</p>
+                        <p>{rankedStats.leaguePoints} LP</p>
+                    </figcaption>
+                </figure>
+                <div className="ranked-stats">
+                    <p>{rankedStats.wins}W {rankedStats.losses}L</p>
+                    <p>Winrate: {((rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100).toFixed(2)}%</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function MasterySection({championMastery}){
+    return(
+        <div className="champion-masteries">
+            {championMastery.map((mastery, index) => (
+                <div key={index} className="champion-mastery">
+                    <figure>
                         <div className="image-container">
-                            <img src={emblems.rankEmbleme} alt="Ranked Icon" />
+                            <img src={mastery.championIcon} alt="Champion Icon" />
                         </div>
-                        <figcaption>
-                            <p>{emblems.tier} {rankedStats.rank}</p>
-                            <p>{rankedStats.leaguePoints} LP</p>
-                        </figcaption>
+                        <div className="mastery-icon">
+                            {mastery.championLevel <= 10 ? (
+                                <img src={championMasteries.find(championMastery => championMastery.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
+                            )
+                            :(
+                                <img src={championMasteries.find(championMastery => championMastery.masteryId === 10).masteryIcon} alt="Mastery Icon" />
+                            )}
+                        </div>
                     </figure>
-                    <div className="ranked-stats">
-                        <p>{rankedStats.wins}W {rankedStats.losses}L</p>
-                        <p>Winrate: {((rankedStats.wins / (rankedStats.wins + rankedStats.losses)) * 100).toFixed(2)}%</p>
+                    <div className="mastery-tooltip">
+                        <p>{mastery.championName}</p>
+                        <p>Mastery level {mastery.championLevel}</p>
+                        <p>{mastery.championPoints.toLocaleString()} Points</p>
+                        <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
+                        <div className="mastery-grades">
+                            <p>Milestone:</p>
+                            {mastery.milestoneGrades.map((grade, index) => (
+                                <p key={index}>{grade}</p>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            )}
+            ))}
         </div>
     );
 }
@@ -68,6 +102,7 @@ function SummonerInfo({summonerInfo}){
                     ))
                 }
             </div>
+            <MasterySection championMastery={summonerInfo.championMastery}/> 
         </div>
     );
 }

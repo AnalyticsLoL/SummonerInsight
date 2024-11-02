@@ -3,40 +3,16 @@ import { useParams } from 'react-router-dom';
 import "../assets/css/components/Match.css";
 
 import {gameTypes} from "../constants";
+import {getTimeDifference, getDuration} from "../reusable/UnixTimeConvert";
 
 function GameStatus({playerStats, match}){
-    const getGameDuration = (gameDuration) => {
-        const minutes = Math.floor(gameDuration / 60);
-        const seconds = gameDuration % 60;
-        return `${minutes}m${seconds}s`;
-    }
-    const getTimeDifference = (gameStart) => {
-        const differenceMilliseconds = Date.now() - gameStart;
-        const differenceMinutes = Math.floor(differenceMilliseconds / 60000);
-        // Define time units and their thresholds
-        const timeUnits = [
-            { unit: 'year', value: 12 * 30 * 24 * 60 },
-            { unit: 'month', value: 30 * 24 * 60 },
-            { unit: 'week', value: 7 * 24 * 60 },
-            { unit: 'day', value: 24 * 60 },
-            { unit: 'hour', value: 60 },
-            { unit: 'minute', value: 1 }
-        ];
-        for (const { unit, value } of timeUnits) {
-            if (differenceMinutes >= value) {
-                const count = Math.floor(differenceMinutes / value);
-                return `${count} ${unit}${count !== 1 ? 's' : ''} ago`;
-            }
-        }
-        return 'just now';
-    };
     return (
         <div className="game-status">
             <p>{gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId)?gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId).description:match.metadata.gameTypeId}</p>
             <p>{getTimeDifference(match.metadata.gameStart)}</p>
             <hr/>
             <p>{playerStats.win ? 'Victory' : 'Defeat'}</p>
-            <p>{getGameDuration(match.metadata.gameDuration)}</p>
+            <p>{getDuration(match.metadata.gameDuration)}</p>
         </div>
     );
 }
@@ -114,7 +90,7 @@ function Team({match, id, gameName}){
                 .map((participant, index) => (
                     <figure key={index} className="player">
                         <img src={participant.championIcon} alt="Champion Icon" />
-                        <figcaption style={{fontWeight: participant.gameName===gameName?'bold':null}}>{participant.gameName}</figcaption>
+                        <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                     </figure>
                 ))}
         </div>
@@ -123,7 +99,7 @@ function Team({match, id, gameName}){
 
 export default function Match({match}){
     const { gameName } = useParams();
-    const playerStats = match.participants.find(participant => participant.gameName === gameName);
+    const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
     return(
         <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
             <GameStatus playerStats={playerStats} match={match}/>

@@ -8,26 +8,40 @@ import masterImage from "./assets/img/ranks/Master.png";
 import grandmasterImage from "./assets/img/ranks/Grandmaster.png";
 import challengerImage from "./assets/img/ranks/Challenger.png";
 
+import championMastery0 from "./assets/img/mastery/0.png";
+import championMastery1 from "./assets/img/mastery/1.png";
+import championMastery2 from "./assets/img/mastery/2.png";
+import championMastery3 from "./assets/img/mastery/3.png";
+import championMastery4 from "./assets/img/mastery/4.png";
+import championMastery5 from "./assets/img/mastery/5.png";
+import championMastery6 from "./assets/img/mastery/6.png";
+import championMastery7 from "./assets/img/mastery/7.png";
+import championMastery8 from "./assets/img/mastery/8.png";
+import championMastery9 from "./assets/img/mastery/9.png";
+import championMastery10 from "./assets/img/mastery/10.png";
+
+// All the regions of league of legends
 export const regions = [
-    {regionName: "North America", regionTag: "NA1", regionRoute: "Americas"},
-    {regionName: "Middle East", regionTag: "ME1", regionRoute: "Asia"}, 
-    {regionName: "Europe West", regionTag: "EUW1", regionRoute: "Europe"}, 
-    {regionName: "Europe Nordic & East", regionTag: "EUN1", regionRoute: "Europe"}, 
-    {regionName: "Oceania", regionTag: "OC1", regionRoute: "Asia"}, 
-    {regionName: "Korea", regionTag: "KR1", regionRoute: "Asia"}, 
-    {regionName: "Japan", regionTag: "JP1", regionRoute: "Asia"}, 
-    {regionName: "Brazil", regionTag: "BR1", regionRoute: "Americas"}, 
-    {regionName: "LAS", regionTag: "LA2", regionRoute: "Americas"}, 
-    {regionName: "LAN", regionTag: "LA1", regionRoute: "Americas"}, 
-    {regionName: "Russia", regionTag: "RU", regionRoute: "Europe"}, 
-    {regionName: "Turkey", regionTag: "TR1", regionRoute: "Asia"}, 
-    {regionName: "Singapore", regionTag: "SG2", regionRoute: "Asia"}, 
-    {regionName: "Philipines", regionTag: "PH2", regionRoute: "Asia"}, 
-    {regionName: "Taiwan", regionTag: "TW2", regionRoute: "Asia"}, 
-    {regionName: "Vietnam", regionTag: "VN2", regionRoute: "Asia"}, 
-    {regionName: "Thailand", regionTag: "TH2", regionRoute: "Asia"}
+    {regionName: "North America", regionTag: "NA1", regionRoute: "americas"},
+    {regionName: "Middle East", regionTag: "ME1", regionRoute: "asia"}, 
+    {regionName: "Europe West", regionTag: "EUW1", regionRoute: "europe"}, 
+    {regionName: "Europe Nordic & East", regionTag: "EUN1", regionRoute: "europe"}, 
+    {regionName: "Oceania", regionTag: "OC1", regionRoute: "asia"}, 
+    {regionName: "Korea", regionTag: "KR1", regionRoute: "asia"}, 
+    {regionName: "Japan", regionTag: "JP1", regionRoute: "asia"}, 
+    {regionName: "Brazil", regionTag: "BR1", regionRoute: "americas"}, 
+    {regionName: "LAS", regionTag: "LA2", regionRoute: "americas"}, 
+    {regionName: "LAN", regionTag: "LA1", regionRoute: "americas"}, 
+    {regionName: "Russia", regionTag: "RU", regionRoute: "europe"}, 
+    {regionName: "Turkey", regionTag: "TR1", regionRoute: "asia"}, 
+    {regionName: "Singapore", regionTag: "SG2", regionRoute: "asia"}, 
+    {regionName: "Philipines", regionTag: "PH2", regionRoute: "asia"}, 
+    {regionName: "Taiwan", regionTag: "TW2", regionRoute: "asia"}, 
+    {regionName: "Vietnam", regionTag: "VN2", regionRoute: "asia"}, 
+    {regionName: "Thailand", regionTag: "TH2", regionRoute: "asia"}
 ];
 
+// To link the ranks to their respective emblems
 export const ranks = [
     {tier: "Iron", rankEmbleme: ironImage},
     {tier: "Bronze", rankEmbleme: bronzeImage},
@@ -40,6 +54,7 @@ export const ranks = [
     {tier: "Challenger", rankEmbleme: challengerImage},
 ];
 
+// To translate generic game modes names to their respective names (gameModes are very simplified)
 export const gameModes = [
     {gameMode: "CLASSIC", gameModeName: "Summoner's Rift"},
     {gameMode: "ARAM", gameModeName: "ARAM"},
@@ -50,6 +65,7 @@ export const gameModes = [
     {gameMode: "ULTBOOK", gameModeName: "Ultimate Spellbook"},
 ]
 
+// To link the queueTypes to their respective type of game and map (gameTypes are a lot more detailed)
 export const gameTypes = [
     {queueId: 0, map: "Custom games", description: "Custom Game"},
     {queueId: 76, map: "Summoner's Rift", description: "Ultra Rapid Fire"},
@@ -69,3 +85,18 @@ export const gameTypes = [
     {queueId: 1020, map: "Summoner's Rift", description: "One for All"},
     {queueId: 1400, map: "Summoner's Rift", description: "Ultimate Spellbook"},
 ];
+
+// To link the champions masteries Icon to their respective levels
+export const championMasteries = [
+    {masteryId: 0, masteryIcon: championMastery0},
+    {masteryId: 1, masteryIcon: championMastery1},
+    {masteryId: 2, masteryIcon: championMastery2},
+    {masteryId: 3, masteryIcon: championMastery3},
+    {masteryId: 4, masteryIcon: championMastery4},
+    {masteryId: 5, masteryIcon: championMastery5},
+    {masteryId: 6, masteryIcon: championMastery6},
+    {masteryId: 7, masteryIcon: championMastery7},
+    {masteryId: 8, masteryIcon: championMastery8},
+    {masteryId: 9, masteryIcon: championMastery9},
+    {masteryId: 10, masteryIcon: championMastery10}
+]

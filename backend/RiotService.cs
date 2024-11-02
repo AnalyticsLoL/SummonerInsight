@@ -329,7 +329,7 @@ namespace backend
                 {"api_key", apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{_settings.Puuid}/top",queries);
-            loadJsonData("data/championFull.json");
+            loadJsonData("data/champion.json");
             var championMastery = new JsonArray();
             foreach(var mastery in data.AsArray())
             {
@@ -345,7 +345,8 @@ namespace backend
                 champion["chestGranted"] = mastery.AsObject()["chestGranted"]?.DeepClone();
                 champion["tokensEarned"] = mastery.AsObject()["tokensEarned"]?.DeepClone();
                 champion["lastPlayTime"] = mastery.AsObject()["lastPlayTime"]?.DeepClone();
-                champion["requiredGrades"] = mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["requiredGradeCounts"]?.DeepClone();
+                champion["milestoneGrades"] = mastery.AsObject()["milestoneGrades"]?.DeepClone();
+
                 championMastery.Add(champion);
             }
             return championMastery;
