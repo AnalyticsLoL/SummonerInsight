@@ -1,10 +1,12 @@
+.match p {
+    margin: 0;
+}
 .match{
     display: flex;
     flex-direction: row;
-    margin: 10px 20px;
-    padding: 25px;
-    border: 1px solid #C8AA6E;
-    min-width: 600px;
+    gap: 30px;
+    width: 800px;
+    padding: 10px 15px;
     border-radius: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -17,23 +19,28 @@
     background-color: #C57D7D;
 }
 .match .game-status{
+    display: flex;
+    flex-direction: column;
     width: 100px;
-    margin: 0 20px;
     gap: 10px;
     font-size: 15px;
+    align-items: center;
+}
+.match .game-status hr{
+    width: 100%;
+    margin: 0;
 }
 .match .player-infos{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 20px;
+    width: 300px;
     gap: 20px;
 }
 .match .player-champion-items{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 20px;
     gap: 10px;
 }
 .match .player-champion-items .champion-summoner{
@@ -88,8 +95,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 20px;
-    gap: 10px;
+    gap: 8px;
     font-size: 12px;
 }
 .match .player-stats .kda {
@@ -118,9 +124,8 @@
 .match .player-stats .damage .damage-section{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 3px;
+    text-align: center;
 }
 .match .player-stats .damage p{
     font-size: 12px;
@@ -161,8 +166,7 @@
     flex-direction: row;
     font-size: 14px;
     gap: 10px;
-    width: 375px;
-    justify-content: center;
+    width: 320px;
 }
 .match .team-composition .team {
     display: flex;
@@ -177,10 +181,11 @@
 }
 .match .team-composition .team .player img{
     width: 30px;
-    height: auto;
+    height: 30px;
     border-radius: 50%;
     border: 2px solid #53472f;
 }
 .match .team-composition .team .player figcaption{
     margin-top: 10px;
+    width: 110px;
 }

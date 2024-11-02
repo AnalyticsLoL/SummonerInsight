@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import "../assets/css/components/Match.css";
+import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
-import {gameTypes} from "../constants";
-import {getTimeDifference, getDuration} from "../reusable/UnixTimeConvert";
+import {gameTypes} from "../../../constants";
+import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
 
 function GameStatus({playerStats, match}){
     return (
@@ -49,11 +49,11 @@ function PlayerInfos({playerStats, match}){
             <div className="player-stats">
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
-                    <p className="ratio">{playerStats.kda.deaths > 0 ? ((playerStats.kda.kills+playerStats.kda.assists)/playerStats.kda.deaths).toFixed(2)+":1 KDA": "Unkillable"}</p>
+                    <p className={`ratio ${playerStats.kda.kda>5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
                 </div>
                 <div className="damage">
                     <div className="damage-section">
-                        <p>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
+                        <p className={`${playerStats.damage.totalDamageDealtToChampions>maxDealt*0.75?'enhance gold':''}`}>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
                         <div className="progress">
                             <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageDealtToChampions, maxDealt)}}/>
                         </div>

@@ -257,6 +257,14 @@ namespace backend
                 kda["kills"] = participant.AsObject()?["kills"]?.DeepClone();
                 kda["deaths"] = participant.AsObject()?["deaths"]?.DeepClone();
                 kda["assists"] = participant.AsObject()?["assists"]?.DeepClone();
+                if(kda["deaths"]?.GetValue<float>() == 0)
+                {
+                    kda["kda"] = kda["kills"]?.GetValue<float>() + kda["assists"]?.GetValue<float>();
+                }
+                else
+                {
+                    kda["kda"] = (kda["kills"]?.GetValue<float>() + kda["assists"]?.GetValue<float>()) / kda["deaths"]?.GetValue<float>();
+                }    
                 participantData["kda"] = kda;
 
                 var objects = new JsonArray();

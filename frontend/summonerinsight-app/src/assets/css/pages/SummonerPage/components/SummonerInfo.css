@@ -1,0 +1,239 @@
+#summoner-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0px;
+    width: 400px;
+    background-color: #E0C68A;
+    border-radius: 20px;
+    border:1px solid #C8AA6E;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+#summoner-info p {
+    margin: 0;
+    font-size: 12px;
+}
+#summoner-info .section .subsection{
+    border: 1px solid #C8AA6E;
+    border-radius: 30px;
+    background-color: #e4c68b;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#summoner-info .section {
+    padding:0;
+}
+
+#summoner-info .tooltip{
+    position: absolute;
+    bottom: 105%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #575757;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#summoner-info .tooltip p{
+    color: #ffffff;
+    margin: 0;
+}
+
+#summoner-info .profile{
+    display: flex;
+    flex-direction: column;
+}
+#summoner-info .profile-icon{
+    width: 150px;
+    align-items: center;
+    margin: 0;
+}
+#summoner-info .profile-icon img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 4px solid #C8AA6E;
+}
+#summoner-info .profile-icon figcaption{
+    position: relative;
+    background-color: #C8AA6E;
+    width:30px;
+    padding: 5px 0px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 15px;
+    margin: -15px auto 0px;
+    color: #4A3C2C;
+    z-index: 2;
+}
+#summoner-info .profile span{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+#summoner-info .profile span p{
+    font-size: 18px;
+}
+#summoner-info .ranked {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .ranked-element {
+    padding: 20px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#summoner-info .ranked-element hr{
+    width: 100%;
+    color: #C8AA6E;
+    margin: 0;
+}
+#summoner-info .ranked-element .ranked-info {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease;
+}
+#summoner-info .ranked-element.is-expanded .ranked-info {
+    max-height: 500px;
+}
+#summoner-info .ranked-element .ranked-header {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    justify-content: space-between;
+}
+#summoner-info .ranked-element .ranked-info{
+    margin-top: -11px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#summoner-info .ranked-element .rank-icon{
+    width: 150px;
+    height: auto;
+    overflow: hidden;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#summoner-info .ranked-element .rank-icon .image-container img {
+    width: 100%;
+    height: auto;
+}
+#summoner-info .ranked-element .ranked-stats {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+#summoner-info .ranked-element .ranked-stats p{
+    margin:0;
+}
+#summoner-info .masteries {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .masteries  .champion-mastery {
+    position: relative;
+    padding: 10px;
+}
+#summoner-info .masteries .champion-mastery figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    
+}
+#summoner-info .black-box-hover:hover{
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.5s ease;
+}
+#summoner-info .masteries  .champion-mastery figure .image-container{
+    width: 75px;
+    height: auto;
+}
+#summoner-info .masteries  .champion-mastery figure .mastery-icon{
+    width: 50px;
+    height: auto;
+}
+#summoner-info .masteries  .champion-mastery figure img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+#summoner-info .masteries  .champion-mastery:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .mastery-grades{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+#summoner-info .stats.subsection{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .stats .win-loss-ratio{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+}
+#summoner-info .bg-circle {
+    fill: none;
+    stroke: #f35d5d; /* Background color */
+    stroke-width: 3;
+}
+#summoner-info .percent-circle {
+    fill: none;
+    stroke: #50c3f5; /* Progress color */
+    stroke-width: 3;
+    stroke-dasharray: calc(2 * 3.1415 * 16px); /* Length of the circle's perimeter */
+    stroke-dashoffset: calc((1 - var(--percentage)) * 2 * 3.1415 * 16px);
+}
+#summoner-info .win-loss-ratio:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .best-champion-kda{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#summoner-info .champion-kda, #summoner-info .champion-kda div{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+#summoner-info .champion-kda img{
+    width: 30px;
+    height: auto;
+    border-radius: 50%;
+}
