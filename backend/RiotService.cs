@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Globalization;
+using System.Text.Json;
 
 namespace backend
 {
@@ -22,10 +23,33 @@ namespace backend
         private readonly HttpClient _httpClient;
         public RiotSettings _settings;
         private static readonly string apiKey = new ApiKey().key;
+        private static Dictionary<string, JsonNode> _championCache = new Dictionary<string, JsonNode>();
         public RiotService(HttpClient httpClient, RiotSettings settings)
         {
             _httpClient = httpClient;
             _settings = settings;
+        }
+        public void loadJsonData(string path)
+        {
+            var json = File.ReadAllText(path);
+            var doc = JsonNode.Parse(json) as JsonObject ?? throw new InvalidOperationException("Failed to parse JSON.");
+            var data = doc["data"] as JsonObject ?? throw new InvalidOperationException("Data not found in JSON.");
+
+            _championCache.Clear();
+            foreach (var property in data)
+            {
+                var item = property.Value as JsonObject;
+
+                // Cache the item if it has a "key" property
+                if (item != null && item.TryGetPropertyValue("key", out var keyElement))
+                {
+                    var key = keyElement?.ToString();
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        _championCache[key] = item;
+                    }
+                }
+            }
         }
         public void UpdateSettings(RiotSettings settings)
         {
@@ -293,6 +317,38 @@ namespace backend
             summonerStats["summonerProfile"] = summonerInfos;
             
             return summonerStats;
+        }
+        public JsonNode GetChampionMastery()
+        {
+            if(string.IsNullOrEmpty(_settings.SummonerId)|| string.IsNullOrEmpty(_settings.RegionTag))
+            {
+                throw new InvalidOperationException("SummonerId must be set.");
+            }
+            var queries= new Dictionary<string,string>
+            {
+                {"api_key", apiKey}
+            };
+            var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{_settings.Puuid}/top",queries);
+            loadJsonData("data/championFull.json");
+            var championMastery = new JsonArray();
+            foreach(var mastery in data.AsArray())
+            {
+                var champion = new JsonObject();
+                if (_championCache.TryGetValue(mastery.AsObject()["championId"]?.ToString(), out var championData))
+                {
+                    champion["championName"] = championData["name"]?.DeepClone();
+                    champion["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/" + championData["id"] + ".png";
+                }
+                champion["championId"] = mastery.AsObject()["championId"]?.DeepClone();
+                champion["championLevel"] = mastery.AsObject()["championLevel"]?.DeepClone();
+                champion["championPoints"] = mastery.AsObject()["championPoints"]?.DeepClone();
+                champion["chestGranted"] = mastery.AsObject()["chestGranted"]?.DeepClone();
+                champion["tokensEarned"] = mastery.AsObject()["tokensEarned"]?.DeepClone();
+                champion["lastPlayTime"] = mastery.AsObject()["lastPlayTime"]?.DeepClone();
+                champion["requiredGrades"] = mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["requiredGradeCounts"]?.DeepClone();
+                championMastery.Add(champion);
+            }
+            return championMastery;
         }
     }
 }

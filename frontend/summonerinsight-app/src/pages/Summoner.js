@@ -86,7 +86,7 @@ function MatchHistory({matchhistory}){
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
         }
         console.log(matches.length+1);
-        const fetchedMatches = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=${matches.length}&idCount=5`, settings, setIsLoading);
+        const fetchedMatches = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsLoading);
         setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
     };
     return(

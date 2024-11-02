@@ -54,6 +54,8 @@ namespace backend.Controllers
                 _riotService.GetSummonerAccount_SummonerID();
             }
             var summonerInfos = _riotService.GetSummonerInfos();
+            summonerInfos["championMastery"]=_riotService.GetChampionMastery();
+
             return Ok(summonerInfos);
         } 
     }

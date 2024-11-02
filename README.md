@@ -7,6 +7,7 @@ Define global flags in Context.js and import them in other components (not const
 
 ## Ideas for next stuff
 
+- [ ] Add masteries in Summoner Infos using the mastery icons (data/mastery) and the championMastery JsonArray from SummonerInfos
 - [ ] Clickable links for players in matches
 - [ ] Add a open/close menu to show more elements of games (check op.gg for ref)
 - [ ] Give more match infos on the same view, feeling like infos is to concised right now, (Maybe show less infos for matches when match menu closed)

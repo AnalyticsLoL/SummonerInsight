@@ -161,7 +161,8 @@
     flex-direction: row;
     font-size: 14px;
     gap: 10px;
-    width: 300px;
+    width: 375px;
+    justify-content: center;
 }
 .match .team-composition .team {
     display: flex;

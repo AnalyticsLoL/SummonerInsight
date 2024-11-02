@@ -90,7 +90,7 @@ export default function SearchSummonerBar() {
         };
         try {
             const summonerInfo = await fetchData(`http://127.0.0.1:5151/api/RiotData/summonerInfo`, settings, setIsLoading);
-            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=5`, settings, setIsLoading);
+            const matchhistory = await fetchData(`http://127.0.0.1:5151/api/RiotData/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
             if (summonerInfo && matchhistory) {
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
