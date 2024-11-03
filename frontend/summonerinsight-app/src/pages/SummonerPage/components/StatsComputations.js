@@ -38,7 +38,7 @@ export const getMeanKDA = (playerStats) => {
 
     console.log(totalKda);
     return Object.values(totalKda).map(champion => ({
-        ... champion
+        ...champion
         ,meanKda: champion.totalKda / champion.gamesPlayed
     }));
 }

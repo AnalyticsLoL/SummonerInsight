@@ -1,0 +1,24 @@
+.item {
+    position: relative;
+    cursor: pointer;
+}
+#summoner .item .tooltip{
+    top: 105%;
+    width: 300px;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #53472f;
+}
+#summoner .item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+.champion img{
+    width: 90%;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid #53472f;
+}

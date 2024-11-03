@@ -141,7 +141,7 @@ function SummonerStats({matchHistory}){
                             console.log(champion);
                             return (
                                 <div key={index} className="champion-kda">
-                                    <img src={`${championIconPath}/${champion.championName}.png`}/>
+                                    <img src={`${championIconPath}/${champion.championName}.png`} alt="Champion Icon"/>
                                     <div>
                                         <p className={`${champion.wins/champion.gamesPlayed>0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
                                         <p>({champion.wins}W/{champion.gamesPlayed-champion.wins}L)</p>

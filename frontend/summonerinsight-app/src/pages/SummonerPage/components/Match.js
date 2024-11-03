@@ -2,9 +2,10 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
-import {gameTypes, itemIconPath} from "../../../constants";
+import {gameTypes} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
-import { championIconPath } from "../../../constants";
+import ChampionComponent from "./ChampionComponent"
+import ItemComponent from "./ItemComponent";
 
 function GameStatus({playerStats, match}){
     return (
@@ -32,16 +33,14 @@ function PlayerInfos({playerStats, match}){
     return (
         <div className="player-infos">
             <div className="player-champion-items">
-                <figure className="champion-summoner">
-                    <img src={`${championIconPath}/${playerStats.champion.image.full}`} alt="Champion Icon" />
+                <div className="champion-summoner">
+                    <ChampionComponent champion={playerStats.champion} isTooltip={true}/>
                     <figcaption>{playerStats.champLevel}</figcaption>
-                </figure>
+                </div>
                 <figure className="items">
                     {playerStats.items.map((item, index) => 
                     (
-                        <div key={index} className={`item ${index === playerStats.items.length - 1 ? 'last-item' : ''}`}>
-                            <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
-                        </div>
+                        <ItemComponent isLastItem={index === playerStats.items.length - 1? true : false} item={item} isTooltip={true}/>
                     ))}
                     {playerStats.items.length < 7 &&
                     Array.from({ length: 7 - playerStats.items.length }).map((_, i) => (
@@ -92,7 +91,7 @@ function Team({match, id, gameName}){
                 .filter(participant => participant.teamId === id)
                 .map((participant, index) => (
                     <figure key={index} className="player">
-                        <img src={`${championIconPath}/${participant.champion.image.full}`} alt="Champion Icon" />
+                        <ChampionComponent champion={participant.champion} isTooltip={false}/>
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                     </figure>
                 ))}

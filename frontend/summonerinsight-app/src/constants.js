@@ -108,10 +108,10 @@ export const championMasteries = [
 export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
 
 // Path to get champion splash arts
-export const championSplashPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash"; 
+export const championSplashPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash"; // Add the champion name and the skin number '.jpg'
 
 // Path to get champion loading arts
-export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading";
+export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading"; // Add the champion name and the skin number '.jpg'
 
 // Path to get champion icon
 export const championIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/champion`;

@@ -25,34 +25,10 @@
     padding:0;
 }
 
-#summoner-info .tooltip{
-    position: absolute;
-    bottom: 105%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 8px;
-    padding: 8px;
-    background-color: #575757;
-    border-radius: 4px;
-    font-size: 14px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-#summoner-info .tooltip p{
-    color: #ffffff;
-    margin: 0;
-}
-
 #summoner-info .profile{
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 #summoner-info .profile-icon{
     width: 150px;
@@ -183,6 +159,10 @@
     height: auto;
     border-radius: 50%;
 }
+#summoner-info .masteries  .champion-mastery .tooltip{
+    white-space: nowrap;
+    bottom: 105%;
+}
 #summoner-info .masteries  .champion-mastery:hover .tooltip{
     opacity: 1;
     visibility: visible;
@@ -217,6 +197,10 @@
     stroke-width: 3;
     stroke-dasharray: calc(2 * 3.1415 * 16px); /* Length of the circle's perimeter */
     stroke-dashoffset: calc((1 - var(--percentage)) * 2 * 3.1415 * 16px);
+}
+#summoner-info .win-loss-ratio .tooltip{
+    bottom: 105%;
+    white-space: nowrap;
 }
 #summoner-info .win-loss-ratio:hover .tooltip{
     opacity: 1;
