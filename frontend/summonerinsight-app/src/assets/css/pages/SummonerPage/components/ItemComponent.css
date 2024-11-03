@@ -16,9 +16,3 @@
     opacity: 1;
     visibility: visible;
 }
-.champion img{
-    width: 90%;
-    height: auto;
-    border-radius: 50%;
-    border: 5px solid #53472f;
-}

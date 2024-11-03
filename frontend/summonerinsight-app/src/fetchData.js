@@ -7,17 +7,18 @@ export const fetchData = async (url, settings, setIsLoading) => {
         settings.Region = regions.find(region => region.regionTag === settings.RegionTag.toUpperCase()).regionRoute;
     }
     console.log('Sending request to: '+url);
-    let response = await fetch(url, {
-        method:'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(settings)
-    });
-    setIsLoading(false);
-    if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-    } else {
+    try {
+        const response = await fetch(url, {
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(settings)
+        });
+        setIsLoading(false);
         return await response.json();
+    } catch (error) {
+        setIsLoading(false);
+        throw new Error(`Error: ${error}`);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace backend
 {
@@ -16,6 +17,8 @@ namespace backend
             var stats = new JsonObject();
             var passives = new JsonArray();
             var actives = new JsonArray();
+
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
             // Match statistics
             var statMatches = Regex.Matches(description, @"<stats>(.*?)<\/stats>", RegexOptions.Singleline);
@@ -34,7 +37,7 @@ namespace backend
                         string text = attentionMatch.Groups["text"].Value.Trim();
 
                         // Normalize key (e.g., "health" from "Health")
-                        string key = text.ToLower(); // Use the text as-is, may want to clean it up further
+                        string key = textInfo.ToTitleCase(text); // Use the text as-is, may want to clean it up further
                         stats[key] = double.TryParse(value, out double numericValue) ? numericValue : value;
                     }
                 }
@@ -55,7 +58,7 @@ namespace backend
                 // Add the passive to the array
                 passives.Add(new JsonObject
                 {
-                    ["name"] = name,
+                    ["name"] = textInfo.ToTitleCase(name),
                     ["description"] = descriptionText
                 });
             }
@@ -75,7 +78,7 @@ namespace backend
                 // Add the passive to the array
                 actives.Add(new JsonObject
                 {
-                    ["name"] = name,
+                    ["name"] = textInfo.ToTitleCase(name),
                     ["description"] = descriptionText
                 });
             }
