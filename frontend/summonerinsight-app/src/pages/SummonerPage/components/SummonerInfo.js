@@ -114,7 +114,6 @@ function SummonerStats({matchHistory}){
     const totalGames = matchHistory.length;
     const wins = countTotalWins(playerStats);
     const losses = totalGames - wins;
-    console.log(playerStats);
     const meanKda = getMeanKDA(playerStats)
 
     return(
@@ -138,7 +137,6 @@ function SummonerStats({matchHistory}){
                         .sort((a, b) => b.wins - a.wins)
                         .slice(0, 3)
                         .map((champion, index) => {
-                            console.log(champion);
                             return (
                                 <div key={index} className="champion-kda">
                                     <img src={`${championIconPath}/${champion.championName}.png`} alt="Champion Icon"/>

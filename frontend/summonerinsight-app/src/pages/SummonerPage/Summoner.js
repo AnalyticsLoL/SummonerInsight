@@ -43,7 +43,7 @@ export default function Summoner() {
     const summonerInfo=location.state.summonerInfo;
 
     return (
-        <div id="summoner">
+        <div id="summoner" className="page">
             <div className="section">
                 <SummonerInfo summonerInfo={summonerInfo} matchHistory={matchhistory}/>
                 <MatchHistory matchhistory={matchhistory}/>

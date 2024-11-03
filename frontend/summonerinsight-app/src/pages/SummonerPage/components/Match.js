@@ -40,7 +40,7 @@ function PlayerInfos({playerStats, match}){
                 <figure className="items">
                     {playerStats.items.map((item, index) => 
                     (
-                        <ItemComponent isLastItem={index === playerStats.items.length - 1? true : false} item={item} isTooltip={true}/>
+                        <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1? true : false} item={item} isTooltip={true}/>
                     ))}
                     {playerStats.items.length < 7 &&
                     Array.from({ length: 7 - playerStats.items.length }).map((_, i) => (

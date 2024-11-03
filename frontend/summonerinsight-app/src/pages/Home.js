@@ -47,7 +47,7 @@ function TeamMember({name, img, description, linkedinUrl, githubUrl, websiteUrl,
 
 export default function Home() {
     return (
-        <div id="home">
+        <div id="home" className="page">
             <div className="section">
                 <div className="home-intro">
                     <div className="splash_art">

@@ -22,12 +22,14 @@ namespace backend
     {
         private readonly HttpClient _httpClient;
         public RiotSettings _settings;
+        public ReusableFunctions _functions;
         private static readonly string apiKey = new ApiKey().key;
         private static Dictionary<string, JsonNode> _championCache = new Dictionary<string, JsonNode>();
         public RiotService(HttpClient httpClient, RiotSettings settings)
         {
             _httpClient = httpClient;
             _settings = settings;
+            _functions = new ReusableFunctions();
         }
         public void LoadChampionData()
         {
@@ -63,6 +65,7 @@ namespace backend
             {
                 _itemCache[property.Key] = property.Value;
                 _itemCache[property.Key]["id"] = property.Key;
+                _itemCache[property.Key]["description"] = _functions.ParseDescriptionToJson(property.Value["description"].ToString());
             }
         }
 
