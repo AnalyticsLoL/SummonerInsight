@@ -51,7 +51,7 @@ function PlayerInfos({playerStats, match}){
             <div className="player-stats">
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
-                    <p className={`ratio ${playerStats.kda.kda>5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
+                    <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
                 </div>
                 <div className="damage">
                     <div className="damage-section">

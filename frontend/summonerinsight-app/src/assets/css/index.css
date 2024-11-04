@@ -1,3 +1,21 @@
+:root {
+    --primary-bg: #2E2E3A;
+    --tooltip-bg: #2B2B36;
+    --tooltip-border-color: #4C566A;
+    --nav-bg: #1F1F28;
+    --title-color: #D4B573;
+    --text-color: #E0E0E0;
+    --hover-text-color: #FFFFFF;
+    --secondary-bg: #40404A;
+    --secondary-border: #5A5A66;
+    --enhance-red: #e43c16;
+    --enhance-gold: #C8AA6E;
+    --icon-border:#C8AA6E;
+    --icon-text:#4A3C2C;
+    --win-color: #3A6D78;
+    --loss-color: #784545;
+}
+  
 @font-face {
     font-family: 'Roboto-Regular';
     src: url('../font/Roboto-Regular.ttf');
@@ -24,20 +42,20 @@
 }
 h1, h2, h3 {
     font-family: 'Merriweather-Bold';
-    color:#3D3D3D;
+    color: var(--text-color);
 }
 h4, h5, h6, span {
     font-family: 'Merriweather-Regular';
-    color:#3D3D3D;
+    color: var(--text-color);
 }
-button, input, textarea, p, figcaption{
+button, input, textarea, p, figcaption, li{
     font-family: 'Roboto-Regular';
-    color:#3D3D3D;
+    color: var(--text-color);
 }
 body {
     margin: 0;
     padding: 0;
-    background-color: #F6E6C1;
+    background-color: var(--primary-bg);
 }
 .page {
     margin-top: 50px;
@@ -47,8 +65,8 @@ body {
     font-family: 'Roboto-Bold';
 }
 .enhance.red {
-    color: #e43c16;
+    color: var(--enhance-red);
 }
 .enhance.gold {
-    color: #B8860B;
+    color: var(--enhance-gold);
 }

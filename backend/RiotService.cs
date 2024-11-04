@@ -357,7 +357,7 @@ namespace backend
                 if (_championCache.TryGetValue(mastery.AsObject()["championId"]?.ToString(), out var championData))
                 {
                     champion["championName"] = championData["name"]?.DeepClone();
-                    champion["championIcon"] = "https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/" + championData["id"] + ".png";
+                    champion["championIcon"] = championData["image"]?.AsObject()["full"]?.DeepClone();
                 }
                 champion["championId"] = mastery.AsObject()["championId"]?.DeepClone();
                 champion["championLevel"] = mastery.AsObject()["championLevel"]?.DeepClone();

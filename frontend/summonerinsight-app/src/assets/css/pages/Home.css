@@ -37,7 +37,7 @@
     align-items: center;
 }
 #home .home-intro h1{
-    color: #E0C68A;
+    color: var(--title-color);
     font-size: 40px;
 }
 
@@ -90,10 +90,10 @@
     margin: 0 5px;
 }
 #home .section .home-about-us .content .team .team-member figcaption .social a svg{
-    color:#3D3D3D;
+    color:var(--title-color);
     font-size: 30px;
 }
 #home .section .home-about-us .content .team .team-member figcaption .social a svg:hover{
-    color:#b6a170;
+    color: var(--hover-text-color);
     transition: color 0.5s;
 }

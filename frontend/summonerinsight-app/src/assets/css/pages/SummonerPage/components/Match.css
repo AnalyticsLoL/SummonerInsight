@@ -12,10 +12,10 @@
     align-items: center;
 }
 .win{
-    background-color: #7DAFC5;
+    background-color: var(--win-color);
 }
 .loss{
-    background-color: #C57D7D;
+    background-color: var(--loss-color);
 }
 .match .game-status{
     display: flex;
@@ -50,13 +50,13 @@
 }
 .match .player-champion-items .champion-summoner figcaption{
     position: relative;
-    background-color: #53472f;
+    background-color: var(--icon-border);
     width:30px;
     padding: 5px 0px;
     border-radius: 50%;
     text-align: center;
     font-size: 15px;
-    color: #E0C68A;
+    color: var(--icon-text);
     bottom:25px;
     left: 75px;
 }
@@ -68,22 +68,10 @@
     height: 85px;
     margin: 0;
 }
-.match .player-champion-items .items .item img{
-    width: 40px;
-    height: 40px;
-    border-radius: 30%;
-}
 .match .player-champion-items .items .empty{
     background-color: rgba(224, 198, 138, 0.3);
     border-radius: 30%;
     filter: blur(1px);
-}
-.match .player-champion-items .items .last-item{
-    position: relative;
-    border-radius: 50%;
-    grid-column: 4;
-    grid-row: 1 / span 2;
-    bottom: -20px;
 }
 .match .player-stats{
     display: flex;
@@ -133,7 +121,7 @@
 }
 .match .player-stats .damage .progress .fill {
     height: 100%;
-    background-color: #C8AA6E;
+    background-color: var(--enhance-gold);
 }
 .match .player-stats .cs {
     display: flex;

@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid #53472f;
+    border: 1px solid var(--tooltip-border);
 }
 #summoner .champion:hover .tooltip {
     opacity: 1;
@@ -20,5 +20,11 @@
     width: 90%;
     height: auto;
     border-radius: 50%;
-    border: 5px solid #53472f;
+    border: 5px solid var(--icon-border);
+}
+.champion .header img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--icon-border);
 }

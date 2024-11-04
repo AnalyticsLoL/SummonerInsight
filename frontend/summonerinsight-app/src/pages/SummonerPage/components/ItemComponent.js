@@ -37,10 +37,13 @@ const description = (itemDescription) => {
 
 export default function ItemComponent({ isLastItem, item, isTooltip }) {
     return (
-        <div className={`item ${ isLastItem? 'last-item' : ''} black-box-hover`}>
+        <div className={`item ${ isLastItem? 'last' : ''} black-box-hover`}>
             <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
             {isTooltip && (<div className='tooltip'>
-                <h4>{item.name}</h4>
+                <div className='header'>
+                    <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
+                    <h4>{item.name}</h4>
+                </div>
                 <p>Cost: {item.gold.total}</p>
                 {description(item.description)}
             </div>)}

@@ -6,7 +6,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     height:auto;
-    background-color: #FAEBD7;
+    background-color: var(--nav-bg);
     margin-top: -50px;
     justify-content: center;
 }
@@ -17,6 +17,6 @@
     margin: 15px 0px;
 }
 #navbar .content a h3:hover{
-    color: #756644;
+    color: var(--hover-text-color);
     transition: color 0.5s;
 }

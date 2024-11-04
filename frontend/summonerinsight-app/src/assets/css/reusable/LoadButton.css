@@ -1,5 +1,5 @@
 .search_button{
-    background-color: #E0C68A;
+    background-color: var(--secondary-bg);
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -11,11 +11,9 @@
 }
 .search_button:hover{
     filter: opacity(0.85);
-    color: #756644;
-    transition: filter 0.5s, color 0.5s;
+    transition: filter 0.2s;
 }
 .search_button p{
-    color:#4A3C2C;
     font-size: 18px;
     font-family: 'Merriweather-Regular';
 }

@@ -79,7 +79,7 @@ function MasterySection({championMastery}){
                 <div key={index} className="champion-mastery subsection black-box-hover">
                     <figure>
                         <div className="image-container">
-                            <img src={mastery.championIcon} alt="Champion Icon" />
+                            <img src={`${championIconPath}/${mastery.championIcon}`} alt="Champion Icon" />
                         </div>
                         <div className="mastery-icon">
                             {mastery.championLevel <= 10 ? (
@@ -91,8 +91,10 @@ function MasterySection({championMastery}){
                         </div>
                     </figure>
                     <div className="tooltip">
-                        <p>{mastery.championName}</p>
-                        <p>Mastery level {mastery.championLevel}</p>
+                        <div className="header">
+                            <img src={`${championIconPath}/${mastery.championIcon}`} alt="Champion Icon"/>
+                            <p>Mastery level {mastery.championLevel}</p>
+                        </div>
                         <p>{mastery.championPoints.toLocaleString()} Points</p>
                         <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
                         {mastery.milestoneGrades && <div className="mastery-grades">
@@ -124,7 +126,7 @@ function SummonerStats({matchHistory}){
                         <circle className="bg-circle" cx="18" cy="18" r="16"></circle>
                         <circle className="percent-circle" cx="18" cy="18" r="16"
                                 style={{"--percentage": `${wins/totalGames}`}}></circle>
-                        <text className={`${wins/totalGames>0.5?'enhance':''}`} x="18" y="20.35" textAnchor="middle" fontSize="8" fill="#333">{(wins/totalGames*100).toFixed(0)}%</text>
+                        <text className={`${wins/totalGames>=0.5?'enhance':''}`} x="18" y="20.35" textAnchor="middle" fontSize="8" fill="#E0E0E0">{(wins/totalGames*100).toFixed(0)}%</text>
                     </svg>
                     <div className="tooltip">
                         <p>{totalGames}G {wins}W {losses}L</p>
@@ -139,12 +141,12 @@ function SummonerStats({matchHistory}){
                         .map((champion, index) => {
                             return (
                                 <div key={index} className="champion-kda">
-                                    <img src={`${championIconPath}/${champion.championName}.png`} alt="Champion Icon"/>
+                                    <img src={`${championIconPath}/${champion.iconName}`} alt="Champion Icon"/>
                                     <div>
-                                        <p className={`${champion.wins/champion.gamesPlayed>0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
+                                        <p className={`${champion.wins/champion.gamesPlayed>=0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
                                         <p>({champion.wins}W/{champion.gamesPlayed-champion.wins}L)</p>
                                     </div>
-                                    <p className={`${champion.meanKda>5?'enhance gold':''}`}>{champion.meanKda.toFixed(2)} KDA</p>
+                                    <p className={`${champion.meanKda>=5?'enhance gold':''}`}>{champion.meanKda.toFixed(2)} KDA</p>
                                 </div>
                             );
                         })}

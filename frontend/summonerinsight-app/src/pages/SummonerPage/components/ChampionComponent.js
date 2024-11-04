@@ -7,10 +7,12 @@ export default function ChampionComponent({ champion, isTooltip }) {
     return (
         <div className="champion">
             <img src={`${championIconPath}/${champion.image.full}`} alt="Champion Icon" />
-            {isTooltip && (<div className='tooltip' style={{backgroundImage: `url(${championSplashPath}/${champion.image.full.replace('.png','')}_0.jpg)`}}>
-                <h4>{champion.name}, {champion.title}</h4>
+            {isTooltip && (<div className='tooltip'>
+                <div className='header'>
+                    <img src={`${championIconPath}/${champion.image.full}`} alt="Champion Icon" />
+                    <h4>{champion.name}, {champion.title}</h4>
+                </div>
                 <p>{champion.blurb}</p>
-                <p>See more...</p>
             </div>)}
         </div>
     );

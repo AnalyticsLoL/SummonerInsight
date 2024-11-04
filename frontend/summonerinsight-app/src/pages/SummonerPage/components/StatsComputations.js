@@ -8,7 +8,8 @@ export const getPlayerStats = (matches, gameName) => {
         const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
         return {
             champion: {
-                name: playerStats.champion.name
+                name: playerStats.champion.name,
+                iconName: playerStats.champion.image.full
             },
             win: playerStats.win,
             kda: playerStats.kda.kda
@@ -18,12 +19,12 @@ export const getPlayerStats = (matches, gameName) => {
 
 export const getMeanKDA = (playerStats) => {
     const totalKda = playerStats.reduce((acc, match) => {
-        const { name } = match.champion;
+        const { name, iconName } = match.champion;
         const { win, kda } = match;
 
         if (!acc[name]) {
             acc[name] = {
-                championName: name,
+                iconName: iconName,
                 gamesPlayed: 0,
                 wins: 0,
                 totalKda: 0
