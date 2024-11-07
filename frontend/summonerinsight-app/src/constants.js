@@ -20,7 +20,7 @@ import championMastery8 from "./assets/img/mastery/8.png";
 import championMastery9 from "./assets/img/mastery/9.png";
 import championMastery10 from "./assets/img/mastery/10.png";
 
-export const league_version = "14.21.1";
+export const league_version = "14.22.1";
 export const api_url = "http://127.0.0.1:5151/api/RiotData";
 
 // All the regions of league of legends
