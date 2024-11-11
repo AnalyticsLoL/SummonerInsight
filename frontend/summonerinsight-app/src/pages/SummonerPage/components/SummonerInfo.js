@@ -32,7 +32,6 @@ function ProfileSection({summonerProfile}){
 
 function RankedElement({rankedStats, emblems}){
     const queueName = rankedStats.queueName==="RANKED_SOLO_5x5"?"Ranked Solo/Duo":"Ranked Flex";
-
     emblems=ranks.find(rank => rank.tier.toUpperCase() === rankedStats.tier);
     return(
         <div className={`ranked-element  subsection`}>

@@ -70,6 +70,7 @@
     align-items: center;
 }
 #summoner-info .ranked-element {
+    position: relative;
     padding: 20px;
     width: 90%;
     display: flex;
@@ -102,6 +103,8 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    bottom: 85%;
+    white-space: nowrap;
 }
 #summoner-info .ranked .ranked-element:hover .tooltip{
     opacity: 1;
@@ -109,6 +112,7 @@
 }
 #summoner-info .ranked .ranked-element .ranked.tooltip p{
     margin:0;
+    width: auto;
 }
 #summoner-info .masteries {
     display: flex;
