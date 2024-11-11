@@ -53,8 +53,9 @@ function ProfileSection({summonerProfile,matchHistory}){
                                 <div key={position_API_Name} className="position icon">
                                     <PositionIcon />
                                     <div className="tooltip">
-                                        <div className="tooltip-header">
+                                        <div className="header">
                                             <PositionIcon />
+                                            <h4>{position.positionName}</h4>
                                         </div>
                                         <p>{value} games played recently</p>
                                     </div>
