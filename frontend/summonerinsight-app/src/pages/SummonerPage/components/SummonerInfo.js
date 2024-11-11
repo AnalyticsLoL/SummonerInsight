@@ -4,23 +4,65 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
+import { ReactComponent as TopIcon } from "../../../assets/svg/position_icons/top.svg";
+
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
-import { ranks, championMasteries, regions } from "../../../constants.js";
+import { ranks, championMasteries, regions, positions } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
 import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
-import { championIconPath } from "../../../constants";
+import { championIconPath, profileIconPath } from "../../../constants";
 
-function ProfileSection({summonerProfile}){
+const find_positions = (matchHistory, summonerProfile) => {
+    let positions = {
+        "TOP": 0,
+        "JUNGLE": 0,
+        "MIDDLE": 0,
+        "BOTTOM": 0,
+        "UTILITY": 0
+    };
+    matchHistory.forEach(match => {
+        const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
+        positions[position]++;
+    });
+    return Object.keys(positions).reduce((acc, key) => {
+        if (positions[key] > 5) {
+            acc[key] = positions[key];
+        }
+        return acc;
+    }, {});
+};
+
+function ProfileSection({summonerProfile,matchHistory}){
+    const favorite_positions = find_positions(matchHistory, summonerProfile);
     return (
         <div className="profile section">
             <figure className="profile-icon">
                 <div className="image-container">
-                    <img src={summonerProfile.profileIconId} alt="Profile Icon" />
+                    <img src={`${profileIconPath}/${summonerProfile.profileIconId}.png`} alt="Profile Icon" />
                 </div>
                 <figcaption>{summonerProfile.summonerLevel}</figcaption>
             </figure>
             <span>
+                {favorite_positions.length !== 0 && (
+                    <div className="position-icons">
+                        {Object.entries(favorite_positions).map(([position_API_Name, value]) => {
+                            const position = positions.find(pos => pos.API_name === position_API_Name);
+                            const PositionIcon = position.positionIcon;
+                            return (
+                                <div key={position_API_Name} className="position icon">
+                                    <PositionIcon />
+                                    <div className="tooltip">
+                                        <div className="tooltip-header">
+                                            <PositionIcon />
+                                        </div>
+                                        <p>{value} games played recently</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
                 <p>{summonerProfile.gameName} #{summonerProfile.tagLine.toUpperCase()}</p>
                 {summonerProfile.regionTag && (
                     <p>{regions.find(region => region.regionTag === summonerProfile.regionTag.toUpperCase()).regionName}</p>
@@ -153,7 +195,7 @@ export default function SummonerInfo({summonerInfo, matchHistory}){
     return(
         <div>
             <div id="summoner-info">
-                <ProfileSection summonerProfile={summonerInfo.summonerProfile}/>
+                <ProfileSection summonerProfile={summonerInfo.summonerProfile} matchHistory={matchHistory}/>
                 <RankedSection rankedStats={summonerInfo.rankedStats}/>
                 <MasterySection championMastery={summonerInfo.championMastery}/>
                 <SummonerStats matchHistory={matchHistory}/> 

@@ -4,7 +4,6 @@ import { itemIconPath } from '../../../constants';
 import '../../../assets/css/pages/SummonerPage/components/ItemComponent.css';
 
 const description = (itemDescription) => {
-    console.log(itemDescription);
     return(
         <div className='description'>
             {Object.values(itemDescription.stats).length > 0 && (<div className='stats'>

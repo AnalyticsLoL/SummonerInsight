@@ -7,7 +7,7 @@ Define global flags in Context.js and import them in other components (not const
 
 ## Ideas for next stuff
 
-- [ ] Add favorite position icons in the Summoner Infos
+- [x] Add favorite position icons in the Summoner Infos
 - [ ] Figure out some style for the masteries milestones
 - [ ] Add tooltips with the name and date of the user profileIcon
 - [ ] Add spells images of the champion in their tooltips with their own tooltips

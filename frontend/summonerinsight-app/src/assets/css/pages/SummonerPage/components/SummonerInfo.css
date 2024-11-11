@@ -57,8 +57,27 @@
 #summoner-info .profile span{
     display: flex;
     flex-direction: column;
-    text-align: center;
+    align-items: center;
     gap: 10px;
+}
+#summoner-info .profile .position.icon {
+    position:relative;
+}
+#summoner-info .profile .position.icon .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 120%;
+    white-space: nowrap;
+}
+#summoner-info .profile .position.icon .tooltip p{
+    font-size: 14px;
+}
+#summoner-info .profile .position.icon:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
 }
 #summoner-info .profile span p{
     font-size: 18px;

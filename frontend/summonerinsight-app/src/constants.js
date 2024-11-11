@@ -20,6 +20,12 @@ import championMastery8 from "./assets/img/mastery/8.png";
 import championMastery9 from "./assets/img/mastery/9.png";
 import championMastery10 from "./assets/img/mastery/10.png";
 
+import { ReactComponent as TopIcon } from "./assets/svg/position_icons/top.svg";
+import { ReactComponent as JungleIcon } from "./assets/svg/position_icons/jungle.svg";
+import { ReactComponent as MidIcon } from "./assets/svg/position_icons/mid.svg";
+import { ReactComponent as AdcIcon } from "./assets/svg/position_icons/adc.svg";
+import { ReactComponent as SupportIcon } from "./assets/svg/position_icons/support.svg";
+
 export const league_version = "14.22.1";
 export const api_url = "http://127.0.0.1:5151/api/RiotData";
 
@@ -104,6 +110,14 @@ export const championMasteries = [
     {masteryId: 10, masteryIcon: championMastery10}
 ]
 
+export const positions = [
+    {API_name: "TOP", positionIcon: TopIcon, positionName: "Top"},
+    {API_name: "JUNGLE", positionIcon: JungleIcon, positionName: "Jungle"},
+    {API_name: "MIDDLE", positionIcon: MidIcon, positionName: "Mid"},
+    {API_name: "BOTTOM", positionIcon: AdcIcon, positionName: "ADC"},
+    {API_name: "UTILITY", positionIcon: SupportIcon, positionName: "Support"}
+]
+
 // Path to get item icons
 export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
 
@@ -115,6 +129,9 @@ export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/
 
 // Path to get champion icon
 export const championIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/champion`;
+
+// Path to get profile icon
+export const profileIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/profileicon`;
 
 // Path to get champion passives icons
 export const championPassivePath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/passive`;

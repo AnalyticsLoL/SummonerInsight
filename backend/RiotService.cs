@@ -156,7 +156,7 @@ namespace backend
             {
                 _settings.SummonerId = summonerId;
                 _settings.AccountId = accoundId;
-                _settings.ProfileIconId = "https://ddragon.leagueoflegends.com/cdn/14.21.1/img/profileicon/"+profileIconId+".png";
+                _settings.ProfileIconId = profileIconId;
                 _settings.SummonerLevel = summonerLevel;
             }
             else
