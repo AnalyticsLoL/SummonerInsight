@@ -33,7 +33,8 @@ const find_positions = (matchHistory, summonerProfile) => {
     }, {});
 };
 
-function ProfileSection({summonerProfile,matchHistory}){
+function ProfileSection({ summonerProfile,matchHistory }){
+    const { regionTag } = useParams();
     const favorite_positions = find_positions(matchHistory, summonerProfile);
     return (
         <div className="profile section">
@@ -64,10 +65,8 @@ function ProfileSection({summonerProfile,matchHistory}){
                         })}
                     </div>
                 )}
-                <p>{summonerProfile.gameName} #{summonerProfile.tagLine.toUpperCase()}</p>
-                {summonerProfile.regionTag && (
-                    <p>{regions.find(region => region.regionTag === summonerProfile.regionTag.toUpperCase()).regionName}</p>
-                )}
+                <p>{summonerProfile.gameName}{summonerProfile.tagLine !== regionTag ? `#${summonerProfile.tagLine}`:null}</p>
+                <p>{regions.find(region => region.regionTag === regionTag.toUpperCase()).regionName}</p>
             </span>
         </div>
     );
