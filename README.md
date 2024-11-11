@@ -6,8 +6,6 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
-
-- [x] Add favorite position icons in the Summoner Infos
 - [ ] Figure out some style for the masteries milestones
 - [ ] Add tooltips with the name and date of the user profileIcon
 - [ ] Add spells images of the champion in their tooltips with their own tooltips
