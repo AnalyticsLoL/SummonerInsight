@@ -20,11 +20,15 @@ function GameStatus({playerStats, match}){
 }
 
 function PlayerInfos({playerStats, match}){
+    const isSupport = playerStats.damage.totalHealsOnTeammates!==0 && playerStats.champion.tags.includes("Support") && playerStats.position === "UTILITY";
     const maxDealt = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalDamageDealtToChampions);
     }, 0);
     const maxTaken = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalDamageTaken);
+    }, 0);
+    const maxHealed = match.participants.reduce((max, player) => {
+        return Math.max(max, player.damage.totalHealsOnTeammates);
     }, 0);
     const damageFillBar = (damage, maxDamage) => {
         const damagePercentage = (damage/maxDamage)*100;
@@ -54,13 +58,22 @@ function PlayerInfos({playerStats, match}){
                     <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
                 </div>
                 <div className="damage">
-                    <div className="damage-section">
-                        <p className={`${playerStats.damage.totalDamageDealtToChampions>maxDealt*0.75?'enhance gold':''}`}>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
-                        <div className="progress">
-                            <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageDealtToChampions, maxDealt)}}/>
-                        </div>
-                        <p>Dealt</p>
-                    </div>
+                    {isSupport
+                        ?(<div className="damage-section">
+                            <p className={`${playerStats.damage.totalHealsOnTeammates>maxHealed*0.75?'enhance gold':''}`}>{playerStats.damage.totalHealsOnTeammates.toLocaleString()}</p>
+                            <div className="progress">
+                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalHealsOnTeammates, maxHealed)}}/>
+                            </div>
+                            <p>HP Healed</p>
+                        </div>)
+                        :(<div className="damage-section">
+                            <p className={`${playerStats.damage.totalDamageDealtToChampions>maxDealt*0.75?'enhance gold':''}`}>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
+                            <div className="progress">
+                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageDealtToChampions, maxDealt)}}/>
+                            </div>
+                            <p>Dealt</p>
+                        </div>)
+                    }
                     <div className="damage-section">
                         <p>{playerStats.damage.totalDamageTaken.toLocaleString()}</p>
                         <div className="progress">

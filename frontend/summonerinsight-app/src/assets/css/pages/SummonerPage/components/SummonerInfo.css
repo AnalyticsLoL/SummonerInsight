@@ -29,6 +29,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 #summoner-info .profile-icon{
     width: 150px;
@@ -36,7 +37,7 @@
     margin: 0;
 }
 #summoner-info .profile-icon img{
-    width: 100%;
+    width: calc(100% - 8px);
     height: auto;
     border-radius: 50%;
     border: 4px solid var(--icon-border);
@@ -55,15 +56,16 @@
 }
 #summoner-info .profile span{
     display: flex;
-    flex-direction: row;
-    gap: 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
 }
 #summoner-info .profile span p{
     font-size: 18px;
 }
 #summoner-info .ranked {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
     align-items: center;
 }
@@ -73,32 +75,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-#summoner-info .ranked-element hr{
-    width: 100%;
-    color: var(--secondary-border);
-    margin: 0;
-}
-#summoner-info .ranked-element .ranked-info {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 1s ease;
-}
-#summoner-info .ranked-element.is-expanded .ranked-info {
-    max-height: 500px;
-}
-#summoner-info .ranked-element .ranked-header {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    justify-content: space-between;
-}
-#summoner-info .ranked-element .ranked-info{
-    margin-top: -11px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    border: none !important;
+    box-shadow: none !important;
 }
 #summoner-info .ranked-element .rank-icon{
     width: 150px;
@@ -113,15 +91,23 @@
     width: 100%;
     height: auto;
 }
-#summoner-info .ranked-element .ranked-stats {
-    font-size: 16px;
+#summoner-info .ranked-element .rank-icon span{
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+#summoner-info .ranked .ranked-element .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
 }
-#summoner-info .ranked-element .ranked-stats p{
+#summoner-info .ranked .ranked-element:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .ranked .ranked-element .ranked.tooltip p{
     margin:0;
 }
 #summoner-info .masteries {

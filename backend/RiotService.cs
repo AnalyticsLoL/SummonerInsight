@@ -248,6 +248,7 @@ namespace backend
                 var damage = new JsonObject();
                 damage["totalDamageDealtToChampions"] = participant.AsObject()?["totalDamageDealtToChampions"]?.DeepClone();
                 damage["totalDamageTaken"] = participant.AsObject()?["totalDamageTaken"]?.DeepClone();
+                damage["totalHealsOnTeammates"] = participant.AsObject()?["totalHealsOnTeammates"]?.DeepClone();
                 participantData["damage"] = damage;
 
                 var vision = new JsonObject();
