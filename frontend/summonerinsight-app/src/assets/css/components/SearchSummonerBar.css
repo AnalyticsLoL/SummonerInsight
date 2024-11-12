@@ -66,6 +66,9 @@
 #region_dropdown .dropdown-menu .dropdown_item {
     cursor: pointer;
     padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap : 10px;
 }
 
 #region_dropdown .dropdown-menu .dropdown_item:hover {

@@ -1,10 +1,5 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
-
-import { ReactComponent as TopIcon } from "../../../assets/svg/position_icons/top.svg";
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 

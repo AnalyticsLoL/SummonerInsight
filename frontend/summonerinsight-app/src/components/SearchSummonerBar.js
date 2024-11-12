@@ -54,6 +54,7 @@ function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute
                 <div className="dropdown-menu">
                     {regions.map((region, index) => (
                         <div key={index} className='dropdown_item' onClick={() => handleDropdownClick(region)}>
+                            <region.regionIcon />
                             <p>{region.regionName}</p>
                         </div>
                     ))}

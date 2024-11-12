@@ -26,28 +26,46 @@ import { ReactComponent as MidIcon } from "./assets/svg/position_icons/mid.svg";
 import { ReactComponent as AdcIcon } from "./assets/svg/position_icons/adc.svg";
 import { ReactComponent as SupportIcon } from "./assets/svg/position_icons/support.svg";
 
+import { ReactComponent as BrIcon } from "./assets/svg/region_icons/br.svg";
+import { ReactComponent as EuneIcon } from "./assets/svg/region_icons/eune.svg";
+import { ReactComponent as EuwIcon } from "./assets/svg/region_icons/euw.svg";
+import { ReactComponent as JpIcon } from "./assets/svg/region_icons/jp.svg";
+import { ReactComponent as KrIcon } from "./assets/svg/region_icons/kr.svg";
+import { ReactComponent as LanIcon } from "./assets/svg/region_icons/lan.svg";
+import { ReactComponent as LasIcon } from "./assets/svg/region_icons/las.svg";
+import { ReactComponent as MeIcon } from "./assets/svg/region_icons/me.svg";
+import { ReactComponent as NaIcon } from "./assets/svg/region_icons/na.svg";
+import { ReactComponent as OceIcon } from "./assets/svg/region_icons/oce.svg";
+import { ReactComponent as PhIcon } from "./assets/svg/region_icons/ph.svg";
+import { ReactComponent as RuIcon } from "./assets/svg/region_icons/ru.svg";
+import { ReactComponent as SiIcon } from "./assets/svg/region_icons/si.svg";
+import { ReactComponent as TaIcon } from "./assets/svg/region_icons/ta.svg";
+import { ReactComponent as ThIcon } from "./assets/svg/region_icons/th.svg";
+import { ReactComponent as TrIcon } from "./assets/svg/region_icons/tr.svg";
+import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
+
 export const league_version = "14.22.1";
 export const api_url = "http://127.0.0.1:5151/api/RiotData";
 
 // All the regions of league of legends
 export const regions = [
-    {regionName: "North America", regionTag: "NA1", regionRoute: "americas"},
-    {regionName: "Middle East", regionTag: "ME1", regionRoute: "asia"}, 
-    {regionName: "Europe West", regionTag: "EUW1", regionRoute: "europe"}, 
-    {regionName: "Europe Nordic & East", regionTag: "EUN1", regionRoute: "europe"}, 
-    {regionName: "Oceania", regionTag: "OC1", regionRoute: "asia"}, 
-    {regionName: "Korea", regionTag: "KR1", regionRoute: "asia"}, 
-    {regionName: "Japan", regionTag: "JP1", regionRoute: "asia"}, 
-    {regionName: "Brazil", regionTag: "BR1", regionRoute: "americas"}, 
-    {regionName: "LAS", regionTag: "LA2", regionRoute: "americas"}, 
-    {regionName: "LAN", regionTag: "LA1", regionRoute: "americas"}, 
-    {regionName: "Russia", regionTag: "RU", regionRoute: "europe"}, 
-    {regionName: "Turkey", regionTag: "TR1", regionRoute: "asia"}, 
-    {regionName: "Singapore", regionTag: "SG2", regionRoute: "asia"}, 
-    {regionName: "Philipines", regionTag: "PH2", regionRoute: "asia"}, 
-    {regionName: "Taiwan", regionTag: "TW2", regionRoute: "asia"}, 
-    {regionName: "Vietnam", regionTag: "VN2", regionRoute: "asia"}, 
-    {regionName: "Thailand", regionTag: "TH2", regionRoute: "asia"}
+    {regionName: "North America", regionTag: "NA1", regionRoute: "americas", regionIcon: NaIcon},
+    {regionName: "Middle East", regionTag: "ME1", regionRoute: "asia", regionIcon: MeIcon},
+    {regionName: "Europe West", regionTag: "EUW1", regionRoute: "europe", regionIcon: EuwIcon},
+    {regionName: "Europe Nordic & East", regionTag: "EUN1", regionRoute: "europe", regionIcon: EuneIcon},
+    {regionName: "Oceania", regionTag: "OC1", regionRoute: "asia", regionIcon: OceIcon},
+    {regionName: "Korea", regionTag: "KR1", regionRoute: "asia", regionIcon: KrIcon},
+    {regionName: "Japan", regionTag: "JP1", regionRoute: "asia", regionIcon: JpIcon},
+    {regionName: "Brazil", regionTag: "BR1", regionRoute: "americas", regionIcon: BrIcon},
+    {regionName: "LAS", regionTag: "LA2", regionRoute: "americas", regionIcon: LasIcon},
+    {regionName: "LAN", regionTag: "LA1", regionRoute: "americas", regionIcon: LanIcon},
+    {regionName: "Russia", regionTag: "RU", regionRoute: "europe", regionIcon: RuIcon},
+    {regionName: "Turkey", regionTag: "TR1", regionRoute: "asia", regionIcon: TrIcon},
+    {regionName: "Singapore", regionTag: "SG2", regionRoute: "asia", regionIcon: SiIcon},
+    {regionName: "Philippines", regionTag: "PH2", regionRoute: "asia", regionIcon: PhIcon},
+    {regionName: "Taiwan", regionTag: "TW2", regionRoute: "asia", regionIcon: TaIcon},
+    {regionName: "Vietnam", regionTag: "VN2", regionRoute: "asia", regionIcon: ViIcon},
+    {regionName: "Thailand", regionTag: "TH2", regionRoute: "asia", regionIcon: ThIcon}
 ];
 
 // To link the ranks to their respective emblems
