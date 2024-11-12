@@ -154,5 +154,23 @@ export const profileIconPath = `https://ddragon.leagueoflegends.com/cdn/${league
 // Path to get champion passives icons
 export const championPassivePath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/passive`;
 
-// Path to get champion spells icons
+// Path to get champion/summoner spells icons
 export const championSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/spell`;
+
+// Path to get champion general data
+export const ddragonChampionGlobalPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion.json`;
+
+// Path to get champion specific data
+export const ddragonChampionSpecificPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion`;
+
+// Path to get item data
+export const ddragonItemPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/item.json`;
+
+// Path to get summoner spells data
+export const ddragonSummonerSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/summoner.json`;
+
+// Path to get map data
+export const ddragonMapPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/map.json`;
+
+// Path to get map img
+export const ddragonMapImgPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/map`;

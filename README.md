@@ -6,9 +6,11 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
+- [ ] Make backend independent from champion and item json (Download it using the link on request) Note that item description still needs to be done in the server for efficiency or find a way to replace description
 - [ ] Figure out some style for the masteries milestones
-- [ ] Add tooltips with the name and date of the user profileIcon
 - [ ] Add spells images of the champion in their tooltips with their own tooltips
+- [ ] Filter matchhistory by queuetype and gamemode
+- [ ] Summonersearchbar in Nav bar when not on home page
 - [ ] Wait that all the elements are loaded before showing a page
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Clickable links for players in matches
