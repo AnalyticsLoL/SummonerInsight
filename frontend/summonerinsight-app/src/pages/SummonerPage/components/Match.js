@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
-import { useGlobal } from "../../../Context";
 
 import {gameTypes} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";

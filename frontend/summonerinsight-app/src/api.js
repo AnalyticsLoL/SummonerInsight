@@ -1,4 +1,4 @@
-import { regions } from "./constants";
+import { regions, ddragonChampionSpecificPath } from "./constants";
 
 export const fetchAPIData = async (url, settings, setIsFetching) => {
     setIsFetching(true);
@@ -21,3 +21,13 @@ export const fetchAPIData = async (url, settings, setIsFetching) => {
         throw new Error(`Error: ${error}`);
     }
 };
+
+export const fetchChampionData = async (championName) => {
+    try {
+        const response = await fetch(`${ddragonChampionSpecificPath}/${championName}.json`);
+        const data = await response.json();
+        return data.data[championName];
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}

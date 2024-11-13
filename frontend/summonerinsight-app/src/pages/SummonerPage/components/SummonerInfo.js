@@ -142,7 +142,7 @@ function SummonerStats({matchHistory}){
                         <circle className="bg-circle" cx="18" cy="18" r="16"></circle>
                         <circle className="percent-circle" cx="18" cy="18" r="16"
                                 style={{"--percentage": `${wins/totalGames}`}}></circle>
-                        <text className={`${wins/totalGames>=0.5?'enhance':''}`} x="18" y="20.35" textAnchor="middle" fontSize="8" fill="#E0E0E0">{(wins/totalGames*100).toFixed(0)}%</text>
+                        <text className={`${wins/totalGames>0.65?'enhance':''}`} x="18" y="20.35" textAnchor="middle" fontSize="8" fill="#E0E0E0">{(wins/totalGames*100).toFixed(0)}%</text>
                     </svg>
                     <div className="tooltip">
                         <p>{totalGames}G {wins}W {losses}L</p>
@@ -159,7 +159,7 @@ function SummonerStats({matchHistory}){
                                 <div key={index} className="champion-kda">
                                     <ChampionComponent championId={champion.championId} isTooltip={false}/>
                                     <div>
-                                        <p className={`${champion.wins/champion.gamesPlayed>=0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
+                                        <p className={`${champion.wins/champion.gamesPlayed>0.65?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
                                         <p>({champion.wins}W/{champion.gamesPlayed-champion.wins}L)</p>
                                     </div>
                                     <p className={`${champion.meanKda>=5?'enhance gold':''}`}>{champion.meanKda.toFixed(2)} KDA</p>

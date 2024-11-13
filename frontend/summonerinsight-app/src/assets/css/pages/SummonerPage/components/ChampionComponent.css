@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 #summoner .champion .tooltip{
-    top: 105%;
+    top: 100%;
     width: 300px;
     height: auto;
     padding: 20px;
@@ -16,15 +16,20 @@
     opacity: 1;
     visibility: visible;
 }
-.champion img{
+.champion .champion-icon{
     width: 90%;
     height: auto;
     border-radius: 50%;
     border: 5px solid var(--icon-border);
 }
-.champion .header img{
+.champion .header .champion-icon{
     width: 50px;
     height: 50px;
     border-radius: 50%;
     border: 2px solid var(--icon-border);
+}
+.champion .tooltip .abilities .ability-list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
