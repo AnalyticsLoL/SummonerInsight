@@ -24,7 +24,8 @@ function ProfileSection({ summonerProfile,matchHistory }){
             <span>
                 {favorite_positions.length !== 0 && (
                     <div className="position-icons">
-                        {Object.entries(favorite_positions).map(([position_API_Name, value]) => {
+                        {favorite_positions.map(([position_API_Name, value]) => {
+                            console.log(position_API_Name);
                             const position = positions.find(pos => pos.API_name === position_API_Name);
                             const PositionIcon = position.positionIcon;
                             return (

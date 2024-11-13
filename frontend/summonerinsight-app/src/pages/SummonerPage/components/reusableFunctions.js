@@ -15,7 +15,7 @@ export function parseDescriptionToJson(description) {
         statLines.forEach(line => {
             const attentionMatch = line.match(/<attention>(\d+%?)<\/attention>\s*(.+)/);
             if (attentionMatch) {
-                const [_, value, text] = attentionMatch;
+                const [, value, text] = attentionMatch;
                 // Capitalize the first letter of each key word
                 const key = text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
                 result.stats[key] = value.includes('%') ? value : Number(value);  // Handle % values as strings
@@ -66,10 +66,5 @@ export const find_positions = (matchHistory, summonerProfile) => {
         const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
         positions[position]++;
     });
-    return Object.keys(positions).reduce((acc, key) => {
-        if (positions[key] > 5) {
-            acc[key] = positions[key];
-        }
-        return acc;
-    }, {});
+    return Object.entries(positions).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, 2);
 };

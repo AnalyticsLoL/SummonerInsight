@@ -60,6 +60,11 @@
     align-items: center;
     gap: 10px;
 }
+#summoner-info .profile .position-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 #summoner-info .profile .position.icon {
     position:relative;
 }
