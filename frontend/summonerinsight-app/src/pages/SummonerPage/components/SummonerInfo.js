@@ -113,8 +113,8 @@ function MasterySection({initialMasteries}){
                         <p>{mastery.championPoints.toLocaleString()} Points</p>
                         <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
                         {mastery.milestoneGrades && <div className="mastery-grades">
-                            <p>Milestone:</p>
-                            {mastery.milestoneGrades.map((grade, index) => (
+                            <p>Grades obtained:</p>
+                            {Array.from(new Set(mastery.milestoneGrades)).map((grade, index) => ( // Turn milestoneGrades into a set to remove duplicates then back in Array
                                 <p key={index}>{grade}</p>
                             ))}
                         </div>}
