@@ -41,7 +41,6 @@ export default function Summoner() {
     const { isLoadingGlobal } = useGlobal();
     const matchhistory=location.state.matchhistory;
     const summonerInfo=location.state.summonerInfo;
-
     return (
         <div id="summoner" className="page" style={{ visibility: isLoadingGlobal ? 'hidden' : 'visible' }}>
             <div className="section">

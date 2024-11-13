@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGlobal } from "../../../Context.js";
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
-import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath } from "../../../constants.js";
+import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath, championFullData } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
 import { find_positions } from "./reusableFunctions";
-import { fetchChampionData } from "../../../api";
 import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
 import ChampionComponent from "./ChampionComponent.js";
 
@@ -86,68 +84,45 @@ function RankedSection({rankedStats}){
 }
 
 function MasterySection({initialMasteries}){
-    const [isFetching,setIsFetching] = useState(true);
-    const { setIsLoadingGlobal } = useGlobal();
-    const [championMasteries, setChampionMasteries] = React.useState([]);
-
-    useEffect(() => {
-        const loadingMasteries = async (initialMasteries) => {
-            const loadedMasteries = await Promise.all(initialMasteries.map(async mastery => {
-                const championData = await fetchChampionData(mastery.championId, setIsFetching);
-                return { ...mastery, champion: championData }; // Add the champion data to each mastery
-            }));
-            if (loadedMasteries) {
-                setChampionMasteries(loadedMasteries);
-                setIsFetching(false);
-            }
-        };
-        loadingMasteries(initialMasteries);
-    },[initialMasteries]);
-
-    useEffect(() => {
-        // Update global loading state whenever fetching changes
-        setTimeout(() => {
-            setIsLoadingGlobal(isFetching);
-        }, 120);
-    }, [isFetching,setIsLoadingGlobal]);
-
-    if(!isFetching){
-        return(
-            <div className="masteries section">
-                {championMasteries.map((mastery, index) => (
-                    <div key={index} className="champion-mastery subsection black-box-hover">
-                        <figure>
-                            <div className="image-container">
-                                <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon" />
-                            </div>
-                            <div className="mastery-icon">
-                                {mastery.championLevel <= 10 ? (
-                                    <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
-                                )
-                                :(
-                                    <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === 10).masteryIcon} alt="Mastery Icon" />
-                                )}
-                            </div>
-                        </figure>
-                        <div className="tooltip">
-                            <div className="header">
-                                <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
-                                <p>Mastery level {mastery.championLevel}</p>
-                            </div>
-                            <p>{mastery.championPoints.toLocaleString()} Points</p>
-                            <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
-                            {mastery.milestoneGrades && <div className="mastery-grades">
-                                <p>Milestone:</p>
-                                {mastery.milestoneGrades.map((grade, index) => (
-                                    <p key={index}>{grade}</p>
-                                ))}
-                            </div>}
+    const championMasteries = initialMasteries.map(mastery => {
+        const champion = Object.values(championFullData.data).find(champion => champion.key === mastery.championId.toString());
+        return { ...mastery, champion };
+    });
+    return(
+        <div className="masteries section">
+            {championMasteries.map((mastery, index) => (
+                <div key={index} className="champion-mastery subsection black-box-hover">
+                    <figure>
+                        <div className="image-container">
+                            <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon" />
                         </div>
+                        <div className="mastery-icon">
+                            {mastery.championLevel <= 10 ? (
+                                <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
+                            )
+                            :(
+                                <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === 10).masteryIcon} alt="Mastery Icon" />
+                            )}
+                        </div>
+                    </figure>
+                    <div className="tooltip">
+                        <div className="header">
+                            <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
+                            <p>Mastery level {mastery.championLevel}</p>
+                        </div>
+                        <p>{mastery.championPoints.toLocaleString()} Points</p>
+                        <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
+                        {mastery.milestoneGrades && <div className="mastery-grades">
+                            <p>Milestone:</p>
+                            {mastery.milestoneGrades.map((grade, index) => (
+                                <p key={index}>{grade}</p>
+                            ))}
+                        </div>}
                     </div>
-                ))}
-            </div>
-        );
-    }
+                </div>
+            ))}
+        </div>
+    );
 }
 
 function SummonerStats({matchHistory}){

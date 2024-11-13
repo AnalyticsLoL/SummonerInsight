@@ -1,4 +1,4 @@
-import { regions, ddragonChampionGlobalPath, ddragonItemPath } from "./constants";
+import { regions } from "./constants";
 
 export const fetchAPIData = async (url, settings, setIsFetching) => {
     setIsFetching(true);
@@ -20,26 +20,4 @@ export const fetchAPIData = async (url, settings, setIsFetching) => {
         setIsFetching(false);
         throw new Error(`Error: ${error}`);
     }
-}
-
-export const fetchChampionData = async (championId, setIsFetching) => {
-    setIsFetching(true);
-    try {
-        let response = await fetch(ddragonChampionGlobalPath);
-        response = await response.json();
-        return Object.values(response.data).find(champion => champion.key === championId.toString());
-    } catch (error) {
-        throw new Error(`Error: ${error}`);
-    }
-}
-
-export const fetchItemData = async (itemId, setIsFetching) => {
-    setIsFetching(true);
-    try {
-        let response = await fetch(`${ddragonItemPath}`);
-        response = await response.json();
-        return response.data[itemId];
-    } catch (error) {
-        throw new Error(`Error: ${error}`);
-    }
-}
+};

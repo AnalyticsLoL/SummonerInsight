@@ -47,10 +47,6 @@ function PlayerInfos({playerStats, match}){
                     (
                         <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1 ? true : false} itemId={itemId} isTooltip={true}/>
                     ))}
-                    {playerStats.items.filter(itemId => itemId === 0).length < 7 &&
-                    Array.from({ length: 7 - playerStats.items.filter(itemId => itemId === 0).length }).map((_, i) => (
-                        <div key={i} className={`empty item ${i === 6 ? 'last-item' : ''}`}/>
-                    ))}
                 </figure>
             </div>
             <div className="player-stats">

@@ -160,11 +160,21 @@ export const championSpellPath = `https://ddragon.leagueoflegends.com/cdn/${leag
 // Path to get champion general data
 export const ddragonChampionGlobalPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion.json`;
 
+// Data object of champions fetched from ddragonChampionGlobalPath
+console.log(`Fetching champion Data from: ${ddragonChampionGlobalPath}`);
+let championResponse = await fetch(ddragonChampionGlobalPath);
+export const championFullData = await championResponse.json();
+
 // Path to get champion specific data
 export const ddragonChampionSpecificPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion`;
 
 // Path to get item data
 export const ddragonItemPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/item.json`;
+
+// Data object of items fetched from ddragonItemPath
+console.log(`Fetching item Data from: ${ddragonItemPath}`);
+let itemResponse = await fetch(ddragonItemPath);
+export const itemFullData = await itemResponse.json();
 
 // Path to get summoner spells data
 export const ddragonSummonerSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/summoner.json`;

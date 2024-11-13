@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useGlobal } from '../../../Context';
+import React from 'react';
 
-import { itemIconPath } from '../../../constants';
-import { fetchItemData } from '../../../api';
+import { itemIconPath, itemFullData } from '../../../constants';
 import { parseDescriptionToJson } from './reusableFunctions';
 
 import '../../../assets/css/pages/SummonerPage/components/ItemComponent.css';
@@ -40,31 +38,12 @@ const description = (itemDescription) => {
 }
 
 export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
-    const [isFetching, setIsFetching] = useState(true);
-    const { setIsLoadingGlobal } = useGlobal();
-    const [item, setItem] = useState({});
-
-    useEffect(() => {
-        const loadingItem = async (itemId) => {
-            const loadedItem = await fetchItemData(itemId, setIsFetching);
-            if (loadedItem) {
-                setItem(loadedItem);
-                setIsFetching(false);
-            }
-        };
-        loadingItem(itemId);
-    },[itemId]);
-
-    useEffect(() => {
-        // Update global loading state whenever fetching changes
-        setTimeout(() => {
-            setIsLoadingGlobal(isFetching);
-        }, 120);
-    }, [isFetching,setIsLoadingGlobal]);
-
-    if(isFetching){
-        return;
+    if(itemId === 0) {
+        return (
+            <div className={`empty item ${isLastItem ? 'last-item' : ''}`}/>
+        );
     }
+    const item = itemFullData.data[itemId];
     return (
         <div className={`item ${ isLastItem? 'last' : ''} black-box-hover`}>
             <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />

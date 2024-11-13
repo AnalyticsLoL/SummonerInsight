@@ -1,37 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import { useGlobal } from '../../../Context';
+import React from 'react';
 
-import { championIconPath } from '../../../constants';
-import { fetchChampionData } from '../../../api';
+import { championIconPath, championFullData } from '../../../constants';
 
 import '../../../assets/css/pages/SummonerPage/components/ChampionComponent.css';
 
 export default function ChampionComponent({ championId, isTooltip, hasBorder }) {
-    const [isFetching, setIsFetching] = useState(true);
-    const [champion, setChampion] = useState({});
-    const { setIsLoadingGlobal } = useGlobal();
-
-    useEffect(() => {
-        const loadingChampion = async (championId) => {
-            const loadedChampion = await fetchChampionData(championId, setIsFetching);
-            if (loadedChampion) {
-                setChampion(loadedChampion);
-                setIsFetching(false);
-            }
-        };
-        loadingChampion(championId);
-    },[championId]);
-
-    useEffect(() => {
-        // Update global loading state whenever fetching changes
-        setTimeout(() => {
-            setIsLoadingGlobal(isFetching);
-        }, 120);
-    }, [isFetching,setIsLoadingGlobal]);
-
-    if(isFetching){
-        return;
-    }
+    const champion = Object.values(championFullData.data).find(champion => champion.key === championId.toString());
     return (
         <div className="champion">
             <img style={hasBorder?null:{border: "none"}} src={`${championIconPath}/${champion.image.full}`} alt="Champion Icon" />
