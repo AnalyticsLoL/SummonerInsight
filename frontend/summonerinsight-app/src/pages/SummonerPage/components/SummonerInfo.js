@@ -1,32 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from 'react-router-dom';
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
-import { ranks, championMasteries, regions, positions } from "../../../constants.js";
+import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
+import { find_positions } from "./reusableFunctions";
+import { fetchChampionData } from "../../../api";
 import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
-import { championIconPath, profileIconPath } from "../../../constants";
-
-const find_positions = (matchHistory, summonerProfile) => {
-    let positions = {
-        "TOP": 0,
-        "JUNGLE": 0,
-        "MIDDLE": 0,
-        "BOTTOM": 0,
-        "UTILITY": 0
-    };
-    matchHistory.forEach(match => {
-        const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
-        positions[position]++;
-    });
-    return Object.keys(positions).reduce((acc, key) => {
-        if (positions[key] > 5) {
-            acc[key] = positions[key];
-        }
-        return acc;
-    }, {});
-};
+import ChampionComponent from "./ChampionComponent.js";
 
 function ProfileSection({ summonerProfile,matchHistory }){
     const { regionTag } = useParams();
@@ -102,51 +84,70 @@ function RankedSection({rankedStats}){
     );
 }
 
-function MasterySection({championMastery}){
-    return(
-        <div className="masteries section">
-            {championMastery.map((mastery, index) => (
-                <div key={index} className="champion-mastery subsection black-box-hover">
-                    <figure>
-                        <div className="image-container">
-                            <img src={`${championIconPath}/${mastery.championIcon}`} alt="Champion Icon" />
+function MasterySection({initialMasteries}){
+    const isLoading = useRef(true);
+    const [championMasteries, setChampionMasteries] = React.useState([]);
+
+    useEffect(() => {
+        const loadingMasteries = async (initialMasteries) => {
+            const loadedMasteries = await Promise.all(initialMasteries.map(async mastery => {
+                const championData = await fetchChampionData(mastery.championId, isLoading);
+                return { ...mastery, champion: championData }; // Add the champion data to each mastery
+            }));
+            if (loadedMasteries) {
+                setChampionMasteries(loadedMasteries);
+            }
+        };
+        loadingMasteries(initialMasteries);
+    },[initialMasteries]);
+
+    if(!isLoading.current){
+        return(
+            <div className="masteries section">
+                {championMasteries.map((mastery, index) => (
+                    <div key={index} className="champion-mastery subsection black-box-hover">
+                        <figure>
+                            <div className="image-container">
+                                <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon" />
+                            </div>
+                            <div className="mastery-icon">
+                                {mastery.championLevel <= 10 ? (
+                                    <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
+                                )
+                                :(
+                                    <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === 10).masteryIcon} alt="Mastery Icon" />
+                                )}
+                            </div>
+                        </figure>
+                        <div className="tooltip">
+                            <div className="header">
+                                <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
+                                <p>Mastery level {mastery.championLevel}</p>
+                            </div>
+                            <p>{mastery.championPoints.toLocaleString()} Points</p>
+                            <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
+                            {mastery.milestoneGrades && <div className="mastery-grades">
+                                <p>Milestone:</p>
+                                {mastery.milestoneGrades.map((grade, index) => (
+                                    <p key={index}>{grade}</p>
+                                ))}
+                            </div>}
                         </div>
-                        <div className="mastery-icon">
-                            {mastery.championLevel <= 10 ? (
-                                <img src={championMasteries.find(championMastery => championMastery.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
-                            )
-                            :(
-                                <img src={championMasteries.find(championMastery => championMastery.masteryId === 10).masteryIcon} alt="Mastery Icon" />
-                            )}
-                        </div>
-                    </figure>
-                    <div className="tooltip">
-                        <div className="header">
-                            <img src={`${championIconPath}/${mastery.championIcon}`} alt="Champion Icon"/>
-                            <p>Mastery level {mastery.championLevel}</p>
-                        </div>
-                        <p>{mastery.championPoints.toLocaleString()} Points</p>
-                        <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
-                        {mastery.milestoneGrades && <div className="mastery-grades">
-                            <p>Milestone:</p>
-                            {mastery.milestoneGrades.map((grade, index) => (
-                                <p key={index}>{grade}</p>
-                            ))}
-                        </div>}
                     </div>
-                </div>
-            ))}
-        </div>
-    );
+                ))}
+            </div>
+        );
+    }
 }
 
 function SummonerStats({matchHistory}){
     const { gameName } = useParams();
+
     const playerStats = getPlayerStats(matchHistory, gameName);
     const totalGames = matchHistory.length;
     const wins = countTotalWins(playerStats);
     const losses = totalGames - wins;
-    const meanKda = getMeanKDA(playerStats)
+    const meanKda = getMeanKDA(playerStats);
 
     return(
         <div className="stats section">
@@ -171,7 +172,7 @@ function SummonerStats({matchHistory}){
                         .map((champion, index) => {
                             return (
                                 <div key={index} className="champion-kda">
-                                    <img src={`${championIconPath}/${champion.iconName}`} alt="Champion Icon"/>
+                                    <ChampionComponent championId={champion.championId} isTooltip={false}/>
                                     <div>
                                         <p className={`${champion.wins/champion.gamesPlayed>=0.5?'enhance red':''}`}>{(champion.wins/champion.gamesPlayed*100).toFixed(0)}%</p>
                                         <p>({champion.wins}W/{champion.gamesPlayed-champion.wins}L)</p>
@@ -192,8 +193,8 @@ export default function SummonerInfo({summonerInfo, matchHistory}){
             <div id="summoner-info">
                 <ProfileSection summonerProfile={summonerInfo.summonerProfile} matchHistory={matchHistory}/>
                 <RankedSection rankedStats={summonerInfo.rankedStats}/>
-                <MasterySection championMastery={summonerInfo.championMastery}/>
-                <SummonerStats matchHistory={matchHistory}/> 
+                <MasterySection initialMasteries={summonerInfo.championMastery}/>
+                <SummonerStats matchHistory={matchHistory}/>
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import "../../assets/css/pages/SummonerPage/Summoner.css";
 import { useGlobal } from "../../Context.js";
 
-import {fetchData} from "../../fetchData.js";
+import {fetchAPIData} from "../../api.js";
 import {api_url} from "../../constants.js";
 
 import LoadButton from "../../reusable/LoadButton.js";
@@ -24,7 +24,7 @@ function MatchHistory({matchhistory}){
             RegionTag: regionTag.toLowerCase(),
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
         }
-        const fetchedMatches = await fetchData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsLoading);
+        const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsLoading);
         setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
     };
     return(

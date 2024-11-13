@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
+import { useGlobal } from "../../../Context";
 
 import {gameTypes} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
@@ -20,7 +21,7 @@ function GameStatus({playerStats, match}){
 }
 
 function PlayerInfos({playerStats, match}){
-    const isSupport = playerStats.damage.totalHealsOnTeammates!==0 && playerStats.champion.tags.includes("Support") && playerStats.position === "UTILITY";
+    const isSupport = playerStats.damage.totalHealsOnTeammates!==0 && playerStats.position === "UTILITY";
     const maxDealt = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalDamageDealtToChampions);
     }, 0);
@@ -38,16 +39,16 @@ function PlayerInfos({playerStats, match}){
         <div className="player-infos">
             <div className="player-champion-items">
                 <div className="champion-summoner">
-                    <ChampionComponent champion={playerStats.champion} isTooltip={true}/>
+                    <ChampionComponent championId={playerStats.championId} isTooltip={true} hasBorder={true}/>
                     <figcaption>{playerStats.champLevel}</figcaption>
                 </div>
                 <figure className="items">
-                    {playerStats.items.map((item, index) => 
+                    {playerStats.items.map((itemId, index) => 
                     (
-                        <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1? true : false} item={item} isTooltip={true}/>
+                        <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1 ? true : false} itemId={itemId} isTooltip={true}/>
                     ))}
-                    {playerStats.items.length < 7 &&
-                    Array.from({ length: 7 - playerStats.items.length }).map((_, i) => (
+                    {playerStats.items.filter(itemId => itemId === 0).length < 7 &&
+                    Array.from({ length: 7 - playerStats.items.filter(itemId => itemId === 0).length }).map((_, i) => (
                         <div key={i} className={`empty item ${i === 6 ? 'last-item' : ''}`}/>
                     ))}
                 </figure>
@@ -104,7 +105,7 @@ function Team({match, id, gameName}){
                 .filter(participant => participant.teamId === id)
                 .map((participant, index) => (
                     <figure key={index} className="player">
-                        <ChampionComponent champion={participant.champion} isTooltip={false}/>
+                        <ChampionComponent championId={participant.championId} isTooltip={false} hasBorder={true}/>
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                     </figure>
                 ))}

@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { itemIconPath } from '../../../constants';
+import { fetchItemData } from '../../../api';
+import { parseDescriptionToJson } from './reusableFunctions';
 
 import '../../../assets/css/pages/SummonerPage/components/ItemComponent.css';
 
 const description = (itemDescription) => {
+    const descriptionObject = parseDescriptionToJson(itemDescription);
     return(
         <div className='description'>
-            {Object.values(itemDescription.stats).length > 0 && (<div className='stats'>
+            {Object.values(descriptionObject.stats).length > 0 && (<div className='stats'>
                 <p>Stats: </p>
                 <ul>
-                    {Object.entries(itemDescription.stats).map(([key, value]) => (
+                    {Object.entries(descriptionObject.stats).map(([key, value]) => (
                         <li key={key}>{key}: {value}</li>
                     ))}
                 </ul>
             </div>)}
-            {itemDescription.passive.length > 0 &&(<div className='passives'>
+            {descriptionObject.passive.length > 0 &&(<div className='passives'>
                 <p>Passive: </p>
                 <ul>
-                    {itemDescription.passive.map((passive, index) => (
+                    {descriptionObject.passive.map((passive, index) => (
                         <li key={index}>{passive.name}: {passive.description}</li>
                     ))}
                 </ul>
             </div>)}
-            {itemDescription.active.length > 0 &&(<div className='actives'>
+            {descriptionObject.active.length > 0 &&(<div className='actives'>
                 <p>Active: </p>
                 <ul>
-                    {itemDescription.active.map((active, index) => (
+                    {descriptionObject.active.map((active, index) => (
                         <li key={index}>{active.name}: {active.description}</li>
                     ))}
                 </ul>
@@ -34,7 +38,23 @@ const description = (itemDescription) => {
     );
 }
 
-export default function ItemComponent({ isLastItem, item, isTooltip }) {
+export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
+    const isLoading = useRef(true);
+    const [item, setItem] = useState({});
+
+    useEffect(() => {
+        const loadingItem = async (itemId) => {
+            const loadedItem = await fetchItemData(itemId, isLoading);
+            if (loadedItem) {
+                setItem(loadedItem);
+                isLoading.current = false;
+            }
+        };
+        loadingItem(itemId);
+    },[itemId]);
+    if(isLoading.current){
+        return;
+    }
     return (
         <div className={`item ${ isLastItem? 'last' : ''} black-box-hover`}>
             <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />

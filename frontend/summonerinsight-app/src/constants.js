@@ -114,7 +114,7 @@ export const gameTypes = [
 ];
 
 // To link the champions masteries Icon to their respective levels
-export const championMasteries = [
+export const championMasteriesIcons = [
     {masteryId: 0, masteryIcon: championMastery0},
     {masteryId: 1, masteryIcon: championMastery1},
     {masteryId: 2, masteryIcon: championMastery2},

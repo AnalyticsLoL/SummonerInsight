@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {api_url, regions} from '../constants.js';
-import { fetchData } from '../fetchData.js';
+import { fetchAPIData } from '../api.js';
 import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../Context.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -90,8 +90,8 @@ export default function SearchSummonerBar() {
             Region: regionRoute.toLowerCase()
         };
         try {
-            const summonerInfo = await fetchData(`${api_url}/summonerInfo`, settings, setIsLoading);
-            const matchhistory = await fetchData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
+            const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsLoading);
+            const matchhistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
             if (summonerInfo && matchhistory) {
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
