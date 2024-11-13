@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGlobal } from '../../../Context';
 
 import { itemIconPath } from '../../../constants';
 import { fetchItemData } from '../../../api';
@@ -39,20 +40,29 @@ const description = (itemDescription) => {
 }
 
 export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
-    const isLoading = useRef(true);
+    const [isFetching, setIsFetching] = useState(true);
+    const { setIsLoadingGlobal } = useGlobal();
     const [item, setItem] = useState({});
 
     useEffect(() => {
         const loadingItem = async (itemId) => {
-            const loadedItem = await fetchItemData(itemId, isLoading);
+            const loadedItem = await fetchItemData(itemId, setIsFetching);
             if (loadedItem) {
                 setItem(loadedItem);
-                isLoading.current = false;
+                setIsFetching(false);
             }
         };
         loadingItem(itemId);
     },[itemId]);
-    if(isLoading.current){
+
+    useEffect(() => {
+        // Update global loading state whenever fetching changes
+        setTimeout(() => {
+            setIsLoadingGlobal(isFetching);
+        }, 120);
+    }, [isFetching,setIsLoadingGlobal]);
+
+    if(isFetching){
         return;
     }
     return (

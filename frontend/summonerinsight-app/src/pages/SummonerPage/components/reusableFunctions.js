@@ -66,5 +66,5 @@ export const find_positions = (matchHistory, summonerProfile) => {
         const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
         positions[position]++;
     });
-    return Object.entries(positions).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, 2);
+    return Object.entries(positions).filter(([, value]) => value > 0).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, 2);
 };

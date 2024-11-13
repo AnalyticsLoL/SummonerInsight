@@ -1,7 +1,7 @@
 import { regions, ddragonChampionGlobalPath, ddragonItemPath } from "./constants";
 
-export const fetchAPIData = async (url, settings, setIsLoading) => {
-    setIsLoading(true);
+export const fetchAPIData = async (url, settings, setIsFetching) => {
+    setIsFetching(true);
     if(!settings.RegionRoute){
         settings.Region = regions.find(region => region.regionTag === settings.RegionTag.toUpperCase()).regionRoute;
     }
@@ -14,20 +14,18 @@ export const fetchAPIData = async (url, settings, setIsLoading) => {
             },
             body: JSON.stringify(settings)
         });
-        setIsLoading(false);
+        setIsFetching(false);
         return await response.json();
     } catch (error) {
-        setIsLoading(false);
+        setIsFetching(false);
         throw new Error(`Error: ${error}`);
     }
 }
 
-export const fetchChampionData = async (championId, isLoading) => {
-    isLoading.current = true;
-    console.log(`Fetching champion data from: ${ddragonChampionGlobalPath}`);
+export const fetchChampionData = async (championId, setIsFetching) => {
+    setIsFetching(true);
     try {
         let response = await fetch(ddragonChampionGlobalPath);
-        isLoading.current = false;
         response = await response.json();
         return Object.values(response.data).find(champion => champion.key === championId.toString());
     } catch (error) {
@@ -35,12 +33,10 @@ export const fetchChampionData = async (championId, isLoading) => {
     }
 }
 
-export const fetchItemData = async (itemId, isLoading) => {
-    isLoading.current = true;
-    console.log(`Fetching item data from: ${ddragonItemPath}`);
+export const fetchItemData = async (itemId, setIsFetching) => {
+    setIsFetching(true);
     try {
         let response = await fetch(`${ddragonItemPath}`);
-        isLoading.current = false;
         response = await response.json();
         return response.data[itemId];
     } catch (error) {

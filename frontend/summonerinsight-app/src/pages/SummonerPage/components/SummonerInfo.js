@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
+import { useGlobal } from "../../../Context.js";
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
@@ -25,7 +26,6 @@ function ProfileSection({ summonerProfile,matchHistory }){
                 {favorite_positions.length !== 0 && (
                     <div className="position-icons">
                         {favorite_positions.map(([position_API_Name, value]) => {
-                            console.log(position_API_Name);
                             const position = positions.find(pos => pos.API_name === position_API_Name);
                             const PositionIcon = position.positionIcon;
                             return (
@@ -86,23 +86,32 @@ function RankedSection({rankedStats}){
 }
 
 function MasterySection({initialMasteries}){
-    const isLoading = useRef(true);
+    const [isFetching,setIsFetching] = useState(true);
+    const { setIsLoadingGlobal } = useGlobal();
     const [championMasteries, setChampionMasteries] = React.useState([]);
 
     useEffect(() => {
         const loadingMasteries = async (initialMasteries) => {
             const loadedMasteries = await Promise.all(initialMasteries.map(async mastery => {
-                const championData = await fetchChampionData(mastery.championId, isLoading);
+                const championData = await fetchChampionData(mastery.championId, setIsFetching);
                 return { ...mastery, champion: championData }; // Add the champion data to each mastery
             }));
             if (loadedMasteries) {
                 setChampionMasteries(loadedMasteries);
+                setIsFetching(false);
             }
         };
         loadingMasteries(initialMasteries);
     },[initialMasteries]);
 
-    if(!isLoading.current){
+    useEffect(() => {
+        // Update global loading state whenever fetching changes
+        setTimeout(() => {
+            setIsLoadingGlobal(isFetching);
+        }, 120);
+    }, [isFetching,setIsLoadingGlobal]);
+
+    if(!isFetching){
         return(
             <div className="masteries section">
                 {championMasteries.map((mastery, index) => (

@@ -10,15 +10,15 @@ export const useGlobal = () => {
 
 // Provider component
 export const ContextProvider = ({ children }) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingGlobal, setIsLoadingGlobal] = useState(true);
 
     // Reset all states
     const resetState = () => {
-        setIsLoading(false);
+        setIsLoadingGlobal(false);
     };
 
     return (
-        <Context.Provider value={{ isLoading, setIsLoading, resetState }}>
+        <Context.Provider value={{ isLoadingGlobal, setIsLoadingGlobal, resetState }}>
             {children}
         </Context.Provider>
     );

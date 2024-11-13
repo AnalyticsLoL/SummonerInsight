@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {api_url, regions} from '../constants.js';
 import { fetchAPIData } from '../api.js';
 import { useNavigate } from 'react-router-dom';
-import { useGlobal } from '../Context.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -70,7 +69,7 @@ export default function SearchSummonerBar() {
     const [gameName, setGameName] = React.useState('');
     const [tagLine, setTagLine] = React.useState('');
     const [regionRoute, setRegionRoute] = React.useState('Americas');
-    const { isLoading, setIsLoading } = useGlobal();
+    const [isFetching, setIsFetching] = useState(false);
     const [message, setMessage] = React.useState('');
     const navigate = useNavigate();
 
@@ -82,7 +81,7 @@ export default function SearchSummonerBar() {
 
     const fetchSummonerData = async () => {
         if(gameName === '') return;
-        if (isLoading) return;
+        if (isFetching) return;
         const settings = {
             GameName: gameName.toLowerCase().replace(/\s/g, ''),
             RegionTag: regionTag.toLowerCase(),
@@ -90,8 +89,8 @@ export default function SearchSummonerBar() {
             Region: regionRoute.toLowerCase()
         };
         try {
-            const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsLoading);
-            const matchhistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsLoading);
+            const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsFetching);
+            const matchhistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsFetching);
             if (summonerInfo && matchhistory) {
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
@@ -130,7 +129,7 @@ export default function SearchSummonerBar() {
                         }} 
                     />
                 </div>
-                <LoadButton onClick={fetchSummonerData} text='Search'/>
+                <LoadButton onClick={fetchSummonerData} text='Search' isFetching={isFetching}/>
             </div>
             {message && (
                 <div className="message">
