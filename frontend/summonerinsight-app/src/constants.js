@@ -111,6 +111,8 @@ export const gameTypes = [
     {queueId: 940, map: "Summoner's Rift", description: "Nexus Siege"},
     {queueId: 1020, map: "Summoner's Rift", description: "One for All"},
     {queueId: 1400, map: "Summoner's Rift", description: "Ultimate Spellbook"},
+    {queueId: 1700, map: "Rings of Wrath", description: "Arena"},
+    {queueId: 1900, map: "Summoner's Rift", description: "Ultra Rapid Fire"},
 ];
 
 // To link the champions masteries Icon to their respective levels
@@ -184,3 +186,19 @@ export const ddragonMapPath = `https://ddragon.leagueoflegends.com/cdn/${league_
 
 // Path to get map img
 export const ddragonMapImgPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/map`;
+
+export const gradeOrder = {
+    "A+": 4.3,
+    "A": 4.0,
+    "A-": 3.7,
+    "B+": 3.3,
+    "B": 3.0,
+    "B-": 2.7,
+    "C+": 2.3,
+    "C": 2.0,
+    "C-": 1.7,
+    "D+": 1.3,
+    "D": 1.0,
+    "D-": 0.7,
+    "F": 0.0
+};

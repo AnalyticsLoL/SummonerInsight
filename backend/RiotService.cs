@@ -55,11 +55,6 @@ namespace backend
                 // Handle 404 Not Found error
                 throw new InvalidOperationException("404 Not Found");
             }
-            else if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                // Handle other non-OK status codes
-                throw new InvalidOperationException("Error: "+response.StatusCode);
-            }
             return JsonNode.Parse(response.Content);
         }
         public backend.RiotSettings GetSummonerPuuID_GameName_ProfileIcon_Level()
@@ -174,6 +169,11 @@ namespace backend
 
             var participants = new JsonArray();
             var participantsArray = (result.AsObject()?["info"]?["participants"]?.AsArray()) ?? throw new InvalidOperationException("Participants data not found in the response.");
+            bool hasNullGameName = participantsArray.Any(participant => participant["riotIdGameName"]?.GetValue<string>() == null);
+            if (hasNullGameName)
+            {
+                throw new InvalidOperationException("Game data incomplete.");
+            }
             foreach (var participant in participantsArray)
             {
                 var participantData = new JsonObject();

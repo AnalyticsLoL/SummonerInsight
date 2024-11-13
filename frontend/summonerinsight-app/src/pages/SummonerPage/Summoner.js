@@ -15,6 +15,7 @@ function MatchHistory({matchhistory}){
     const { regionTag, gameName, tagLine } = useParams();
     const [matches, setMatches] = React.useState(matchhistory);
     const [isFetching, setIsFetching] = useState(false);
+    const [canLoad, setCanLoad] = useState(true);
     
     const fetchSummonerData = async () => {
         if(isFetching) return;
@@ -24,6 +25,7 @@ function MatchHistory({matchhistory}){
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
         }
         const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsFetching);
+        if(fetchedMatches.length === 0) setCanLoad(false);
         setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
     };
     return(
@@ -31,7 +33,7 @@ function MatchHistory({matchhistory}){
             {matches.map((match, index) => (
                 <Match key={index} match={match}/>
             ))}
-            <LoadButton onClick={fetchSummonerData} text='Load More' isFetching={isFetching}/>
+            {canLoad && (<LoadButton onClick={fetchSummonerData} text='Load More' isFetching={isFetching}/>)}
         </div>
     );
 }

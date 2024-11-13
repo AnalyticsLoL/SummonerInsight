@@ -2,14 +2,21 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
-import {gameTypes} from "../../../constants";
+import {gameTypes,positions} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
 import ChampionComponent from "./ChampionComponent"
 import ItemComponent from "./ItemComponent";
 
 function GameStatus({playerStats, match}){
+    let PositionIcon = null;
+    if (playerStats.position !== ''){
+        console.log(playerStats.position);
+        const position = positions.find(pos => pos.API_name === playerStats.position);
+        PositionIcon = position.positionIcon;
+    }
     return (
         <div className="game-status">
+            { PositionIcon && (<PositionIcon/>)}
             <p>{gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId)?gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId).description:match.metadata.gameTypeId}</p>
             <p>{getTimeDifference(match.metadata.gameStart)}</p>
             <hr/>
@@ -20,7 +27,7 @@ function GameStatus({playerStats, match}){
 }
 
 function PlayerInfos({playerStats, match}){
-    const isSupport = playerStats.damage.totalHealsOnTeammates!==0 && playerStats.position === "UTILITY";
+    const isSupport = playerStats.damage.totalHealsOnTeammates>=1000 && playerStats.position === "UTILITY";
     const maxDealt = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalDamageDealtToChampions);
     }, 0);

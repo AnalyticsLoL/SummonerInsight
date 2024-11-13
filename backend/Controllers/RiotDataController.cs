@@ -40,7 +40,15 @@ namespace backend.Controllers
             var matchInfos = new List<object>();
             foreach (var matchId in matchIds)
             {
-                matchInfos.Add(_riotService.GetMatchInfos(matchId));
+                try
+                {
+                    matchInfos.Add(_riotService.GetMatchInfos(matchId));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    break;
+                }
             }
             return Ok(matchInfos);
         } 

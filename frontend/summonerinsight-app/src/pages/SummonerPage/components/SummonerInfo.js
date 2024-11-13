@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
-import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath, championFullData } from "../../../constants.js";
+import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath, championFullData, gradeOrder } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
 import { find_positions } from "./reusableFunctions";
 import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
@@ -83,6 +83,41 @@ function RankedSection({rankedStats}){
     );
 }
 
+function MasteryElement({mastery}){
+    const grades = Array.from(new Set(mastery.milestoneGrades)).sort((a, b) => gradeOrder[b] - gradeOrder[a]); // Removes duplicates and orders by gradeOrder
+    return (
+        <div className="champion-mastery subsection black-box-hover">
+            <figure>
+                <div className="image-container">
+                    <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon" />
+                </div>
+                <div className="mastery-icon">
+                    {mastery.championLevel <= 10 ? (
+                        <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
+                    )
+                    :(
+                        <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === 10).masteryIcon} alt="Mastery Icon" />
+                    )}
+                </div>
+            </figure>
+            <div className="tooltip">
+                <div className="header">
+                    <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
+                    <p>Mastery level {mastery.championLevel}</p>
+                </div>
+                <p>{mastery.championPoints.toLocaleString()} Points</p>
+                <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
+                {mastery.milestoneGrades && (<div className="mastery-grades">
+                    <p>Grades obtained:</p>
+                    {grades.map((grade, index) => (
+                        <p key={index}>{grade}</p>
+                    ))}
+                </div>)}
+            </div>
+        </div>
+    );
+};
+
 function MasterySection({initialMasteries}){
     const championMasteries = initialMasteries.map(mastery => {
         const champion = Object.values(championFullData.data).find(champion => champion.key === mastery.championId.toString());
@@ -91,35 +126,7 @@ function MasterySection({initialMasteries}){
     return(
         <div className="masteries section">
             {championMasteries.map((mastery, index) => (
-                <div key={index} className="champion-mastery subsection black-box-hover">
-                    <figure>
-                        <div className="image-container">
-                            <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon" />
-                        </div>
-                        <div className="mastery-icon">
-                            {mastery.championLevel <= 10 ? (
-                                <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === mastery.championLevel).masteryIcon} alt="Mastery Icon" />
-                            )
-                            :(
-                                <img src={championMasteriesIcons.find(championMasteryIcon => championMasteryIcon.masteryId === 10).masteryIcon} alt="Mastery Icon" />
-                            )}
-                        </div>
-                    </figure>
-                    <div className="tooltip">
-                        <div className="header">
-                            <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
-                            <p>Mastery level {mastery.championLevel}</p>
-                        </div>
-                        <p>{mastery.championPoints.toLocaleString()} Points</p>
-                        <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
-                        {mastery.milestoneGrades && <div className="mastery-grades">
-                            <p>Grades obtained:</p>
-                            {Array.from(new Set(mastery.milestoneGrades)).map((grade, index) => ( // Turn milestoneGrades into a set to remove duplicates then back in Array
-                                <p key={index}>{grade}</p>
-                            ))}
-                        </div>}
-                    </div>
-                </div>
+                <MasteryElement key={index} mastery={mastery}/>
             ))}
         </div>
     );

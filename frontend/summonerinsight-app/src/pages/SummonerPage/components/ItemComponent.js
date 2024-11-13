@@ -52,8 +52,16 @@ export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
                     <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
                     <h4>{item.name}</h4>
                 </div>
+                <p>{item.plaintext}</p>
                 <p>Cost: {item.gold.total}</p>
                 {description(item.description)}
+                <div className='tags'>
+                    {Object.values(item.tags).map((tag, index) => (
+                        <span key={index} className='tag'>
+                            <p>{tag.replace(/([a-z])([A-Z])/g, '$1 $2')}</p>
+                        </span>  
+                    ))}
+                </div>
             </div>)}
         </div>
     );

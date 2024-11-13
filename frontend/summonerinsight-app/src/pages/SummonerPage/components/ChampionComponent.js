@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { championIconPath, championFullData, championPassivePath } from '../../../constants';
+import { championIconPath, championFullData } from '../../../constants';
 
 import '../../../assets/css/pages/SummonerPage/components/ChampionComponent.css';
 import { fetchChampionData } from '../../../api';

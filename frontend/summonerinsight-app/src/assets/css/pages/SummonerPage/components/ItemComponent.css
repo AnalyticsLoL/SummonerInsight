@@ -28,3 +28,18 @@
     opacity: 1;
     visibility: visible;
 }
+#summoner .item .tooltip .tags{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+}
+#summoner .item .tooltip .tags span {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-border);
+    padding: 5px;
+}
+#summoner .item .tooltip .tags .tag p{
+    font-size: 12px;
+}

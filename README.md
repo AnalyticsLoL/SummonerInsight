@@ -6,7 +6,7 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
-- [ ] Figure out some style for the masteries milestones
+- [ ] Figure out some style for the masteries milestones (Maybe sort of tags with colors for each letter)
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Summonersearchbar in Nav bar when not on home page
 - [ ] Create context elements for matches and summonerInfo and wait that all children components are loaded before showing them
