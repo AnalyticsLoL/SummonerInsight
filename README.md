@@ -6,6 +6,7 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
+- [ ] Make the champion and item data constants to be fetched only once
 - [ ] Figure out some style for the masteries milestones
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Summonersearchbar in Nav bar when not on home page
