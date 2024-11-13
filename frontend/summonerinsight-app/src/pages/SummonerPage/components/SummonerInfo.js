@@ -103,16 +103,22 @@ function MasteryElement({mastery}){
             <div className="tooltip">
                 <div className="header">
                     <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
-                    <p>Mastery level {mastery.championLevel}</p>
+                    <h5>Mastery level {mastery.championLevel}</h5>
                 </div>
                 <p>{mastery.championPoints.toLocaleString()} Points</p>
                 <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
-                {mastery.milestoneGrades && (<div className="mastery-grades">
-                    <p>Grades obtained:</p>
-                    {grades.map((grade, index) => (
-                        <p key={index}>{grade}</p>
-                    ))}
-                </div>)}
+                {grades.length>0 && (
+                    <div className="grades">
+                        <h5>Grades obtained:</h5>
+                        <div className="tags">
+                            {grades.map((grade, index) => (
+                                <span key={index} className="tag">
+                                    <p className={`${grade.includes("S") || grade.includes("A+") ? 'enhance red':''}`}>{grade}</p>
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

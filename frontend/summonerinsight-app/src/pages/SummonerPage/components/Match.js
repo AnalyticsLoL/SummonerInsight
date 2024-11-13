@@ -10,7 +10,6 @@ import ItemComponent from "./ItemComponent";
 function GameStatus({playerStats, match}){
     let PositionIcon = null;
     if (playerStats.position !== ''){
-        console.log(playerStats.position);
         const position = positions.find(pos => pos.API_name === playerStats.position);
         PositionIcon = position.positionIcon;
     }

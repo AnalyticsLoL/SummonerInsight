@@ -101,7 +101,7 @@ export const gameTypes = [
     {queueId: 430, map: "Summoner's Rift", description: "5v5 Blind Pick"},
     {queueId: 440, map: "Summoner's Rift", description: "5v5 Ranked Flex"},
     {queueId: 450, map: "Howling Abyss", description: "5v5 ARAM"},
-    {queueId: 490, map: "Summoner's Rift", description: "Normal (Quickplay)"},
+    {queueId: 490, map: "Summoner's Rift", description: "Quickplay"},
     {queueId: 700, map: "Summoner's Rift", description: "Summoner's Rift Clash"},
     {queueId: 720, map: "Howling Abyss", description: "ARAM Clash"},
     {queueId: 870, map: "Summoner's Rift", description: "Co-op vs. AI Intro Bot"},

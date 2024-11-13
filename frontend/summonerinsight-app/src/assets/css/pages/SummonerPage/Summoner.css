@@ -51,6 +51,21 @@
 #summoner .tooltip li, #summoner .tooltip p{
     font-size: 14px;
 }
+#summoner .tooltip .tags{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+}
+#summoner .tooltip .tags span {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-border);
+    padding: 5px;
+}
+#summoner .tooltip .tags .tag p{
+    font-size: 12px;
+}
 
 .black-box-hover:hover{
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);

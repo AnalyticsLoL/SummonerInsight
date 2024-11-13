@@ -176,6 +176,7 @@
 #summoner-info .masteries  .champion-mastery .tooltip{
     white-space: nowrap;
     bottom: 105%;
+    gap: 10px;
 }
 #summoner-info .masteries  .champion-mastery .tooltip img{
     width: 50px;
@@ -186,10 +187,14 @@
     opacity: 1;
     visibility: visible;
 }
-#summoner-info .masteries  .champion-mastery .tooltip .mastery-grades{
+#summoner-info .masteries  .champion-mastery .tooltip .grades{
     display: flex;
-    flex-direction: row;
-    gap: 5px;
+    flex-direction: column;
+    gap: 8px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip h5{
+    font-size: 14px;
+    margin: 0;
 }
 #summoner-info .stats.subsection{
     padding: 10px 20px;
