@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -33,38 +34,47 @@ namespace backend.Controllers
             _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
 
             // Retrieve match IDs for the player
-            var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idCount);
+            var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idCount).ToList();
             
             // Retrieve match information for each match ID
-            var matchInfosTasks = matchIds.Select(async matchId =>
+            List<JsonObject> matchInfos = [];
+
+            // Batch size because more than 10 at time causes incomplete data
+            const int batchSize = 10;
+            for (int i = 0; i < idCount; i += batchSize)
             {
+                var batch = matchIds.Skip(i).Take(batchSize);
+                var matchInfosTasks = batch.Select(async matchId =>
+                {
+                    try
+                    {
+                        var matchInfo = await _riotService.GetMatchInfosAsync(matchId);
+                        if (matchInfo != null)
+                        {
+                            return matchInfo;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error retrieving match info for match ID {matchId}: {e.Message}");
+                    }
+                    return null;
+                }).ToList();
+
                 try
                 {
-                    var matchInfo = await _riotService.GetMatchInfosAsync(matchId);
-                    if (matchInfo != null)
-                    {
-                        return matchInfo;
-                    }
+                    var batchMatchInfos = await Task.WhenAll(matchInfosTasks);
+                    matchInfos.AddRange(batchMatchInfos.Where(info => info is JsonObject).Cast<JsonObject>());
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Error retrieving match info for match ID {matchId}: {e.Message}");
+                    // Handle any errors from any of the requests
+                    Console.WriteLine(e.Message);
+                    return StatusCode(500, "Error retrieving match information");
                 }
-                return null;
-            }).ToList();
+            }
 
-            try 
-            {
-                var matchInfos = await Task.WhenAll(matchInfosTasks);
-                var validMatchInfos = matchInfos.Where(info => info != null).ToList();
-                return Ok(validMatchInfos);
-            }
-            catch (Exception e)
-            {
-                // Handle any errors from any of the requests
-                Console.WriteLine(e.Message);
-                return StatusCode(500, "Error retrieving match information");
-            }
+            return Ok(matchInfos);
         } 
         [HttpPost("summonerInfo")]
         public IActionResult GetSummonerInfos([FromBody] RiotSettings settings)

@@ -176,66 +176,78 @@ namespace backend
             {
                 throw new ArgumentNullException(nameof(result));
             }
-            var matchData = new JsonObject();
+            JsonObject matchData = [];
 
-            var metadata = new JsonObject();
-            metadata["matchId"] = result.AsObject()?["metadata"]?.AsObject()["matchId"]?.DeepClone();
-            metadata["participantsPuuId"] = result.AsObject()?["metadata"]?.AsObject()?["participants"]?.AsArray().DeepClone();
-            metadata["gameDuration"] = result.AsObject()?["info"]?.AsObject()["gameDuration"]?.DeepClone();
-            metadata["gameStart"] = result.AsObject()?["info"]?["gameStartTimestamp"]?.DeepClone();
-            metadata["gameMode"] = result.AsObject()?["info"]?["gameMode"]?.DeepClone();
-            metadata["gameTypeId"] = result.AsObject()?["info"]?["queueId"]?.DeepClone();
+            JsonObject metadata = new()
+            {
+                ["matchId"] = result.AsObject()?["metadata"]?.AsObject()["matchId"]?.DeepClone(),
+                ["participantsPuuId"] = result.AsObject()?["metadata"]?.AsObject()?["participants"]?.AsArray().DeepClone(),
+                ["gameDuration"] = result.AsObject()?["info"]?.AsObject()["gameDuration"]?.DeepClone(),
+                ["gameStart"] = result.AsObject()?["info"]?["gameStartTimestamp"]?.DeepClone(),
+                ["gameMode"] = result.AsObject()?["info"]?["gameMode"]?.DeepClone(),
+                ["gameTypeId"] = result.AsObject()?["info"]?["queueId"]?.DeepClone()
+            };
             matchData["metadata"] = metadata;
 
-            var participants = new JsonArray();
-            var participantsArray = (result.AsObject()?["info"]?["participants"]?.AsArray()) ?? throw new InvalidOperationException("Participants data not found in the response.");
+            JsonArray participants = [];
+            var participantsArray = result.AsObject()["info"]?["participants"]?.AsArray() ?? throw new InvalidOperationException("Participants data not found in the response.");
             foreach (var participant in participantsArray)
             {
                 if (participant == null || participant.AsObject()["riotIdGameName"] == null)
                 {
                     throw new ArgumentNullException(nameof(participant));
                 }
-                var participantData = new JsonObject();
-                participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
-                participantData["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone();
-                participantData["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone();
-                participantData["championId"]= participant["championId"]?.DeepClone();
-                participantData["tagLine"] = participant.AsObject()?["riotIdTagline"]?.DeepClone();
-                participantData["puuid"] = participant.AsObject()?["puuid"]?.DeepClone();
-                participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
-                participantData["win"] = participant.AsObject()?["win"]?.DeepClone();
-                participantData["position"]= participant.AsObject()?["teamPosition"]?.DeepClone();
-                participantData["doubleKill"] = participant.AsObject()?["doubleKills"]?.GetValue<int>() != 0;
-                participantData["tripleKill"] = participant.AsObject()?["tripleKills"]?.GetValue<int>() != 0;
-                participantData["quadraKill"] = participant.AsObject()?["quadraKills"]?.GetValue<int>() != 0;
-                participantData["pentakill"] = participant.AsObject()?["pentaKills"]?.GetValue<int>() != 0;
-                participantData["firstBlood"] = participant.AsObject()?["firstBloodKill"]?.DeepClone();
-                participantData["firstTower"] = participant.AsObject()?["firstTowerKill"]?.DeepClone();
+                JsonObject participantData = new()
+                {
+                    ["puuid"] = participant.AsObject()?["puuid"]?.DeepClone(),
+                    ["teamId"] = participant.AsObject()?["teamId"]?.DeepClone(),
+                    ["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone(),
+                    ["champLevel"] = participant.AsObject()?["champLevel"]?.DeepClone(),
+                    ["championId"]= participant["championId"]?.DeepClone(),
+                    ["tagLine"] = participant.AsObject()?["riotIdTagline"]?.DeepClone(),
+                    ["teamId"] = participant.AsObject()?["teamId"]?.DeepClone(),
+                    ["win"] = participant.AsObject()?["win"]?.DeepClone(),
+                    ["position"]= participant.AsObject()?["teamPosition"]?.DeepClone(),
+                    ["doubleKill"] = participant.AsObject()?["doubleKills"]?.GetValue<int>() != 0,
+                    ["tripleKill"] = participant.AsObject()?["tripleKills"]?.GetValue<int>() != 0,
+                    ["quadraKill"] = participant.AsObject()?["quadraKills"]?.GetValue<int>() != 0,
+                    ["pentakill"] = participant.AsObject()?["pentaKills"]?.GetValue<int>() != 0,
+                    ["firstBlood"] = participant.AsObject()?["firstBloodKill"]?.DeepClone(),
+                    ["firstTower"] = participant.AsObject()?["firstTowerKill"]?.DeepClone()
+                };
 
-                var damage = new JsonObject();
-                damage["totalDamageDealtToChampions"] = participant.AsObject()?["totalDamageDealtToChampions"]?.DeepClone();
-                damage["totalDamageTaken"] = participant.AsObject()?["totalDamageTaken"]?.DeepClone();
-                damage["totalHealsOnTeammates"] = participant.AsObject()?["totalHealsOnTeammates"]?.DeepClone();
+                JsonObject damage = new()
+                {
+                    ["totalDamageDealtToChampions"] = participant.AsObject()?["totalDamageDealtToChampions"]?.DeepClone(),
+                    ["totalDamageTaken"] = participant.AsObject()?["totalDamageTaken"]?.DeepClone(),
+                    ["totalHealsOnTeammates"] = participant.AsObject()?["totalHealsOnTeammates"]?.DeepClone()
+                };
                 participantData["damage"] = damage;
 
-                var vision = new JsonObject();
-                vision["visionScore"] = participant.AsObject()?["visionScore"]?.DeepClone();
-                vision["wardsPlaced"] = participant.AsObject()?["wardsPlaced"]?.DeepClone();
-                vision["wardsKilled"] = participant.AsObject()?["wardsKilled"]?.DeepClone();
-                vision["controlWardsPlaced"] = participant.AsObject()?["controlWardsPlaced"]?.DeepClone();
+                JsonObject vision = new()
+                {
+                    ["visionScore"] = participant.AsObject()?["visionScore"]?.DeepClone(),
+                    ["wardsPlaced"] = participant.AsObject()?["wardsPlaced"]?.DeepClone(),
+                    ["wardsKilled"] = participant.AsObject()?["wardsKilled"]?.DeepClone(),
+                    ["controlWardsPlaced"] = participant.AsObject()?["controlWardsPlaced"]?.DeepClone()
+                };
                 participantData["vision"] = vision;
 
-                var gold = new JsonObject();
-                gold["totalMinionsKilled"] = participant.AsObject()?["totalMinionsKilled"]?.DeepClone();
-                gold["csPerMinute"] = gold["totalMinionsKilled"]?.GetValue<float>() / (metadata["gameDuration"]?.GetValue<float>() / 60);
-                gold["goldEarned"] = participant.AsObject()?["goldEarned"]?.DeepClone();
-                gold["goldPerMinute"] = participant.AsObject()?["challenges"]?.AsObject()["goldPerMinute"]?.DeepClone();
+                JsonObject gold = new()
+                {
+                    ["totalMinionsKilled"] = participant.AsObject()?["totalMinionsKilled"]?.DeepClone(),
+                    ["csPerMinute"] = participant.AsObject()?["totalMinionsKilled"]?.GetValue<float>() / (metadata["gameDuration"]?.GetValue<float>() / 60),
+                    ["goldEarned"] = participant.AsObject()?["goldEarned"]?.DeepClone(),
+                    ["goldPerMinute"] = participant.AsObject()?["challenges"]?.AsObject()["goldPerMinute"]?.DeepClone()
+                };
                 participantData["gold"] = gold;
 
-                var kda = new JsonObject();
-                kda["kills"] = participant.AsObject()?["kills"]?.DeepClone();
-                kda["deaths"] = participant.AsObject()?["deaths"]?.DeepClone();
-                kda["assists"] = participant.AsObject()?["assists"]?.DeepClone();
+                JsonObject kda = new()
+                {
+                    ["kills"] = participant.AsObject()?["kills"]?.DeepClone(),
+                    ["deaths"] = participant.AsObject()?["deaths"]?.DeepClone(),
+                    ["assists"] = participant.AsObject()?["assists"]?.DeepClone()
+                };
                 if(kda["deaths"]?.GetValue<float>() == 0)
                 {
                     kda["kda"] = kda["kills"]?.GetValue<float>() + kda["assists"]?.GetValue<float>();
@@ -246,7 +258,7 @@ namespace backend
                 }    
                 participantData["kda"] = kda;
 
-                var objects = new JsonArray();
+                JsonArray objects = [];
                 for(int i=0;i<7;i++)
                 {   
                     objects.Add(participant.AsObject()?["item"+i]?.DeepClone());
