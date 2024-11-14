@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useParams, useLocation } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
-import { useGlobal } from "../../Context.js";
 
 import {fetchAPIData} from "../../api.js";
 import {api_url} from "../../constants.js";
@@ -40,14 +39,32 @@ function MatchHistory({matchhistory}){
 
 export default function Summoner() {
     const location = useLocation();
-    const { isLoadingGlobal } = useGlobal();
-    const matchhistory=location.state.matchhistory;
-    const summonerInfo=location.state.summonerInfo;
+    const { regionTag, gameName, tagLine } = useParams();
+    const [summonerInfo, setSummonerInfo] = useState(null);
+    const [matchHistory, setMatchHistory] = useState(null);
+
+    useEffect(() => {
+        const updateData = () => {
+            try {
+                setSummonerInfo(location.state.summonerInfo);
+                setMatchHistory(location.state.matchHistory);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        };
+        updateData();
+    }, [regionTag, gameName, tagLine, location.state]);
+
+    // As long as matchHistory and summonerInfo are not updated, don't render
+    if (matchHistory!==location.state.matchHistory || summonerInfo!==location.state.summonerInfo){ 
+        return;
+    };
+
     return (
-        <div id="summoner" className="page" style={{ visibility: isLoadingGlobal ? 'hidden' : 'visible' }}>
+        <div id="summoner" className="page">
             <div className="section">
-                <SummonerInfo summonerInfo={summonerInfo} matchHistory={matchhistory}/>
-                <MatchHistory matchhistory={matchhistory}/>
+                <SummonerInfo summonerInfo={summonerInfo} matchHistory={matchHistory}/>
+                <MatchHistory matchhistory={matchHistory}/>
             </div>
         </div>
     );

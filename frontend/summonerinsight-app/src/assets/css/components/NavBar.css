@@ -2,19 +2,27 @@
     position: fixed;
     width: 100%;
     min-width: 1300px;
-    display: flex;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
     z-index: 1000;
     height:auto;
     background-color: var(--nav-bg);
-    margin-top: -50px;
+    margin-top: -58px;
     justify-content: center;
+    padding: 2px 20px;
+}
+#navbar .content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    padding: 10px 0px;
 }
 #navbar .content a{
     text-decoration: none;
 }
 #navbar .content a h3{
-    margin: 15px 0px;
+    margin: 0;
 }
 #navbar .content a h3:hover{
     color: var(--hover-text-color);

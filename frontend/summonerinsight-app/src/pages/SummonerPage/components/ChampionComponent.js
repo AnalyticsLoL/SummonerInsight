@@ -4,7 +4,6 @@ import { championIconPath, championFullData } from '../../../constants';
 
 import '../../../assets/css/pages/SummonerPage/components/ChampionComponent.css';
 import { fetchChampionData } from '../../../api';
-import SpellComponent from './SpellComponent.js';
 
 export default function ChampionComponent({ championId, isTooltip, hasBorder }) {
     const champion = Object.values(championFullData.data).find(champion => champion.key === championId.toString());

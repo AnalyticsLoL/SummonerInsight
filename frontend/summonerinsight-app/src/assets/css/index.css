@@ -6,6 +6,7 @@
     --title-color: #D4B573;
     --text-color: #E0E0E0;
     --hover-text-color: #FFFFFF;
+    --hover-item-bg: #ffffff4d;
     --secondary-bg: #40404A;
     --secondary-border: #5A5A66;
     --enhance-red: #ff8164;
@@ -58,7 +59,7 @@ body {
     background-color: var(--primary-bg);
 }
 .page {
-    margin-top: 50px;
+    margin-top: 58px;
     min-width: 1300px;
 }
 .enhance{
