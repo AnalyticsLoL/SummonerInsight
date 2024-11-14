@@ -108,7 +108,6 @@ export default function SmallSearchSummonerBar() {
                 <textarea 
                     type="text" 
                     onChange={(event)=> HandleGameNameandGameTag(event)} 
-                    placeholder={`Game Name + #${regionTag}`}
                     autoComplete="off"
                     autoCorrect="off"
                     spellCheck="false"
@@ -116,6 +115,7 @@ export default function SmallSearchSummonerBar() {
                         if (event.key === 'Enter') {
                             event.preventDefault();
                             fetchSummonerData();
+                            event.target.value = '';
                         }
                     }} 
                 />

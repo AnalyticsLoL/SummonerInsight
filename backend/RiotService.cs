@@ -191,7 +191,7 @@ namespace backend
             var participantsArray = (result.AsObject()?["info"]?["participants"]?.AsArray()) ?? throw new InvalidOperationException("Participants data not found in the response.");
             foreach (var participant in participantsArray)
             {
-                if (participant == null)
+                if (participant == null || participant.AsObject()["riotIdGameName"] == null)
                 {
                     throw new ArgumentNullException(nameof(participant));
                 }
