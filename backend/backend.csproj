@@ -19,6 +19,7 @@
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.8" />
     <PackageReference Include="restsharp" Version="111.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

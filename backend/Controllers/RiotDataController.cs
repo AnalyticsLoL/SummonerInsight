@@ -27,40 +27,35 @@ namespace backend.Controllers
             return Ok(_riotService._settings);
         }
         [HttpPost("matchhistory")]
-        public IActionResult GetPlayerMatchHistory([FromBody] RiotSettings settings, [FromQuery] int? idStartList, [FromQuery] int? idCount)
+        public async Task<IActionResult> GetPlayerMatchHistory([FromBody] RiotSettings settings, [FromQuery] int? idStartList, [FromQuery] int? idCount)
         {
             _riotService.UpdateSettings(settings);
             _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
-            _riotService.GetSummonerAccount_SummonerID();
 
             // Retrieve match IDs for the player
             var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idCount);
             
             // Retrieve match information for each match ID
-            var matchInfos = new List<object>();
-            foreach (var matchId in matchIds)
+            var matchInfosTasks = matchIds.Select(matchId =>_riotService.GetMatchInfosAsync(matchId)).ToList();
+            try 
             {
-                try
-                {
-                    matchInfos.Add(_riotService.GetMatchInfos(matchId));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    break;
-                }
+                var matchInfos = await Task.WhenAll(matchInfosTasks);
+                return Ok(matchInfos);
             }
-            return Ok(matchInfos);
+            catch (Exception e)
+            {
+                // Handle any errors from any of the requests
+                Console.WriteLine(e.Message);
+                return StatusCode(500, "Error retrieving match information");
+            }
         } 
         [HttpPost("summonerInfo")]
-        public IActionResult GetSummonerInfos([FromBody] RiotSettings? settings)
+        public IActionResult GetSummonerInfos([FromBody] RiotSettings settings)
         {
-            if (settings != null)
-            {
-                _riotService.UpdateSettings(settings);
-                _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
-                _riotService.GetSummonerAccount_SummonerID();
-            }
+            _riotService.UpdateSettings(settings);
+            _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
+            _riotService.GetSummonerAccount_SummonerID();
+            
             var summonerInfos = _riotService.GetSummonerInfos();
             summonerInfos["championMastery"]=_riotService.GetChampionMastery();
 

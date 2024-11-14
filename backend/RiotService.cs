@@ -36,7 +36,7 @@ namespace backend
                 _settings.TagLine = _settings.RegionTag;
             }
         }
-        private static JsonNode GetData(string url, Dictionary<string,string>? queries)
+        private static JsonNode? GetData(string url, Dictionary<string,string>? queries)
         {
             var options = new RestClientOptions(url);
             var client = new RestClient(options);
@@ -50,10 +50,34 @@ namespace backend
             }
             Console.WriteLine("Sending request to :"+url);
             var response = client.Execute(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            if (!response.IsSuccessful)
             {
                 // Handle 404 Not Found error
-                throw new InvalidOperationException("404 Not Found");
+                throw new InvalidOperationException(nameof(response.StatusCode));
+            }
+            if (string.IsNullOrEmpty(response.Content))
+            {
+                throw new InvalidOperationException("Response content is null or empty.");
+            }
+            return JsonNode.Parse(response.Content);
+        }
+        private static async Task<JsonNode?> GetDataAsync(string url, Dictionary<string,string>? queries)
+        {
+            var options = new RestClientOptions(url);
+            var client = new RestClient(options);
+            var request = new RestRequest("");
+            if (queries != null)
+            {
+                foreach (var query in queries)
+                {
+                    request.AddParameter(query.Key, query.Value);
+                }
+            }
+            Console.WriteLine("Sending request to :"+url);
+            var response = await client.ExecuteAsync(request);
+            if (string.IsNullOrEmpty(response.Content))
+            {
+                throw new InvalidOperationException("Response content is null or empty.");
             }
             return JsonNode.Parse(response.Content);
         }
@@ -74,12 +98,12 @@ namespace backend
             {
                 throw new ArgumentNullException(nameof(summoner));
             }
-            var puuid = summoner.AsObject()["puuid"].ToString();
-            var GameName = summoner.AsObject()["gameName"].ToString();
-            if (!string.IsNullOrEmpty(puuid) && !string.IsNullOrEmpty(GameName))
+            var puuid = summoner.AsObject()["puuid"] ?? throw new ArgumentNullException("PuuID not found in the response.");
+            var GameName = summoner.AsObject()["gameName"] ?? throw new ArgumentNullException("GameName not found in the response.");
+            if (!string.IsNullOrEmpty(puuid.ToString()) && !string.IsNullOrEmpty(GameName.ToString()))
             {
-                _settings.Puuid = puuid;
-                _settings.GameName = GameName;
+                _settings.Puuid = puuid.ToString();
+                _settings.GameName = GameName.ToString();
             }
             else
             {
@@ -102,15 +126,15 @@ namespace backend
             {
                 throw new ArgumentNullException(nameof(accountInfos));
             }
-            string summonerId = accountInfos.AsObject()["id"].ToString();
-            string accoundId = accountInfos.AsObject()["accountId"].ToString();
-            var profileIconId = accountInfos.AsObject()["profileIconId"]?.ToString();
+            var summonerId = accountInfos.AsObject()["id"] ?? throw new ArgumentNullException("Summoner Id not found in the response.");
+            var accoundId = accountInfos.AsObject()["accountId"] ?? throw new ArgumentNullException("Summoner Id not found in the response.");
+            var profileIconId = accountInfos.AsObject()["profileIconId"] ?? throw new ArgumentNullException("Profile Icon Id not found in the response.");
             var summonerLevel = accountInfos.AsObject()["summonerLevel"]?.GetValue<long>();
-            if (!string.IsNullOrEmpty(summonerId) && !string.IsNullOrEmpty(accoundId))
+            if (!string.IsNullOrEmpty(summonerId.ToString()) && !string.IsNullOrEmpty(accoundId.ToString()))
             {
-                _settings.SummonerId = summonerId;
-                _settings.AccountId = accoundId;
-                _settings.ProfileIconId = profileIconId;
+                _settings.SummonerId = summonerId.ToString();
+                _settings.AccountId = accoundId.ToString();
+                _settings.ProfileIconId = profileIconId.ToString();
                 _settings.SummonerLevel = summonerLevel;
             }
             else
@@ -141,17 +165,13 @@ namespace backend
             string[] matchIdsArray = matchIds.AsArray().Select(node => node.GetValue<string>()).ToArray();
             return matchIdsArray;
         }
-        public JsonNode GetMatchInfos([FromQuery] string matchId)
+        public async Task<JsonNode> GetMatchInfosAsync([FromQuery] string matchId)
         {
-            if(string.IsNullOrEmpty(_settings.Region))
-            {
-                throw new InvalidOperationException("Region must be set.");
-            }
             var queries= new Dictionary<string,string>
             {
                 {"api_key", apiKey}
             };
-            var result = GetData($"https://{_settings.Region}.api.riotgames.com/lol/match/v5/matches/{matchId}",queries);
+            var result = await GetDataAsync($"https://{_settings.Region}.api.riotgames.com/lol/match/v5/matches/{matchId}",queries);
             if (result == null)
             {
                 throw new ArgumentNullException(nameof(result));
@@ -169,13 +189,12 @@ namespace backend
 
             var participants = new JsonArray();
             var participantsArray = (result.AsObject()?["info"]?["participants"]?.AsArray()) ?? throw new InvalidOperationException("Participants data not found in the response.");
-            bool hasNullGameName = participantsArray.Any(participant => participant["riotIdGameName"]?.GetValue<string>() == null);
-            if (hasNullGameName)
-            {
-                throw new InvalidOperationException("Game data incomplete.");
-            }
             foreach (var participant in participantsArray)
             {
+                if (participant == null)
+                {
+                    throw new ArgumentNullException(nameof(participant));
+                }
                 var participantData = new JsonObject();
                 participantData["teamId"] = participant.AsObject()?["teamId"]?.DeepClone();
                 participantData["gameName"] = participant.AsObject()?["riotIdGameName"]?.DeepClone();
@@ -250,31 +269,42 @@ namespace backend
                 {"api_key", apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/league/v4/entries/by-summoner/{_settings.SummonerId}",queries);
-            
-            var summonerStats = new JsonObject();
-            var rankedStats = new JsonArray();
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            JsonObject summonerStats = [];
+            JsonArray rankedStats = [];
             foreach(var stats in data.AsArray())
             {
-                var queue = new JsonObject();
-                queue["queueName"] = stats.AsObject()["queueType"]?.DeepClone();
-                queue["tier"] = stats.AsObject()["tier"]?.DeepClone();
-                queue["rank"] = stats.AsObject()["rank"]?.DeepClone();
-                queue["leaguePoints"] = stats.AsObject()["leaguePoints"]?.DeepClone();
-                queue["wins"] = stats.AsObject()["wins"]?.DeepClone();
-                queue["losses"] = stats.AsObject()["losses"]?.DeepClone();
-                queue["veteran"] = stats.AsObject()["veteran"]?.DeepClone();
-                queue["inactive"] = stats.AsObject()["inactive"]?.DeepClone();
-                queue["freshBlood"] = stats.AsObject()["freshBlood"]?.DeepClone();
-                queue["hotStreak"] = stats.AsObject()["hotStreak"]?.DeepClone();
+                if (stats == null)
+                {
+                    throw new ArgumentNullException(nameof(stats));
+                }
+                JsonObject queue = new()
+                {
+                    ["queueName"] = stats.AsObject()["queueType"]?.DeepClone(),
+                    ["tier"] = stats.AsObject()["tier"]?.DeepClone(),
+                    ["rank"] = stats.AsObject()["rank"]?.DeepClone(),
+                    ["leaguePoints"] = stats.AsObject()["leaguePoints"]?.DeepClone(),
+                    ["wins"] = stats.AsObject()["wins"]?.DeepClone(),
+                    ["losses"] = stats.AsObject()["losses"]?.DeepClone(),
+                    ["veteran"] = stats.AsObject()["veteran"]?.DeepClone(),
+                    ["inactive"] = stats.AsObject()["inactive"]?.DeepClone(),
+                    ["freshBlood"] = stats.AsObject()["freshBlood"]?.DeepClone(),
+                    ["hotStreak"] = stats.AsObject()["hotStreak"]?.DeepClone()
+                };
                 rankedStats.Add(queue);
             }
             summonerStats["rankedStats"] = rankedStats;
 
-            var summonerInfos = new JsonObject();
-            summonerInfos["profileIconId"] = _settings.ProfileIconId;
-            summonerInfos["summonerLevel"] = _settings.SummonerLevel;
-            summonerInfos["gameName"] = _settings.GameName;
-            summonerInfos["tagLine"] = _settings.TagLine;
+            JsonObject summonerInfos = new()
+            {
+                ["profileIconId"] = _settings.ProfileIconId,
+                ["summonerLevel"] = _settings.SummonerLevel,
+                ["gameName"] = _settings.GameName,
+                ["tagLine"] = _settings.TagLine
+            };
             if (_settings.TagLine != _settings.RegionTag)
             {
                 summonerInfos["regionTag"] = _settings.RegionTag;
@@ -294,18 +324,27 @@ namespace backend
                 {"api_key", apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{_settings.Puuid}/top",queries);
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
             var championMastery = new JsonArray();
             foreach(var mastery in data.AsArray())
             {
-                var champion = new JsonObject();
-                champion["championId"] = mastery.AsObject()["championId"]?.DeepClone();
-                champion["championLevel"] = mastery.AsObject()["championLevel"]?.DeepClone();
-                champion["championPoints"] = mastery.AsObject()["championPoints"]?.DeepClone();
-                champion["chestGranted"] = mastery.AsObject()["chestGranted"]?.DeepClone();
-                champion["tokensEarned"] = mastery.AsObject()["tokensEarned"]?.DeepClone();
-                champion["lastPlayTime"] = mastery.AsObject()["lastPlayTime"]?.DeepClone();
-                champion["milestoneGrades"] = mastery.AsObject()["milestoneGrades"]?.DeepClone();
-
+                if (mastery == null)
+                {
+                    throw new ArgumentNullException(nameof(mastery));
+                }
+                JsonObject champion = new()
+                {
+                    ["championId"] = mastery.AsObject()["championId"]?.DeepClone(),
+                    ["championLevel"] = mastery.AsObject()["championLevel"]?.DeepClone(),
+                    ["championPoints"] = mastery.AsObject()["championPoints"]?.DeepClone(),
+                    ["chestGranted"] = mastery.AsObject()["chestGranted"]?.DeepClone(),
+                    ["tokensEarned"] = mastery.AsObject()["tokensEarned"]?.DeepClone(),
+                    ["lastPlayTime"] = mastery.AsObject()["lastPlayTime"]?.DeepClone(),
+                    ["milestoneGrades"] = mastery.AsObject()["milestoneGrades"]?.DeepClone()
+                };
                 championMastery.Add(champion);
             }
             return championMastery;

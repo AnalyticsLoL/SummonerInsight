@@ -5,7 +5,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     z-index: 1000;
-    height:auto;
+    height: 58px;
     background-color: var(--nav-bg);
     margin-top: -58px;
     justify-content: center;
