@@ -36,11 +36,28 @@ namespace backend.Controllers
             var matchIds = _riotService.GetMatchHistoryGameIds(idStartList, idCount);
             
             // Retrieve match information for each match ID
-            var matchInfosTasks = matchIds.Select(matchId =>_riotService.GetMatchInfosAsync(matchId)).ToList();
+            var matchInfosTasks = matchIds.Select(async matchId =>
+            {
+                try
+                {
+                    var matchInfo = await _riotService.GetMatchInfosAsync(matchId);
+                    if (matchInfo != null)
+                    {
+                        return matchInfo;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error retrieving match info for match ID {matchId}: {e.Message}");
+                }
+                return null;
+            }).ToList();
+
             try 
             {
                 var matchInfos = await Task.WhenAll(matchInfosTasks);
-                return Ok(matchInfos);
+                var validMatchInfos = matchInfos.Where(info => info != null).ToList();
+                return Ok(validMatchInfos);
             }
             catch (Exception e)
             {
