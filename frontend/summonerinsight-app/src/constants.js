@@ -188,6 +188,9 @@ export const ddragonMapPath = `https://ddragon.leagueoflegends.com/cdn/${league_
 export const ddragonMapImgPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/map`;
 
 export const gradeOrder = {
+    "S+": 5.0,
+    "S": 4.7,
+    "S-": 4.5,
     "A+": 4.3,
     "A": 4.0,
     "A-": 3.7,

@@ -92,6 +92,9 @@ export default function SearchSummonerBar() {
             const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsFetching);
             const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsFetching);
             if (summonerInfo && matchHistory) {
+                if (matchHistory.length === 0) {
+                    throw new Error('No match history found in the last year for this summoner.');
+                }
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
                     {
@@ -103,7 +106,7 @@ export default function SearchSummonerBar() {
                 );
             }
         } catch (error) {
-            setMessage('Please enter your tag numbers using the format #0000 or select the right region.');
+            setMessage(error.message);
             setTimeout(() => setMessage(''), 7800); // Reset the message a bit shorter than the animation to avoid rerendering visual error
         } 
     };

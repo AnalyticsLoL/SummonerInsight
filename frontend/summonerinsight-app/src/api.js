@@ -18,7 +18,7 @@ export const fetchAPIData = async (url, settings, setIsFetching) => {
         return await response.json();
     } catch (error) {
         setIsFetching(false);
-        throw new Error(`Error: ${error}`);
+        throw new Error(`Please enter your tag numbers using the format #0000 or select the right region.`);
     }
 };
 

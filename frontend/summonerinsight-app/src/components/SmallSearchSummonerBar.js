@@ -87,6 +87,9 @@ export default function SmallSearchSummonerBar() {
             const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsFetching);
             const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsFetching);
             if (summonerInfo && matchHistory) {
+                if (matchHistory.length === 0) {
+                    throw new Error('No match history found in the last year for this summoner.');
+                }
                 navigate(
                     `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
                     {
@@ -98,7 +101,7 @@ export default function SmallSearchSummonerBar() {
                 );
             }
         } catch (error) {
-            console.error(error);
+            console.error(error.message);
         } 
     };
     return(
