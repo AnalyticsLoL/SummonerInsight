@@ -4,6 +4,7 @@ import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
 import {gameTypes,positions} from "../../../constants";
 import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
+import FillBar from "../../../reusable/FillBar";
 import ChampionComponent from "./ChampionComponent"
 import ItemComponent from "./ItemComponent";
 
@@ -36,10 +37,6 @@ function PlayerInfos({playerStats, match}){
     const maxHealed = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalHealsOnTeammates);
     }, 0);
-    const damageFillBar = (damage, maxDamage) => {
-        const damagePercentage = (damage/maxDamage)*100;
-        return `${damagePercentage}%`;
-    }
     return (
         <div className="player-infos">
             <div className="player-champion-items">
@@ -63,24 +60,18 @@ function PlayerInfos({playerStats, match}){
                     {isSupport
                         ?(<div className="damage-section">
                             <p className={`${playerStats.damage.totalHealsOnTeammates>maxHealed*0.75?'enhance gold':''}`}>{playerStats.damage.totalHealsOnTeammates.toLocaleString()}</p>
-                            <div className="progress">
-                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalHealsOnTeammates, maxHealed)}}/>
-                            </div>
+                            <FillBar value={playerStats.damage.totalHealsOnTeammates} maxValue={maxHealed}/>
                             <p>HP Healed</p>
                         </div>)
                         :(<div className="damage-section">
                             <p className={`${playerStats.damage.totalDamageDealtToChampions>maxDealt*0.75?'enhance gold':''}`}>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
-                            <div className="progress">
-                                <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageDealtToChampions, maxDealt)}}/>
-                            </div>
+                            <FillBar value={playerStats.damage.totalDamageDealtToChampions} maxValue={maxDealt}/>
                             <p>Dealt</p>
                         </div>)
                     }
                     <div className="damage-section">
                         <p>{playerStats.damage.totalDamageTaken.toLocaleString()}</p>
-                        <div className="progress">
-                            <div className="fill" style={{width: damageFillBar(playerStats.damage.totalDamageTaken, maxTaken)}}/>
-                        </div>
+                        <FillBar value={playerStats.damage.totalDamageTaken} maxValue={maxTaken}/>
                         <p>Taken</p>
                     </div>
                 </div>

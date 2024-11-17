@@ -355,8 +355,20 @@ namespace backend
                     ["chestGranted"] = mastery.AsObject()["chestGranted"]?.DeepClone(),
                     ["tokensEarned"] = mastery.AsObject()["tokensEarned"]?.DeepClone(),
                     ["lastPlayTime"] = mastery.AsObject()["lastPlayTime"]?.DeepClone(),
-                    ["milestoneGrades"] = mastery.AsObject()["milestoneGrades"]?.DeepClone()
+                    ["championSeasonMilestone"] = mastery.AsObject()["championSeasonMilestone"]?.DeepClone(),
+                    ["milestoneGrades"] = mastery.AsObject()["milestoneGrades"]?.DeepClone(),
+                    ["championPointsUntilNextLevel"] = mastery.AsObject()["championPointsUntilNextLevel"]?.DeepClone(),
+                    ["championPointsSinceLastLevel"] = mastery.AsObject()["championPointsSinceLastLevel"]?.DeepClone(),
+                    ["markRequiredForNextLevel"] = mastery.AsObject()["tokensEarned"]?.DeepClone()
                 };
+                JsonObject nextMilestoneRequirements = new()
+                {
+                    ["requireGradeCounts"]= mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["requireGradeCounts"]?.DeepClone(),
+                    ["rewardMarks"]= mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["rewardMarks"]?.DeepClone(),
+                    ["rewardType"]= mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["rewardConfig"]?.AsObject()["rewardType"]?.DeepClone(),
+                    ["maximumReward"]= mastery.AsObject()["nextSeasonMilestone"]?.AsObject()["rewardConfig"]?.AsObject()["maximumReward"]?.DeepClone()
+                };
+                champion["nextMilestoneRequirements"] = nextMilestoneRequirements;
                 championMastery.Add(champion);
             }
             return championMastery;

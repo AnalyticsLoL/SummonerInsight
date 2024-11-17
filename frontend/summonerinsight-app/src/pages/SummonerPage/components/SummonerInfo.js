@@ -3,14 +3,30 @@ import { useParams } from 'react-router-dom';
 
 import "../../../assets/css/pages/SummonerPage/components/SummonerInfo.css";
 
-import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath, championFullData, gradeOrder } from "../../../constants.js";
+import { ranks, championMasteriesIcons, regions, positions, championIconPath, profileIconPath, championFullData, gradeGPA, rewardTypes } from "../../../constants.js";
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
-import { find_positions } from "./reusableFunctions";
+import FillBar from "../../../reusable/FillBar.js";
 import { getPlayerStats, countTotalWins, getMeanKDA } from "./StatsComputations";
 import ChampionComponent from "./ChampionComponent.js";
 
 function ProfileSection({ summonerProfile,matchHistory }){
     const { regionTag } = useParams();
+
+    const find_positions = (matchHistory, summonerProfile) => {
+        let positions = {
+            "TOP": 0,
+            "JUNGLE": 0,
+            "MIDDLE": 0,
+            "BOTTOM": 0,
+            "UTILITY": 0
+        };
+        matchHistory.forEach(match => {
+            const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
+            positions[position]++;
+        });
+        return Object.entries(positions).filter(([, value]) => value > 0).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, 2);
+    };
+
     const favorite_positions = find_positions(matchHistory, summonerProfile);
     return (
         <div className="profile section">
@@ -84,7 +100,12 @@ function RankedSection({rankedStats}){
 }
 
 function MasteryElement({mastery}){
-    const grades = Array.from(new Set(mastery.milestoneGrades)).sort((a, b) => gradeOrder[b] - gradeOrder[a]); // Removes duplicates and orders by gradeOrder
+    const requiredGrades = (mastery) => {
+        return Object.entries(mastery.nextMilestoneRequirements.requireGradeCounts).map(([grade, count]) => {
+            const achievedCount = mastery.milestoneGrades.filter(g => gradeGPA[g] > gradeGPA[grade]).length;
+            return Array.from({ length: count }, (_, i) => ({ [grade]: i < achievedCount }));
+        }).flat();
+    }
     return (
         <div className="champion-mastery subsection black-box-hover">
             <figure>
@@ -103,22 +124,44 @@ function MasteryElement({mastery}){
             <div className="tooltip">
                 <div className="header">
                     <img src={`${championIconPath}/${mastery.champion.image.full}`} alt="Champion Icon"/>
-                    <h5>Mastery level {mastery.championLevel}</h5>
+                    <h4>Mastery level {mastery.championLevel}</h4>
                 </div>
-                <p>{mastery.championPoints.toLocaleString()} Points</p>
+                <p>Mastery points: {mastery.championPoints.toLocaleString()}</p>
+                {mastery.markRequiredForNextLevel>0 &&(
+                            mastery.markRequiredForNextLevel>1?
+                            <p>{mastery.markRequiredForNextLevel} Marks of masteries</p>:
+                            <p>{mastery.markRequiredForNextLevel} Mark of mastery</p>
+                        )}
                 <p>Last played: {getTimeDifference(mastery.lastPlayTime)}</p>
-                {grades.length>0 && (
-                    <div className="grades">
-                        <h5>Grades obtained:</h5>
-                        <div className="tags">
-                            {grades.map((grade, index) => (
-                                <span key={index} className="tag">
-                                    <p className={`${grade.includes("S") || grade.includes("A+") ? 'enhance red':''}`}>{grade}</p>
-                                </span>
-                            ))}
+                <div className="milestone">
+                    <h4>Milestone {mastery.championSeasonMilestone}</h4>
+                    <div className="milestone-requirements">
+                        <div className="mp-requirements">
+                            <p>{(mastery.championPointsSinceLastLevel).toLocaleString()}</p>
+                            <FillBar value={mastery.championPointsSinceLastLevel} maxValue={mastery.championPointsSinceLastLevel+mastery.championPointsUntilNextLevel}/>
+                            <p>{(mastery.championPointsSinceLastLevel+mastery.championPointsUntilNextLevel).toLocaleString()}</p>
+                        </div>
+                        <div className="milestone-grades">
+                            {requiredGrades(mastery).map((grades) => {
+                                console.log(grades);
+                                return Object.entries(grades).map(([grade, isAchieved],index) => (
+                                    <div key={index} className={`grade ${isAchieved ? 'achieved' : 'not-achieved'}`}>
+                                        <p>{grade}</p>
+                                    </div>
+                                ))}
+                            )}
                         </div>
                     </div>
-                )}
+                    <div className="milestone-reward">
+                        <p>Next level reward: </p>
+                        <p>{rewardTypes.find(reward => reward.type === mastery.nextMilestoneRequirements.rewardType).name}</p>
+                        {mastery.nextMilestoneRequirements.rewardMarks>0 &&(
+                            mastery.nextMilestoneRequirements.rewardMarks>1?
+                            <p>{mastery.nextMilestoneRequirements.rewardMarks} Mark of masteries</p>:
+                            <p>{mastery.nextMilestoneRequirements.rewardMarks} Mark of mastery</p>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

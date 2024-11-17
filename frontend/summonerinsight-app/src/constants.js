@@ -47,6 +47,55 @@ import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
 export const league_version = "14.22.1";
 export const api_url = "http://127.0.0.1:5151/api/RiotData";
 
+// Path to get item icons
+export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
+
+// Path to get champion splash arts
+export const championSplashPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash"; // Add the champion name and the skin number '.jpg'
+
+// Path to get champion loading arts
+export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading"; // Add the champion name and the skin number '.jpg'
+
+// Path to get champion icon
+export const championIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/champion`;
+
+// Path to get profile icon
+export const profileIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/profileicon`;
+
+// Path to get champion passives icons
+export const championPassivePath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/passive`;
+
+// Path to get champion/summoner spells icons
+export const championSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/spell`;
+
+// Path to get champion general data
+export const ddragonChampionGlobalPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion.json`;
+
+// Data object of champions fetched from ddragonChampionGlobalPath
+console.log(`Fetching champion Data from: ${ddragonChampionGlobalPath}`);
+let championResponse = await fetch(ddragonChampionGlobalPath);
+export const championFullData = await championResponse.json();
+
+// Path to get champion specific data
+export const ddragonChampionSpecificPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion`;
+
+// Path to get item data
+export const ddragonItemPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/item.json`;
+
+// Data object of items fetched from ddragonItemPath
+console.log(`Fetching item Data from: ${ddragonItemPath}`);
+let itemResponse = await fetch(ddragonItemPath);
+export const itemFullData = await itemResponse.json();
+
+// Path to get summoner spells data
+export const ddragonSummonerSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/summoner.json`;
+
+// Path to get map data
+export const ddragonMapPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/map.json`;
+
+// Path to get map img
+export const ddragonMapImgPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/map`;
+
 // All the regions of league of legends
 export const regions = [
     {regionName: "North America", regionTag: "NA1", regionRoute: "americas", regionIcon: NaIcon},
@@ -138,70 +187,24 @@ export const positions = [
     {API_name: "UTILITY", positionIcon: SupportIcon, positionName: "Support"}
 ]
 
-// Path to get item icons
-export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
+export const rewardTypes = [
+    {type: "HEXTECH_CHEST", name: "Coffre Hextech"},
+]
 
-// Path to get champion splash arts
-export const championSplashPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash"; // Add the champion name and the skin number '.jpg'
-
-// Path to get champion loading arts
-export const championLoadingPath = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading"; // Add the champion name and the skin number '.jpg'
-
-// Path to get champion icon
-export const championIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/champion`;
-
-// Path to get profile icon
-export const profileIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/profileicon`;
-
-// Path to get champion passives icons
-export const championPassivePath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/passive`;
-
-// Path to get champion/summoner spells icons
-export const championSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/spell`;
-
-// Path to get champion general data
-export const ddragonChampionGlobalPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion.json`;
-
-// Data object of champions fetched from ddragonChampionGlobalPath
-console.log(`Fetching champion Data from: ${ddragonChampionGlobalPath}`);
-let championResponse = await fetch(ddragonChampionGlobalPath);
-export const championFullData = await championResponse.json();
-
-// Path to get champion specific data
-export const ddragonChampionSpecificPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion`;
-
-// Path to get item data
-export const ddragonItemPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/item.json`;
-
-// Data object of items fetched from ddragonItemPath
-console.log(`Fetching item Data from: ${ddragonItemPath}`);
-let itemResponse = await fetch(ddragonItemPath);
-export const itemFullData = await itemResponse.json();
-
-// Path to get summoner spells data
-export const ddragonSummonerSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/summoner.json`;
-
-// Path to get map data
-export const ddragonMapPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/map.json`;
-
-// Path to get map img
-export const ddragonMapImgPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/map`;
-
-export const gradeOrder = {
-    "S+": 5.0,
-    "S": 4.7,
-    "S-": 4.5,
-    "A+": 4.3,
-    "A": 4.0,
-    "A-": 3.7,
-    "B+": 3.3,
-    "B": 3.0,
-    "B-": 2.7,
-    "C+": 2.3,
-    "C": 2.0,
-    "C-": 1.7,
-    "D+": 1.3,
-    "D": 1.0,
-    "D-": 0.7,
-    "F": 0.0
+export const gradeGPA = {
+    "S+": 4.3,
+    "S": 4.3,
+    "S-": 4.0,
+    "A+": 3.7,
+    "A": 3.5,
+    "A-": 3.2,
+    "B+": 2.7,
+    "B": 2.5,
+    "B-": 2.2,
+    "C+": 1.7,
+    "C": 1.5,
+    "C-": 1.2,
+    "D+": 0,
+    "D": 0,
+    "D-": 0
 };

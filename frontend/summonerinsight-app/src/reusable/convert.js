@@ -53,18 +53,3 @@ export function parseDescriptionToJson(description) {
 
     return result;
 }
-
-export const find_positions = (matchHistory, summonerProfile) => {
-    let positions = {
-        "TOP": 0,
-        "JUNGLE": 0,
-        "MIDDLE": 0,
-        "BOTTOM": 0,
-        "UTILITY": 0
-    };
-    matchHistory.forEach(match => {
-        const position = match.participants.find(participant => participant.gameName === summonerProfile.gameName).position;
-        positions[position]++;
-    });
-    return Object.entries(positions).filter(([, value]) => value > 0).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, 2);
-};

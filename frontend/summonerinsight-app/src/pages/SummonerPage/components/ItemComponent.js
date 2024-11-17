@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { itemIconPath, itemFullData } from '../../../constants';
-import { parseDescriptionToJson } from './reusableFunctions';
+import { parseDescriptionToJson } from '../../../reusable/convert';
 
 import '../../../assets/css/pages/SummonerPage/components/ItemComponent.css';
 
