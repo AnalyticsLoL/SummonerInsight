@@ -6,6 +6,7 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
+- [ ] Update the mastery grades to match the after match icons in client
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Clickable links for players in matches
