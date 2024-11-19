@@ -102,6 +102,9 @@ function RankedSection({rankedStats}){
 function MasteryElement({mastery}){
     const requiredGrades = (mastery) => {
         return Object.entries(mastery.nextMilestoneRequirements.requireGradeCounts).map(([grade, count]) => {
+            if (!mastery.milestoneGrades) {
+                return Array.from({ length: count }, (_, i) => ({ [grade]: i < false }));
+            }
             const achievedCount = mastery.milestoneGrades.filter(g => gradeGPA[g] > gradeGPA[grade]).length;
             return Array.from({ length: count }, (_, i) => ({ [grade]: i < achievedCount }));
         }).flat();
@@ -154,7 +157,9 @@ function MasteryElement({mastery}){
                     </div>
                     <div className="milestone-reward">
                         <p>Next level reward: </p>
-                        <p>{rewardTypes.find(reward => reward.type === mastery.nextMilestoneRequirements.rewardType).name}</p>
+                        {mastery.nextMilestoneRequirements.rewardType && 
+                            <p>{rewardTypes.find(reward => reward.type === mastery.nextMilestoneRequirements.rewardType).name}</p>
+                        }
                         {mastery.nextMilestoneRequirements.rewardMarks>0 &&(
                             mastery.nextMilestoneRequirements.rewardMarks>1?
                             <p>{mastery.nextMilestoneRequirements.rewardMarks} Mark of masteries</p>:
