@@ -1,6 +1,12 @@
 using backend;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddUserSecrets<Program>();
+Console.WriteLine("RiotApiKey: " + builder.Configuration["RiotApiKey"]); // Debugging line
+
+builder.Services.AddSingleton<RiotService>();
 
 // Register services
 builder.Services.AddControllers();
@@ -19,10 +25,6 @@ builder.Services.AddCors(options =>
 
 // Register RiotSettings as a singleton
 builder.Services.AddSingleton<RiotSettings>();
-
-// Register RiotService with HttpClient dependency
-builder.Services.AddHttpClient<RiotService>();
-builder.Services.AddSingleton<RiotService>();
 
 var app = builder.Build();
 

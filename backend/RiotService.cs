@@ -20,13 +20,12 @@ namespace backend
     }
     public class RiotService
     {
-        private readonly HttpClient _httpClient;
         public RiotSettings _settings;
-        private static readonly string apiKey = new ApiKey().key;
-        public RiotService(HttpClient httpClient, RiotSettings settings)
+        public string _apiKey;
+        public RiotService(RiotSettings settings, IConfiguration configuration)
         {
-            _httpClient = httpClient;
             _settings = settings;
+            _apiKey = configuration["RiotApiKey"] ?? throw new ArgumentNullException("RiotApiKey");
         }
         public void UpdateSettings(RiotSettings settings)
         {
@@ -89,7 +88,7 @@ namespace backend
             }
             var queries= new Dictionary<string,string>
             {
-                {"api_key", apiKey}
+                {"api_key", _apiKey}
             };
             var tag = _settings.TagLine;
             // Start by getting the puuid and game name
@@ -119,7 +118,7 @@ namespace backend
             }
             var queries= new Dictionary<string,string>
             {
-                {"api_key", apiKey}
+                {"api_key", _apiKey}
             };
             var accountInfos = GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{_settings.Puuid}",queries);
             if (accountInfos == null)
@@ -151,7 +150,7 @@ namespace backend
             }
             var queries = new Dictionary<string, string>
             {
-                {"api_key", apiKey},
+                {"api_key", _apiKey},
                 {"start", idStartList?.ToString() ?? "0"},
                 {"count", idCount?.ToString() ?? "0"}
             };
@@ -169,7 +168,7 @@ namespace backend
         {
             var queries= new Dictionary<string,string>
             {
-                {"api_key", apiKey}
+                {"api_key", _apiKey}
             };
             var result = await GetDataAsync($"https://{_settings.Region}.api.riotgames.com/lol/match/v5/matches/{matchId}",queries);
             if (result == null)
@@ -278,7 +277,7 @@ namespace backend
             }
             var queries= new Dictionary<string,string>
             {
-                {"api_key", apiKey}
+                {"api_key", _apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/league/v4/entries/by-summoner/{_settings.SummonerId}",queries);
             if (data == null)
@@ -333,7 +332,7 @@ namespace backend
             }
             var queries= new Dictionary<string,string>
             {
-                {"api_key", apiKey}
+                {"api_key", _apiKey}
             };
             var data=GetData($"https://{_settings.RegionTag}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{_settings.Puuid}/top",queries);
             if (data == null)

@@ -7,3 +7,9 @@ To see the big picture of what you can do with this application, run the app and
 
 ## Data
 champion.json and item.json contains all the data from the item as of patch 14.21.1. All the data is located in the data attribute and is classed by id (items) or names (champions)
+
+**MANDATORY**: Add your Riot Api Key as such:
+```
+dotnet user-secrets init
+dotnet user-secrets set "RiotApiKey" "your-api-key-here"
+```
