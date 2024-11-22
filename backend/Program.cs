@@ -15,10 +15,13 @@ builder.Services.AddSwaggerGen();
 // Enable CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", builder =>
+    options.AddPolicy("AllowReactApp", builder =>
     {
-        builder.AllowAnyOrigin() // Allow any origin
-               .AllowAnyMethod() // Allow any HTTP method
+        builder.WithOrigins("http://192.168.2.34:3000") // Allow only the React app's URL
+               .AllowAnyMethod() // Allow any HTTP method (GET, POST, etc.)
+               .AllowAnyHeader(); // Allow any header
+        builder.WithOrigins("http://localhost:3000") // Allow only the React app's URL
+               .AllowAnyMethod() // Allow any HTTP method (GET, POST, etc.)
                .AllowAnyHeader(); // Allow any header
     });
 });
@@ -35,9 +38,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
 
-app.UseCors("AllowAllOrigins");
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
