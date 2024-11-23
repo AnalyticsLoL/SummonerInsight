@@ -122,7 +122,7 @@ function Team({match, id, gameName}){
                         <ChampionComponent championId={participant.championId} isTooltip={false} hasBorder={true}/>
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                         <div className="tooltip">
-                            <p>Go to summoner</p>
+                            <p>See this summoner</p>
                         </div>
                     </figure>
                 ))}

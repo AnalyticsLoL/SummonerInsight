@@ -33,7 +33,8 @@ function ProfileSection({ summonerProfile,matchHistory }){
         <div className="profile section">
             <figure className="profile-icon">
                 <div className="image-container">
-                    <img src={`${profileIconPath}/${summonerProfile.profileIconId}.png`} alt="Profile Icon" />
+                    {/* In case the profileIconId don't have an image yet in ddragon db, replace with default icon 29*/}
+                    <img src={`${profileIconPath}/${summonerProfile.profileIconId}.png`} alt="Profile Icon" onError={(e)=> {e.target.src = `${profileIconPath}/29.png`;}}/> 
                 </div>
                 <figcaption>{summonerProfile.summonerLevel}</figcaption>
             </figure>
