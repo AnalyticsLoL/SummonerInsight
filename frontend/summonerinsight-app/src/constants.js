@@ -45,7 +45,7 @@ import { ReactComponent as TrIcon } from "./assets/svg/region_icons/tr.svg";
 import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
 
 export const league_version = "14.22.1";
-export const api_url = "http://192.168.2.34:5151/api/RiotData";
+export const api_url = "http://192.168.1.58:5151/api/RiotData";
 
 // Path to get item icons
 export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
