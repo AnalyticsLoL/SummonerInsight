@@ -1,13 +1,24 @@
 import '../assets/css/reusable/LoadButton.css';
+import { useState, useEffect } from 'react';
 
 
 export default function LoadButton({ onClick, text, isFetching, icon }) {
+    const [loading, setLoading] = useState(isFetching.current);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setLoading(isFetching.current);
+        }, 100);
+
+        return () => clearInterval(interval);
+    }, [isFetching]);
+
     return (
         <span
-            className={`search_button ${isFetching.current ? 'loading' : ''}`}
+            className={`search_button ${loading ? 'loading' : ''}`}
             onClick={onClick}
         >
-            {isFetching.current ? (
+            {loading ? (
                 <span className="spinner"></span>
             ) : (
                 text ? <p>{text}</p> : icon
