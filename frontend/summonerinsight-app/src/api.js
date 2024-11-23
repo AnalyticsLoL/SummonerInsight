@@ -1,7 +1,7 @@
 import { regions, ddragonChampionSpecificPath } from "./constants";
 
-export const fetchAPIData = async (url, settings, setIsFetching) => {
-    setIsFetching(true);
+export const fetchAPIData = async (url, settings, isFetching) => {
+    isFetching.current = true;
     if(!settings.Region){
         settings.Region = regions.find(region => region.regionTag === settings.RegionTag.toUpperCase()).regionRoute;
     }
@@ -15,10 +15,10 @@ export const fetchAPIData = async (url, settings, setIsFetching) => {
             },
             body: JSON.stringify(settings)
         });
-        setIsFetching(false);
+        isFetching.current = false;
         return await response.json();
     } catch (error) {
-        setIsFetching(false);
+        isFetching.current = false;
         throw new Error(`Please enter your tag numbers using the format #0000 or select the right region.`);
     }
 };

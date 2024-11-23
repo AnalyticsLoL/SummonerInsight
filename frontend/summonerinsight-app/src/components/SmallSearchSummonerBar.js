@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {api_url, regions} from '../constants.js';
 import { fetchAPIData } from '../api.js';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,8 @@ import '../assets/css/components/SmallSearchSummonerBar.css';
 import LoadButton from '../reusable/LoadButton.js';
 
 function RegionDropdown({setRegionTag, regionTag, setRegionRoute}){
-    const [dropdownOpen, setDropdownOpen] = React.useState(false);
-    const dropdownRef = React.useRef(null);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     const handleDropdownClick = (region) => {
         setDropdownOpen(false);
@@ -61,11 +61,11 @@ function RegionDropdown({setRegionTag, regionTag, setRegionRoute}){
 }
 
 export default function SmallSearchSummonerBar() {
-    const [regionTag, setRegionTag] = React.useState('NA1');
-    const [gameName, setGameName] = React.useState('');
-    const [tagLine, setTagLine] = React.useState('');
-    const [regionRoute, setRegionRoute] = React.useState('Americas');
-    const [isFetching, setIsFetching] = useState(false);
+    const [regionTag, setRegionTag] = useState('NA1');
+    const [gameName, setGameName] = useState('');
+    const [tagLine, setTagLine] = useState('');
+    const [regionRoute, setRegionRoute] = useState('Americas');
+    const isFetching = useRef(false);
     const navigate = useNavigate();
 
     const HandleGameNameandGameTag=(event)=>{
@@ -76,7 +76,7 @@ export default function SmallSearchSummonerBar() {
 
     const fetchSummonerData = async () => {
         if(gameName === '') return;
-        if (isFetching) return;
+        if (isFetching.current) return;
         const settings = {
             GameName: gameName.toLowerCase().replace(/\s/g, ''),
             RegionTag: regionTag.toLowerCase(),
@@ -84,8 +84,8 @@ export default function SmallSearchSummonerBar() {
             Region: regionRoute.toLowerCase()
         };
         try {
-            const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsFetching);
-            const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsFetching);
+            const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, isFetching);
+            const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, isFetching);
             if (summonerInfo && matchHistory) {
                 if (matchHistory.length === 0) {
                     throw new Error('No match history found in the last year for this summoner.');

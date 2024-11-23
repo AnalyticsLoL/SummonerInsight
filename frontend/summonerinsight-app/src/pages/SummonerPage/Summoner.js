@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useParams, useLocation } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
@@ -39,22 +39,24 @@ function MatchHistory({matchhistory}){
 
 export default function Summoner() {
     const location = useLocation();
-    const [isFetching, setIsFetching] = useState(false);
+    const isFetching = useRef(false);
     const { regionTag, gameName, tagLine } = useParams();
     const [summonerInfo, setSummonerInfo] = useState(null);
     const [matchHistory, setMatchHistory] = useState(null);
 
     useEffect(() => {
         const fetchSummonerData = async () => {
-            if (isFetching) return;
+            if(isFetching.current) return;
+            setSummonerInfo(null);
+            setMatchHistory(null);
             const settings = {
                 GameName: gameName,
                 RegionTag: regionTag.toLowerCase(),
                 TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
             }
             try {
-                const fetchedSummonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, setIsFetching);
-                const fetchedMatchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, setIsFetching);
+                const fetchedSummonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, isFetching);
+                const fetchedMatchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, isFetching);
                 if (fetchedSummonerInfo && fetchedMatchHistory) {
                     if (fetchedMatchHistory.length === 0) {
                         throw new Error('No match history found in the last year for this summoner.');
@@ -74,8 +76,6 @@ export default function Summoner() {
                 console.error('Failed to fetch data:', error);
             }
         } else if (!summonerInfo || summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()!==gameName) {
-            setSummonerInfo(null);
-            setMatchHistory(null);
             console.log(`Fetching summoner data for ${gameName}#${tagLine}`);
             fetchSummonerData();
         }        
