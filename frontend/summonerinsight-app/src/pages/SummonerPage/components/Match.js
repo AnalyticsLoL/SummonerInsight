@@ -55,6 +55,9 @@ function PlayerInfos({playerStats, match}){
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
                     <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
+                    <div className="tooltip">
+                        <p>Kill/Deaths/Assists</p>
+                    </div>
                 </div>
                 <div className="damage">
                     {isSupport
@@ -62,28 +65,45 @@ function PlayerInfos({playerStats, match}){
                             <p className={`${playerStats.damage.totalHealsOnTeammates>maxHealed*0.75?'enhance gold':''}`}>{playerStats.damage.totalHealsOnTeammates.toLocaleString()}</p>
                             <FillBar value={playerStats.damage.totalHealsOnTeammates} maxValue={maxHealed}/>
                             <p>HP Healed</p>
+                            <div className="tooltip">
+                                <p>HP healed to Teammates</p>
+                            </div>
                         </div>)
                         :(<div className="damage-section">
                             <p className={`${playerStats.damage.totalDamageDealtToChampions>maxDealt*0.75?'enhance gold':''}`}>{playerStats.damage.totalDamageDealtToChampions.toLocaleString()}</p>
                             <FillBar value={playerStats.damage.totalDamageDealtToChampions} maxValue={maxDealt}/>
                             <p>Dealt</p>
+                            <div className="tooltip">
+                                <p>Damage dealt</p>
+                            </div>
                         </div>)
                     }
                     <div className="damage-section">
                         <p>{playerStats.damage.totalDamageTaken.toLocaleString()}</p>
                         <FillBar value={playerStats.damage.totalDamageTaken} maxValue={maxTaken}/>
                         <p>Taken</p>
+                        <div className="tooltip">
+                            <p>Damage taken</p>
+                        </div>
                     </div>
                 </div>
                 <div className="cs">
                     <p>{playerStats.gold.totalMinionsKilled}</p>
                     <p>{playerStats.gold.csPerMinute.toFixed(0)}/m</p>
                     <p>CS</p>
+                    <div className="tooltip">
+                        <p>Total minions killed</p>
+                         <p>Minions killed / minute</p>
+                    </div>
                 </div>
                 <div className="vision">
                     <p>{playerStats.vision.controlWardsPlaced ? playerStats.vision.controlWardsPlaced : 0}</p>
                     <p>{playerStats.vision.wardsPlaced}/{playerStats.vision.wardsKilled}</p>
                     <p>Vision</p>
+                    <div className="tooltip">
+                        <p>Control Wards Placed</p>
+                        <p>Wards placed / Wards destroyed</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,6 +121,9 @@ function Team({match, id, gameName}){
                     <figure key={index} className="player" onClick={()=>navigate(`../../../summoner/${regionTag}/${participant.gameName.toLowerCase().replace(/\s/g, '')}/${participant.tagLine}`)}>
                         <ChampionComponent championId={participant.championId} isTooltip={false} hasBorder={true}/>
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
+                        <div className="tooltip">
+                            <p>Go to summoner</p>
+                        </div>
                     </figure>
                 ))}
         </div>
@@ -111,7 +134,7 @@ export default function Match({match}){
     const { gameName } = useParams();
     const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
     return(
-        <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
+        <div id='match' className={`${playerStats.win ? 'win' : 'loss'}`}>
             <GameStatus playerStats={playerStats} match={match}/>
             <PlayerInfos playerStats={playerStats} match={match}/>
             <div className="team-composition">
