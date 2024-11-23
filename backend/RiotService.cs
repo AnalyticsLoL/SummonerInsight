@@ -52,7 +52,7 @@ namespace backend
             if (!response.IsSuccessful)
             {
                 // Handle 404 Not Found error
-                throw new InvalidOperationException(nameof(response.StatusCode));
+                throw new InvalidOperationException(response.StatusCode.ToString());
             }
             if (string.IsNullOrEmpty(response.Content))
             {

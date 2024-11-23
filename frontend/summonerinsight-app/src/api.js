@@ -2,7 +2,7 @@ import { regions, ddragonChampionSpecificPath } from "./constants";
 
 export const fetchAPIData = async (url, settings, setIsFetching) => {
     setIsFetching(true);
-    if(!settings.RegionRoute){
+    if(!settings.Region){
         settings.Region = regions.find(region => region.regionTag === settings.RegionTag.toUpperCase()).regionRoute;
     }
     console.log('Sending request to: '+url);

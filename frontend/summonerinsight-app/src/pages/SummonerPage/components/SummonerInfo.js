@@ -28,6 +28,7 @@ function ProfileSection({ summonerProfile,matchHistory }){
     };
 
     const favorite_positions = find_positions(matchHistory, summonerProfile);
+    const RegionSVG = regions.find(region => region.regionTag === regionTag.toUpperCase()).regionIcon;
     return (
         <div className="profile section">
             <figure className="profile-icon">
@@ -58,7 +59,12 @@ function ProfileSection({ summonerProfile,matchHistory }){
                     </div>
                 )}
                 <p>{summonerProfile.gameName}{summonerProfile.tagLine !== regionTag ? `#${summonerProfile.tagLine}`:null}</p>
-                <p>{regions.find(region => region.regionTag === regionTag.toUpperCase()).regionName}</p>
+                <div className="region icon">
+                    <RegionSVG style={{width: '30px', height: 'auto'}}/>
+                    <div className="tooltip">
+                        <p>{regions.find(region => region.regionTag === regionTag.toUpperCase()).regionName}</p>
+                    </div>
+                </div>
             </span>
         </div>
     );
@@ -146,7 +152,6 @@ function MasteryElement({mastery}){
                         </div>
                         <div className="milestone-grades">
                             {requiredGrades(mastery).map((grades) => {
-                                console.log(grades);
                                 return Object.entries(grades).map(([grade, isAchieved],index) => (
                                     <div key={index} className={`grade ${isAchieved ? 'achieved' : 'not-achieved'}`}>
                                         <p>{grade}</p>

@@ -65,10 +65,10 @@
     flex-direction: row;
     gap: 10px;
 }
-#summoner-info .profile .position.icon {
+#summoner-info .profile .icon {
     position:relative;
 }
-#summoner-info .profile .position.icon .tooltip {
+#summoner-info .profile .icon .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,10 +77,10 @@
     bottom: 120%;
     white-space: nowrap;
 }
-#summoner-info .profile .position.icon .tooltip p{
+#summoner-info .profile .icon .tooltip p{
     font-size: 14px;
 }
-#summoner-info .profile .position.icon:hover .tooltip{
+#summoner-info .profile .icon:hover .tooltip{
     opacity: 1;
     visibility: visible;
 }
