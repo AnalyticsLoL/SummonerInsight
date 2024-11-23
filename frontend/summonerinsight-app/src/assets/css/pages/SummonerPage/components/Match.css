@@ -151,6 +151,7 @@
     flex-direction: row;
     gap: 5px;
     margin: 0;
+    cursor: pointer;
 }
 .match .team-composition .team .player img{
     width: 30px;

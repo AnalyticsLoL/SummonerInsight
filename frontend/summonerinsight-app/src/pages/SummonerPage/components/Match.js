@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
 import {gameTypes,positions} from "../../../constants";
@@ -91,12 +91,14 @@ function PlayerInfos({playerStats, match}){
 }
 
 function Team({match, id, gameName}){
+    const navigate = useNavigate();
+    const regionTag = useParams().regionTag;
     return (
         <div className="team">
             {match.participants
                 .filter(participant => participant.teamId === id)
                 .map((participant, index) => (
-                    <figure key={index} className="player">
+                    <figure key={index} className="player" onClick={()=>navigate(`../../../summoner/${regionTag}/${participant.gameName.toLowerCase().replace(/\s/g, '')}/${participant.tagLine}`)}>
                         <ChampionComponent championId={participant.championId} isTooltip={false} hasBorder={true}/>
                         <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
                     </figure>
