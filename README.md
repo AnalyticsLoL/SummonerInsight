@@ -1,9 +1,8 @@
 # SummonerInsight
 Website showing users and champion data of League of Legends
 
-## Redux
-
-Define global flags in Context.js and import them in other components (not constant functions).
+## SSL connection
+Be on the home network and connect using ssh: `ssh username@ip_address` or use vscode extension Remote SSH
 
 ## Ideas for next stuff
 - [ ] Update the mastery grades to match the after match icons in client
