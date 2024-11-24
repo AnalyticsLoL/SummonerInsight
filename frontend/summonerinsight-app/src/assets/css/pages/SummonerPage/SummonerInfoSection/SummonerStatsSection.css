@@ -1,0 +1,22 @@
+#summoner-info .stats.subsection{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .stats .best-champion-kda{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#summoner-info .stats .champion-kda, #summoner-info .champion-kda div{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+#summoner-info .stats .champion-kda img{
+    width: 30px;
+    height: auto;
+    border-radius: 50%;
+}

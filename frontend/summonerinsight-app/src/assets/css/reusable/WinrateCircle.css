@@ -1,0 +1,27 @@
+.win-loss-ratio{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+}
+.bg-circle {
+    fill: none;
+    stroke: #f35d5d; /* Background color */
+    stroke-width: 3;
+}
+.percent-circle {
+    fill: none;
+    stroke: #50c3f5; /* Progress color */
+    stroke-width: 3;
+    stroke-dasharray: calc(2 * 3.1415 * 16px); /* Length of the circle's perimeter */
+    stroke-dashoffset: calc((1 - var(--percentage)) * 2 * 3.1415 * 16px);
+}
+.win-loss-ratio .tooltip{
+    bottom: 105%;
+    white-space: nowrap;
+}
+.win-loss-ratio:hover .tooltip{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
