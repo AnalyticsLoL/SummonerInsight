@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {api_url, regions} from '../constants.js';
 import { fetchAPIData } from '../api.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -65,8 +65,18 @@ export default function SmallSearchSummonerBar() {
     const [gameName, setGameName] = useState('');
     const [tagLine, setTagLine] = useState('');
     const [regionRoute, setRegionRoute] = useState('Americas');
+    const [entree, setEntree] = useState('');
     const isFetching = useRef(false);
     const navigate = useNavigate();
+    const location = useLocation();
+    const textAreaFocus = useRef(null);
+
+    useEffect(() => {
+        setEntree('');
+        setGameName('');
+        setTagLine('');
+        textAreaFocus.current.blur();
+    }, [location]);
 
     const HandleGameNameandGameTag=(event)=>{
         const text = event.target.value.split("#");
@@ -75,7 +85,7 @@ export default function SmallSearchSummonerBar() {
     }
 
     const fetchSummonerData = async () => {
-        if(gameName === '') return;
+        if (gameName === '') return;
         if (isFetching.current) return;
         const settings = {
             GameName: gameName.toLowerCase().replace(/\s/g, ''),
@@ -108,9 +118,15 @@ export default function SmallSearchSummonerBar() {
         <div className='small search'>
             <div className='search-content'>
                 <RegionDropdown setRegionTag={setRegionTag} regionTag={regionTag} setRegionRoute={setRegionRoute}/>
-                <textarea 
+                <div className='divider'/>
+                <textarea
+                    ref={textAreaFocus}
                     type="text" 
-                    onChange={(event)=> HandleGameNameandGameTag(event)} 
+                    value={entree}
+                    onChange={(event) => {
+                        setEntree(event.target.value);
+                        HandleGameNameandGameTag(event);
+                    }}
                     autoComplete="off"
                     autoCorrect="off"
                     spellCheck="false"
@@ -118,7 +134,6 @@ export default function SmallSearchSummonerBar() {
                         if (event.key === 'Enter') {
                             event.preventDefault();
                             fetchSummonerData();
-                            event.target.value = '';
                         }
                     }} 
                 />

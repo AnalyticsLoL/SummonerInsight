@@ -114,7 +114,7 @@ export default function SearchSummonerBar() {
         <div className='search_summoner_bar'>
             <div className='search_summoner_bar_content'>
                 <RegionDropdown setRegionTag={setRegionTag} regionName={regionName} setRegionName={setRegionName} setRegionRoute={setRegionRoute}/>
-                <div className='vertical_line'/>
+                <div className='divider'/>
                 <div className='gameName_input'>
                     <span>Game Name:</span>
                     <textarea 

@@ -6,36 +6,8 @@ import "../../assets/css/pages/SummonerPage/Summoner.css";
 import {fetchAPIData} from "../../api.js";
 import {api_url} from "../../constants.js";
 
-import LoadButton from "../../reusable/LoadButton.js";
-import Match from "./components/Match.js";
-import SummonerInfo from "./components/SummonerInfo.js";
-
-function MatchHistory({matchhistory}){
-    const { regionTag, gameName, tagLine } = useParams();
-    const [matches, setMatches] = React.useState(matchhistory);
-    const [isFetching, setIsFetching] = useState(false);
-    const [canLoad, setCanLoad] = useState(true);
-    
-    const fetchSummonerData = async () => {
-        if(isFetching) return;
-        const settings = {
-            GameName: gameName,
-            RegionTag: regionTag.toLowerCase(),
-            TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
-        }
-        const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsFetching);
-        if(fetchedMatches.length === 0) setCanLoad(false);
-        setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
-    };
-    return(
-        <div className="match-history">
-            {matches.map((match, index) => (
-                <Match key={index} match={match}/>
-            ))}
-            {canLoad && (<LoadButton onClick={fetchSummonerData} text='Load More' isFetching={isFetching}/>)}
-        </div>
-    );
-}
+import MatchHistory from "./MatchHistorySection/MatchHistory.js";
+import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
 
 export default function Summoner() {
     const location = useLocation();
