@@ -44,7 +44,7 @@ import { ReactComponent as ThIcon } from "./assets/svg/region_icons/th.svg";
 import { ReactComponent as TrIcon } from "./assets/svg/region_icons/tr.svg";
 import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
 
-export const league_version = "14.22.1";
+export const league_version = "14.23.1";
 export const api_url = "http://192.168.2.34:5151/api/RiotData";
 
 // Path to get item icons

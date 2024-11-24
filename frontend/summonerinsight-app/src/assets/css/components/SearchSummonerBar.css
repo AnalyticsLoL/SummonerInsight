@@ -6,7 +6,7 @@
 }
 .search_summoner_bar .search_summoner_bar_content{
     display: flex;
-    display: row;
+    flex-direction: row;
     gap: 20px;
     justify-content: center;
     background-color: var(--tooltip-bg);
@@ -15,7 +15,6 @@
     width:600px;
     height:50px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-    position: relative;
 }
 .search_summoner_bar .search_summoner_bar_content .divider {
     width: 2px;
@@ -42,7 +41,7 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    width: 130px;
+    width: 120px;
     display: flex;
     flex-direction: column;
 }

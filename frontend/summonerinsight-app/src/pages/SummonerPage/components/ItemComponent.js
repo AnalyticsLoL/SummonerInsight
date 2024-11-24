@@ -45,7 +45,7 @@ export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
     }
     const item = itemFullData.data[itemId];
     return (
-        <div className={`item ${ isLastItem? 'last' : ''} black-box-hover`}>
+        <div id='item' className={`${ isLastItem? 'last' : ''} black-box-hover`}>
             <img src={`${itemIconPath}/${item.image.full}`} alt="Item Icon" />
             {isTooltip && (<div className='tooltip'>
                 <div className='header'>
@@ -53,8 +53,24 @@ export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
                     <h4>{item.name}</h4>
                 </div>
                 <p>{item.plaintext}</p>
-                <p>Cost: {item.gold.total}</p>
                 {description(item.description)}
+                {item.from && (<div className='from'>
+                    <p>Builds from: </p>
+                    <div className='items'>
+                        {item.from.map((fromId, index) => (
+                            <ItemComponent key={index} itemId={fromId} isTooltip={false} isLastItem={false} />
+                        ))}
+                    </div>
+                </div>)}
+                {item.into && (<div className='into'>
+                    <p>Builds into: </p>
+                    <div className='items'>
+                        {item.into.map((intoId, index) => (
+                            <ItemComponent key={index} itemId={intoId} isTooltip={false} isLastItem={false} />
+                        ))}
+                    </div>
+                </div>)}
+                {item.gold.total !==0 && (<p>Cost (Sell): {item.gold.total} ({item.gold.sell})</p>)}
                 <div className='tags'>
                     {Object.values(item.tags).map((tag, index) => (
                         <span key={index} className='tag'>

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import "../../../assets/css/pages/SummonerPage/SummonerInfoSection/SummonerInfo.css";
 
 import { regions, positions, profileIconPath } from "../../../constants.js";
-import { getPlayerStats, countTotalWins, getMeanKDA } from "../components/StatsComputations.js";
+import { getChampionsStats } from "../components/StatsComputations.js";
 import ChampionComponent from "../components/ChampionComponent.js";
 import MasterySection from "./MasterySection.js";
 import RankedSection from "./RankedSection.js";
@@ -74,12 +74,11 @@ function ProfileSection({ summonerProfile,matchHistory }){
 function SummonerStats({matchHistory}){
     const { gameName } = useParams();
 
-    const playerStats = getPlayerStats(matchHistory, gameName);
     const totalGames = matchHistory.length;
-    const wins = countTotalWins(playerStats);
+    
+    const { championStats, wins } = getChampionsStats(matchHistory, gameName);
     const losses = totalGames - wins;
-    const meanKda = getMeanKDA(playerStats);
-
+    const playerMeanKda = championStats.reduce((acc, champion) => acc + champion.meanKda, 0) / championStats.length;
     return(
         <div className="stats section">
             <div className="stats subsection black-box-hover">
@@ -93,11 +92,12 @@ function SummonerStats({matchHistory}){
                     <div className="tooltip">
                         <p>{totalGames}G {wins}W {losses}L</p>
                         <p>Winrate: {((wins / totalGames) * 100).toFixed(0)}%</p>
+                        <p>Average {playerMeanKda.toFixed(2)} KDA</p>
                     </div>
                 </div>
                 <div className="best-champion-kda">
                     <p>Recent {totalGames} games played champion:</p>
-                    {Object.values(meanKda)
+                    {Object.values(championStats)
                         .sort((a, b) => b.wins - a.wins)
                         .slice(0, 3)
                         .map((champion, index) => {
