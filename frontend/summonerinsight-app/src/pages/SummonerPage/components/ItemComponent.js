@@ -40,7 +40,7 @@ const description = (itemDescription) => {
 export default function ItemComponent({ isLastItem, itemId, isTooltip }) {
     if(itemId === 0) {
         return (
-            <div className={`empty item ${isLastItem ? 'last-item' : ''}`}/>
+            <div className={`empty item ${isLastItem ? 'last' : ''}`}/>
         );
     }
     const item = itemFullData.data[itemId];
