@@ -37,7 +37,6 @@ function PlayerInfos({playerStats, match}){
     const maxHealed = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalHealsOnTeammates);
     }, 0);
-    console.log(playerStats.items.length);
     return (
         <div className="player-infos">
             <div className="player-champion-items">

@@ -8,7 +8,7 @@ import {api_url} from "../../constants.js";
 
 import LoadButton from "../../reusable/LoadButton.js";
 import Match from "./components/Match.js";
-import SummonerInfo from "./components/SummonerInfo.js";
+import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
 
 function MatchHistory({matchhistory}){
     const { regionTag, gameName, tagLine } = useParams();

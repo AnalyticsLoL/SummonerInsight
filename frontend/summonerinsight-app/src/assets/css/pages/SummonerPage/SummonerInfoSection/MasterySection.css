@@ -1,0 +1,105 @@
+#summoner-info .masteries {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .masteries  .champion-mastery {
+    position: relative;
+    padding: 10px;
+}
+#summoner-info .masteries .champion-mastery figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    
+}
+#summoner-info .masteries  .champion-mastery figure .image-container{
+    width: 75px;
+    height: auto;
+}
+#summoner-info .masteries  .champion-mastery figure .mastery-icon{
+    width: 50px;
+    height: auto;
+}
+#summoner-info .masteries  .champion-mastery figure img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+#summoner-info .masteries  .champion-mastery .tooltip{
+    white-space: nowrap;
+    width: auto;
+    bottom: -30%;
+    left : 10%;
+    transform: translateX(30%);
+    gap: 20px;
+    padding: 20px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+#summoner-info .masteries  .champion-mastery:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .content{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .mastery-requirements{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .mastery-requirements .mp-requirements {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone .milestone-requirements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone .milestone-grades{
+    display: flex;
+    flex-direction: row;
+    gap:3px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone .milestone-grades .grade{
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    background-color: var(--loss-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone .milestone-grades .grade.achieved{
+    background-color: var(--win-color);
+}
+#summoner-info .masteries  .champion-mastery .tooltip .milestone .milestone-reward{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#summoner-info .masteries  .champion-mastery .tooltip h4{
+    font-size: 14px;
+    margin: 0;
+}
+#summoner-info .masteries  .champion-mastery .tooltip h5{
+    font-size: 12px;
+    margin: 0;
+}

@@ -1,0 +1,55 @@
+#summoner-info .ranked {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+#summoner-info .ranked-element {
+    position: relative;
+    padding: 0 20px 10px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: none !important;
+    box-shadow: none !important;
+}
+#summoner-info .ranked-element .rank-icon{
+    width: 150px;
+    height: auto;
+    overflow: hidden;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#summoner-info .ranked-element .rank-icon .image-container{
+    width: 75%;
+    height: auto;
+}
+#summoner-info .ranked-element .rank-icon .image-container img {
+    width: 100%;
+    height: auto;
+}
+#summoner-info .ranked-element .rank-icon span{
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+#summoner-info .ranked .ranked-element .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    bottom: 85%;
+    white-space: nowrap;
+}
+#summoner-info .ranked .ranked-element:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .ranked .ranked-element .ranked.tooltip p{
+    margin:0;
+    width: auto;
+}
