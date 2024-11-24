@@ -11,7 +11,7 @@ export const fetchAPIData = async (url, settings, isFetching) => {
             method:'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "http://172.28.183.213:5151"
+                "Access-Control-Allow-Origin": "http://192.168.1.58:5151"
             },
             body: JSON.stringify(settings)
         });
