@@ -1,0 +1,176 @@
+#match-history .match .player-infos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    gap: 20px;
+}
+#match-history .match .player-champion-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+#match-history .match .player-champion-items .champion-summoner{
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    margin: 0;
+}
+#match-history .match .player-champion-items .champion-summoner figcaption{
+    position: relative;
+    background-color: var(--icon-border);
+    width:30px;
+    padding: 5px 0px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 15px;
+    color: var(--icon-text);
+    bottom:25px;
+    left: 75px;
+}
+#match-history .match .player-champion-items .items{
+    display: grid;
+    grid-template-columns: repeat(3, auto) 1fr;
+    grid-template-rows: repeat(2, 40px);
+    gap: 5px;
+    height: 85px;
+    margin: 0;
+}
+#match-history .match .player-champion-items .items .empty{
+    width: 40px;
+    background-color: rgba(224, 198, 138, 0.3);
+    border-radius: 30%;
+    filter: blur(1px);
+}
+#match-history .match .player-stats{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+#match-history .match .player-stats .kda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    gap: 10px;
+    position: relative;
+}
+#match-history .match .player-stats .kda .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 110%;
+    white-space: nowrap;
+}
+#match-history .match .player-stats .kda .tooltip p{
+    font-size: 11px;
+    width:auto;
+}
+#match-history .match .player-stats .kda:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#match-history .match .player-stats .kda .kill_death_assists{
+    font-size: 14px;
+    margin: 0;
+}
+#match-history .match .player-stats .kda .ratio{
+    font-size: 12px;
+    margin: 0;
+}
+#match-history .match .player-stats .damage{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 150px;
+}
+#match-history .match .player-stats .damage .damage-section{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+    position: relative;
+}
+#match-history .match .player-stats .damage .damage-section .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 110%;
+    white-space: nowrap;
+}
+#match-history .match .player-stats .damage .damage-section .tooltip p{
+    font-size: 11px;
+    width:auto;
+}
+#match-history .match .player-stats .damage .damage-section:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#match-history .match .player-stats .damage p{
+    font-size: 12px;
+    margin: 0;
+    width:50px;
+}
+#match-history .match .player-stats .cs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    position: relative;
+}
+#match-history .match .player-stats .cs .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 110%;
+    white-space: nowrap;
+}
+#match-history .match .player-stats .cs .tooltip p{
+    font-size: 11px;
+}
+#match-history .match .player-stats .cs:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#match-history .match .player-stats .cs p{
+    margin: 0;
+}
+#match-history .match .player-stats .vision {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    position: relative;
+}
+#match-history .match .player-stats .vision .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 110%;
+    white-space: nowrap;
+}
+#match-history .match .player-stats .vision .tooltip p{
+    font-size: 11px;
+}
+#match-history .match .player-stats .vision:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#match-history .match .player-stats .vision p{
+    margin: 0;
+}

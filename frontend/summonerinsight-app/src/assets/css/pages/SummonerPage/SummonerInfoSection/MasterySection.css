@@ -32,9 +32,7 @@
 #summoner-info .masteries  .champion-mastery .tooltip{
     white-space: nowrap;
     width: auto;
-    bottom: -30%;
-    left : 10%;
-    transform: translateX(30%);
+    bottom: 110%;
     gap: 20px;
     padding: 20px;
 }

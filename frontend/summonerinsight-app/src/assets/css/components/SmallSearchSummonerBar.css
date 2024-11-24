@@ -9,10 +9,16 @@
     gap: 10px;
     padding: 2px;
 }
+.small.search .search-content .divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--nav-bg);
+}
 .small.search .region_dropdown{
     position: relative;
-    width: 75px;
+    width: 60px;
     cursor: pointer;
+    padding-left: 10px;
     font-size: 14px;
 }
 .small.search .region_dropdown .header {

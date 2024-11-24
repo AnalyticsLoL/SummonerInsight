@@ -1,32 +1,12 @@
 import React from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import "../../../assets/css/pages/SummonerPage/components/Match.css";
 
-import {gameTypes,positions} from "../../../constants";
-import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
+import '../../../assets/css/pages/SummonerPage/MatchHistorySection/PlayerInfos.css';
+
+import ItemComponent from "../components/ItemComponent";
+import ChampionComponent from "../components/ChampionComponent";
 import FillBar from "../../../reusable/FillBar";
-import ChampionComponent from "./ChampionComponent"
-import ItemComponent from "./ItemComponent";
 
-function GameStatus({playerStats, match}){
-    let PositionIcon = null;
-    if (playerStats.position !== ''){
-        const position = positions.find(pos => pos.API_name === playerStats.position);
-        PositionIcon = position.positionIcon;
-    }
-    return (
-        <div className="game-status">
-            { PositionIcon && (<PositionIcon/>)}
-            <p>{gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId)?gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId).description:match.metadata.gameTypeId}</p>
-            <p>{getTimeDifference(match.metadata.gameStart)}</p>
-            <hr/>
-            <p>{playerStats.win ? 'Victory' : 'Defeat'}</p>
-            <p>{getDuration(match.metadata.gameDuration)}</p>
-        </div>
-    );
-}
-
-function PlayerInfos({playerStats, match}){
+export default function PlayerInfos({playerStats, match}){
     const isSupport = playerStats.damage.totalHealsOnTeammates>=1000 && playerStats.position === "UTILITY";
     const maxDealt = match.participants.reduce((max, player) => {
         return Math.max(max, player.damage.totalDamageDealtToChampions);
@@ -38,7 +18,7 @@ function PlayerInfos({playerStats, match}){
         return Math.max(max, player.damage.totalHealsOnTeammates);
     }, 0);
     return (
-        <div className="player-infos">
+        <div className="player-infos section">
             <div className="player-champion-items">
                 <div className="champion-summoner">
                     <ChampionComponent championId={playerStats.championId} isTooltip={true} hasBorder={true}/>
@@ -105,41 +85,6 @@ function PlayerInfos({playerStats, match}){
                         <p>Wards placed / Wards destroyed</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    );
-}
-
-function Team({match, id, gameName}){
-    const navigate = useNavigate();
-    const regionTag = useParams().regionTag;
-    return (
-        <div className="team">
-            {match.participants
-                .filter(participant => participant.teamId === id)
-                .map((participant, index) => (
-                    <figure key={index} className="player" onClick={()=>navigate(`../../../summoner/${regionTag}/${participant.gameName.toLowerCase().replace(/\s/g, '')}/${participant.tagLine}`)}>
-                        <ChampionComponent championId={participant.championId} isTooltip={false} hasBorder={true}/>
-                        <figcaption style={{fontWeight: participant.gameName.toLowerCase().replace(/\s/g, '')===gameName?'bold':null}}>{participant.gameName}</figcaption>
-                        <div className="tooltip">
-                            <p>See this summoner</p>
-                        </div>
-                    </figure>
-                ))}
-        </div>
-    );
-}
-
-export default function Match({match}){
-    const { gameName } = useParams();
-    const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
-    return(
-        <div id='match' className={`${playerStats.win ? 'win' : 'loss'}`}>
-            <GameStatus playerStats={playerStats} match={match}/>
-            <PlayerInfos playerStats={playerStats} match={match}/>
-            <div className="team-composition">
-                <Team match={match} id={100} gameName={gameName}/>
-                <Team match={match} id={200} gameName={gameName}/>
             </div>
         </div>
     );

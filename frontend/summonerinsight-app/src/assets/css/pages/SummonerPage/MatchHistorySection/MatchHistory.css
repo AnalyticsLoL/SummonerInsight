@@ -1,0 +1,27 @@
+#match-history{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 500px;
+    width: 830px;
+    gap: 10px;
+}
+#match-history .match p {
+    margin: 0;
+}
+#match-history .match{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 800px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+.win{
+    background-color: var(--win-color);
+}
+.loss{
+    background-color: var(--loss-color);
+}
