@@ -18,7 +18,7 @@ function Match({match}){
         <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
             <GameStatus playerStats={playerStats} match={match}/>
             <PlayerInfos playerStats={playerStats} match={match}/>
-            <div className="team-composition">
+            <div className="team-composition section">
                 <Team match={match} id={100} gameName={gameName}/>
                 <Team match={match} id={200} gameName={gameName}/>
             </div>

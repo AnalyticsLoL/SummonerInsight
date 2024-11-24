@@ -9,7 +9,7 @@ export default function Team({match, id, gameName}){
     const navigate = useNavigate();
     const regionTag = useParams().regionTag;
     return (
-        <div className="team section">
+        <div className="team">
             {match.participants
                 .filter(participant => participant.teamId === id)
                 .map((participant, index) => (
