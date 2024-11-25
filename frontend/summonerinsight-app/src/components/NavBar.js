@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../assets/css/components/NavBar.css';
-import SmallSearchSummonerBar from './SmallSearchSummonerBar';
+import SearchSummonerBar from './SearchSummonerBar';
 
 export default function NavBar(){
     const location = useLocation();
@@ -19,7 +19,7 @@ export default function NavBar(){
                 <Link to='/'>
                     <h3>Home</h3>
                 </Link>
-                {hasSearchBar && <SmallSearchSummonerBar />}
+                {hasSearchBar && <SearchSummonerBar isSmall={true}/>}
             </div>
         </div>
     );

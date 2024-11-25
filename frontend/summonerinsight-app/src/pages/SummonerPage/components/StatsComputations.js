@@ -1,4 +1,4 @@
-export const getChampionsStats = (matches, gameName) => {
+export const getNumberofWins = (matches, gameName) => {
     const playerStats = matches.map(match => {
         const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
         return {
@@ -7,8 +7,19 @@ export const getChampionsStats = (matches, gameName) => {
             kda: playerStats.kda.kda
         };
     });
-    const wins = playerStats.filter(match => match.win === true).length;
-    const totalKda = playerStats.reduce((acc, match) => {
+    return playerStats.filter(match => match.win === true).length;
+}
+
+export const getChampionsKDA = (matches, gameName) => {
+    const playerStats = matches.map(match => {
+        const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
+        return {
+            championId: playerStats.championId,
+            win: playerStats.win,
+            kda: playerStats.kda.kda
+        };
+    });
+    const totalKdaPerChampion = playerStats.reduce((acc, match) => {
         const { championId, win, kda } = match;
 
         if (!acc[championId]) {
@@ -26,11 +37,10 @@ export const getChampionsStats = (matches, gameName) => {
         return acc;
     }, {});
 
-    return {
-            championStats : Object.values(totalKda).map(champion => ({
-            ...champion
-            ,meanKda: champion.totalKda / champion.gamesPlayed
-        })), 
-        wins : wins
-    };
+    return Object.values(totalKdaPerChampion).map(champion => ({
+        championId: champion.championId,
+        gamesPlayed: champion.gamesPlayed,
+        wins: champion.wins,
+        meanKda: champion.totalKda / champion.gamesPlayed
+    }));
 }

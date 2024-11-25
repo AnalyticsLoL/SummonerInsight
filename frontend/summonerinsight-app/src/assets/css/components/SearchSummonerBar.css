@@ -1,12 +1,19 @@
-.search_summoner_bar p{
+.search p{
     margin: 0;
 }
-.search_summoner_bar{
+.search{
     height: 120px;
+    position: relative;
 }
-.search_summoner_bar .search_summoner_bar_content{
+.small.search {
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+}
+.search .search-content{
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20px;
     justify-content: center;
     background-color: var(--tooltip-bg);
@@ -16,17 +23,28 @@
     height:50px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
-.search_summoner_bar .search_summoner_bar_content .divider {
+.small.search .search-content {
+    gap: 10px;
+    border-radius: 10px;
+    padding: 2px;
+    width: auto;
+    height: auto;
+}
+.search .search-content .divider {
     width: 2px;
     height: 50px;
     background-color: var(--nav-bg);
 }
-.search_summoner_bar .gameName_input {
+.small.search .search-content .divider {
+    width: 1px;
+    height: 20px;
+}
+.search .gameName_input {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.search_summoner_bar .gameName_input textarea{
+.search .gameName_input textarea{
     background-color: transparent;
     border: none;
     width:300px;
@@ -37,68 +55,52 @@
     padding: 0;
     margin: 0;
 }
-#region_dropdown{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    width: 120px;
-    display: flex;
-    flex-direction: column;
-}
-#region_dropdown .dropdown-header{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+
+.small.search .gameName_input textarea {
+    width: 200px;
+    height: 16px;
+    font-size: 14px;
     align-items: center;
+    justify-content: center;
 }
 
-#region_dropdown .dropdown-header .open_dropdown{
-    margin: 0;
-    text-align: left;
-}
-
-#region_dropdown .dropdown-menu {
-    margin-top: 16px;
-    background-color: var(--tooltip-bg);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-    z-index: 5;
-    overflow-y: scroll;
-    margin-left: -20px;
-    width: 160px;
-}
-
-#region_dropdown .dropdown-menu .dropdown_item {
+.small.search .search_button {
+    padding: 5px 10px;
+    border-radius: 10px;
     cursor: pointer;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    gap : 10px;
+    width: 50px;
+    height: 20px;
 }
 
-#region_dropdown .dropdown-menu .dropdown_item:hover {
-    background-color: var(--hover-item-bg);
-}
-
-.search_summoner_bar .message{
-    margin-top: 5px;
+.search .message{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.search_summoner_bar .message-content {
-    width: auto;
-    min-width: 400px;
+.small.search .message{
+    top: 120%;
+}
+.search .message-content {
+    width: 400px;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #C8AA6E;
+    background-color: var(--tooltip-bg);
     border-radius: 5px;
     text-align: center;
     transition: opacity 8s ease-in-out;
     opacity: 1;
+    font-size: 14px;
+}
+.small.search .message-content{
+    width: 300px;
+    font-size: 12px;
 }
 
-.search_summoner_bar .message-content p {
-    color: #C8AA6E;
+.search .message-content p {
+    color: var(--title-color);
 }
 
 .message:not(:empty) {

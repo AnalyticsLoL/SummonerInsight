@@ -1,77 +1,34 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {api_url, regions} from '../constants.js';
 import { fetchAPIData } from '../api.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import '../assets/css/components/SearchSummonerBar.css';
 
-import LoadButton from '../reusable/LoadButton.js';
+import LoadButton from './LoadButton.js';
+import RegionDropdown from './RegionDropdown.js';
 
-function RegionDropdown({setRegionTag, regionName, setRegionName, setRegionRoute}){
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
-
-    const handleDropdownClick = (region) => {
-        setDropdownOpen(false);
-        setRegionTag(region.regionTag);
-        setRegionName(region.regionName);
-        setRegionRoute(region.regionRoute);
-    };
-
-    useEffect(() => {
-        const handleEscPress = (event) => {
-            if (event.key === 'Escape') {
-                setDropdownOpen(false);
-            }
-        };
-        
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setDropdownOpen(false);
-            }
-        };
-        document.addEventListener('keydown', handleEscPress);
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('keydown', handleEscPress);
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    },[]);
-
-    return (
-        <div ref={dropdownRef} id='region_dropdown' onClick={() => setDropdownOpen(!dropdownOpen)} style={{height: dropdownOpen? "300px":""}}>
-            <div className='dropdown-header'>
-                <span>Region:</span>
-                <FontAwesomeIcon icon={dropdownOpen?faChevronUp : faChevronDown} />
-                <p className='open_dropdown'>{regionName}</p>
-            </div>
-            {dropdownOpen && (
-                <div className="dropdown-menu">
-                    {regions.map((region, index) => (
-                        <div key={index} className='dropdown_item' onClick={() => handleDropdownClick(region)}>
-                            <region.regionIcon />
-                            <p>{region.regionName}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-}
-
-export default function SearchSummonerBar() {
-    const [regionTag, setRegionTag] = useState('NA1');
-    const [regionName, setRegionName] = useState('North America');
+export default function SearchSummonerBar({isSmall}) {
+    const location = useLocation();
+    const [regionTag, setRegionTag] = useState(location.pathname !== '/' ? location.pathname.split('/')[2].toUpperCase() : 'NA1');
     const [gameName, setGameName] = useState('');
     const [tagLine, setTagLine] = useState('');
-    const [regionRoute, setRegionRoute] = useState('Americas');
+    const [regionRoute, setRegionRoute] = useState(regions.find(region => region.regionTag === regionTag).regionRoute);
+    const [entree, setEntree] = useState('');
     const isFetching= useRef(false);
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const textAreaFocus = useRef(null);
+
+    useEffect(() => {
+        setEntree('');
+        setGameName('');
+        setTagLine('');
+        textAreaFocus.current.blur();
+    }, [location]);
 
     const HandleGameNameandGameTag=(event)=>{
         const text = event.target.value.split("#");
@@ -111,16 +68,27 @@ export default function SearchSummonerBar() {
         } 
     };
     return(
-        <div className='search_summoner_bar'>
-            <div className='search_summoner_bar_content'>
-                <RegionDropdown setRegionTag={setRegionTag} regionName={regionName} setRegionName={setRegionName} setRegionRoute={setRegionRoute}/>
+        <div className={`${isSmall? 'small': ''} search`}>
+            <div className='search-content'>
+                <RegionDropdown 
+                    setRegionTag={setRegionTag} 
+                    intialRegionName={isSmall? null : regions.find(region => region.regionTag === regionTag).regionName} 
+                    regionTag={isSmall ? regionTag : null}
+                    setRegionRoute={setRegionRoute}
+                />
                 <div className='divider'/>
                 <div className='gameName_input'>
-                    <span>Game Name:</span>
+                    {!isSmall && <span>Game Name:</span>}
                     <textarea 
+                        ref={textAreaFocus}
                         type="text" 
-                        onChange={(event)=> HandleGameNameandGameTag(event)} 
-                        placeholder={`Game Name + #${regionTag}`}
+                        value={entree}
+                        onChange={(event)=> {
+                                setEntree(event.target.value);
+                                HandleGameNameandGameTag(event);
+                            }
+                        } 
+                        placeholder={isSmall?null:`Game Name + #${regionTag}`}
                         autoComplete="off"
                         autoCorrect="off"
                         spellCheck="false"
@@ -132,7 +100,7 @@ export default function SearchSummonerBar() {
                         }} 
                     />
                 </div>
-                <LoadButton onClick={fetchSummonerData} text='Search' isFetching={isFetching}/>
+                <LoadButton onClick={fetchSummonerData} icon={<FontAwesomeIcon icon={faSearch} />} isFetching={isFetching}/>
             </div>
             {message && (
                 <div className="message">

@@ -1,0 +1,62 @@
+#summoner-info .profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+#summoner-info .profile-icon{
+    width: 150px;
+    align-items: center;
+    margin: 0;
+}
+#summoner-info .profile-icon img{
+    width: calc(100% - 8px);
+    height: auto;
+    border-radius: 50%;
+    border: 4px solid var(--icon-border);
+}
+#summoner-info .profile-icon figcaption{
+    position: relative;
+    background-color: var(--icon-border);
+    color: var(--icon-text);
+    width:30px;
+    padding: 5px 0px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 15px;
+    margin: -15px auto 0px;
+    z-index: 2;
+}
+#summoner-info .profile span{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+#summoner-info .profile .position-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+#summoner-info .profile .icon {
+    position:relative;
+}
+#summoner-info .profile .icon .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 120%;
+    white-space: nowrap;
+}
+#summoner-info .profile .icon .tooltip p{
+    font-size: 14px;
+}
+#summoner-info .profile .icon:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+#summoner-info .profile span p{
+    font-size: 18px;
+}

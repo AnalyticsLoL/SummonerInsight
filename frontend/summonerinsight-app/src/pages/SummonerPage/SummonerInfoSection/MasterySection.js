@@ -5,7 +5,7 @@ import '../../../assets/css/pages/SummonerPage/SummonerInfoSection/MasterySectio
 import { championMasteriesIcons, championIconPath, gradeGPA, rewardTypes, championFullData } from "../../../constants.js";
 
 import { getTimeDifference } from "../../../reusable/UnixTimeConvert.js";
-import FillBar from "../../../reusable/FillBar.js";
+import FillBar from "../../../components/FillBar.js";
 import ChampionComponent from "../components/ChampionComponent.js";
 
 function MasteryElement({mastery}){

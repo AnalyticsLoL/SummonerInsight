@@ -56,7 +56,7 @@ export default function Home() {
                     <div className="title">
                         <h1>Welcome to Summoner Insight</h1>
                     </div>
-                    <SearchSummonerBar />
+                    <SearchSummonerBar isSmall={false}/>
                 </div>
             </div>
             <div className="section" style={{boxShadow: "none"}}>

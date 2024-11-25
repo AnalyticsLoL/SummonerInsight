@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 
 import '../../../assets/css/pages/SummonerPage/MatchHistorySection/MatchHistory.css';
 
-import LoadButton from "../../../reusable/LoadButton.js";
+import LoadButton from "../../../components/LoadButton.js";
 import GameStatus from "./GameStatus.js";
 import PlayerInfos from "./PlayerInfos.js";
 import Team from "./Team.js";
