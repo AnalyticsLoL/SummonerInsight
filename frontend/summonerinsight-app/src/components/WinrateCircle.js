@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../assets/css/reusable/WinrateCircle.css";
+import "../assets/css/components/WinrateCircle.css";
 
 export default function WinrateCircle({wins, totalGames, losses, playerMeanKda}) {
     return (

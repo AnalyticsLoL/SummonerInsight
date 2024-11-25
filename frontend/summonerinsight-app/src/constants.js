@@ -44,7 +44,19 @@ import { ReactComponent as ThIcon } from "./assets/svg/region_icons/th.svg";
 import { ReactComponent as TrIcon } from "./assets/svg/region_icons/tr.svg";
 import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
 
-export const league_version = "14.23.1";
+// Fetch last version number of league of legends
+let league_version;
+try {
+    let versionResponse = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
+    versionResponse = await versionResponse.json();
+    league_version = versionResponse[0];
+    console.log(`League of Legends current version number: ${league_version}`);
+} catch (error) {
+    console.error('Failed to fetch league of legends current version number');
+}
+export { league_version };
+
+// Url of the .Net application
 export const api_url = "http://192.168.2.34:5151/api/RiotData";
 
 // Path to get item icons
@@ -73,8 +85,14 @@ export const ddragonChampionGlobalPath = `https://ddragon.leagueoflegends.com/cd
 
 // Data object of champions fetched from ddragonChampionGlobalPath
 console.log(`Fetching champion Data from: ${ddragonChampionGlobalPath}`);
-let championResponse = await fetch(ddragonChampionGlobalPath);
-export const championFullData = await championResponse.json();
+let championFullData;
+try {
+    let championResponse = await fetch(ddragonChampionGlobalPath);
+    championFullData = await championResponse.json();
+} catch (error) {
+    console.error('Failed to fetch champion data');
+}
+export { championFullData };
 
 // Path to get champion specific data
 export const ddragonChampionSpecificPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/champion`;
@@ -84,8 +102,14 @@ export const ddragonItemPath = `https://ddragon.leagueoflegends.com/cdn/${league
 
 // Data object of items fetched from ddragonItemPath
 console.log(`Fetching item Data from: ${ddragonItemPath}`);
-let itemResponse = await fetch(ddragonItemPath);
-export const itemFullData = await itemResponse.json();
+let itemFullData;
+try {
+    let itemResponse = await fetch(ddragonItemPath);
+    itemFullData = await itemResponse.json();
+} catch (error) {
+    console.error('Failed to fetch item data');
+}
+export { itemFullData };
 
 // Path to get summoner spells data
 export const ddragonSummonerSpellPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/data/en_US/summoner.json`;
@@ -145,11 +169,11 @@ export const gameModes = [
 export const gameTypes = [
     {queueId: 0, map: "Custom games", description: "Custom Game"},
     {queueId: 76, map: "Summoner's Rift", description: "Ultra Rapid Fire"},
-    {queueId: 400, map: "Summoner's Rift", description: "5v5 Draft Pick"},
+    {queueId: 400, map: "Summoner's Rift", description: "5v5 Draft"},
     {queueId: 420, map: "Summoner's Rift", description: "Ranked Solo/Duo"},
-    {queueId: 430, map: "Summoner's Rift", description: "5v5 Blind Pick"},
-    {queueId: 440, map: "Summoner's Rift", description: "5v5 Ranked Flex"},
-    {queueId: 450, map: "Howling Abyss", description: "5v5 ARAM"},
+    {queueId: 430, map: "Summoner's Rift", description: "5v5 Blind"},
+    {queueId: 440, map: "Summoner's Rift", description: "Ranked Flex"},
+    {queueId: 450, map: "Howling Abyss", description: "ARAM"},
     {queueId: 490, map: "Summoner's Rift", description: "Quickplay"},
     {queueId: 700, map: "Summoner's Rift", description: "Summoner's Rift Clash"},
     {queueId: 720, map: "Howling Abyss", description: "ARAM Clash"},

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../assets/css/reusable/FillBar.css';
+import '../assets/css/components/FillBar.css';
 
 export default function FillBar({value, maxValue}) {
     let percentage;

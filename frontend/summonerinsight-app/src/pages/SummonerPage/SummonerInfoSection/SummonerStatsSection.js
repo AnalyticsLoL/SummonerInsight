@@ -5,7 +5,7 @@ import "../../../assets/css/pages/SummonerPage/SummonerInfoSection/SummonerStats
 
 import ChampionComponent from "../components/ChampionComponent";
 import { getChampionsKDA, getNumberofWins } from "../components/StatsComputations";
-import WinrateCircle from "../../../reusable/WinrateCircle";
+import WinrateCircle from "../../../components/WinrateCircle";
 
 export default function SummonerStats({matchHistory}){
     const { gameName } = useParams();

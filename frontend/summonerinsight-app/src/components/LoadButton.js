@@ -1,4 +1,4 @@
-import '../assets/css/reusable/LoadButton.css';
+import '../assets/css/components/LoadButton.css';
 import { useState, useEffect } from 'react';
 
 

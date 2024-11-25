@@ -4,7 +4,7 @@ import '../../../assets/css/pages/SummonerPage/MatchHistorySection/PlayerInfos.c
 
 import ItemComponent from "../components/ItemComponent";
 import ChampionComponent from "../components/ChampionComponent";
-import FillBar from "../../../reusable/FillBar";
+import FillBar from "../../../components/FillBar";
 
 export default function PlayerInfos({playerStats, match}){
     const isSupport = playerStats.damage.totalHealsOnTeammates>=1000 && playerStats.position === "UTILITY";
