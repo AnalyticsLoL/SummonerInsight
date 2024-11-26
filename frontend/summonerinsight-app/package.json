@@ -1,7 +1,7 @@
 {
   "name": "summonerinsight-app",
   "version": "0.1.0",
-  "start": "react-scripts start --host 0.0.0.0",
+  "start": "react-scripts start --host dev.summonerinsight.com",
   "private": true,
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
