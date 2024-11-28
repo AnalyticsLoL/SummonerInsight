@@ -16,3 +16,4 @@ Define global flags in Context.js and import them in other components (not const
 - Team Summoner names two columns take too much space
 - Add skins in game
 - Add a more general season/split statistique section with draft/aram...
+- Add live games options
