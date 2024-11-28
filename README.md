@@ -11,3 +11,8 @@ Define global flags in Context.js and import them in other components (not const
 - [ ] Add a open/close menu to show more elements of games (check op.gg for ref)
 - [ ] Add tags with First Blood, First Tower etc...
 - [ ] Give more match infos on the same view, feeling like infos is to concised right now, (Maybe show less infos for matches when match menu closed)
+
+## Feedbacks
+- Team Summoner names two columns take too much space
+- Add skins in game
+- Add a more general season/split statistique section with draft/aram...
