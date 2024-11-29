@@ -17,3 +17,6 @@ Define global flags in Context.js and import them in other components (not const
 - Add skins in game
 - Add a more general season/split statistique section with draft/aram...
 - Add live games options
+- Use i18next for multiple languages support
+- Win prediction
+- Mobile app
