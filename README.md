@@ -1,4 +1,4 @@
-# SummonerInsight
+gg# SummonerInsight
 Website showing users and champion data of League of Legends
 
 ## Redux
@@ -20,3 +20,8 @@ Define global flags in Context.js and import them in other components (not const
 - Use i18next for multiple languages support
 - Win prediction
 - Mobile app
+- match blocks take too much space, should be smaller and ouvrable to allow users to see more than 3 games at once
+- teams player names too big, and too much spacing
+- champion icon too big
+
+
