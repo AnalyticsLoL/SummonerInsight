@@ -57,7 +57,7 @@ try {
 export { league_version };
 
 // Url of the .Net application
-export const api_url = "http://192.168.1.58:5151/api/RiotData";
+export const api_url = "http://dev.summonerinsight.com:5151/api/RiotData";
 
 // Path to get item icons
 export const itemIconPath = `https://ddragon.leagueoflegends.com/cdn/${league_version}/img/item`;
