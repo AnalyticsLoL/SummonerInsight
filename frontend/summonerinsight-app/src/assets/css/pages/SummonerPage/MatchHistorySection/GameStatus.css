@@ -1,12 +1,9 @@
 #match-history .match .game-status{
     display: flex;
     flex-direction: column;
-    width: 100px;
+    width: 75px;
     gap: 10px;
-    font-size: 15px;
+    font-size: 12px;
     align-items: center;
-}
-#match-history .match .game-status hr{
-    width: 100%;
-    margin: 0;
+    padding: 0px;
 }

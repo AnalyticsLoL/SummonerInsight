@@ -1,9 +1,9 @@
 #match-history .match .player-infos{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    width: 300px;
     gap: 20px;
+    padding: 0px;
 }
 #match-history .match .player-champion-items{
     display: flex;
@@ -12,10 +12,14 @@
     gap: 10px;
 }
 #match-history .match .player-champion-items .champion-summoner{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     align-items: center;
     margin: 0;
+}
+#match-history .match .player-champion-items .champion-summoner img {
+    border-radius: 10px;
+    border: 2px solid var(--icon-border);
 }
 #match-history .match .player-champion-items .champion-summoner figcaption{
     position: relative;
@@ -27,7 +31,7 @@
     font-size: 15px;
     color: var(--icon-text);
     bottom:25px;
-    left: 75px;
+    left: 55px;
 }
 #match-history .match .player-champion-items .items{
     display: grid;
