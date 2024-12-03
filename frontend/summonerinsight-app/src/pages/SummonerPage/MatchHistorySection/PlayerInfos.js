@@ -24,12 +24,12 @@ export default function PlayerInfos({playerStats, match}){
                     <ChampionComponent championId={playerStats.championId} isTooltip={true} hasBorder={true}/>
                     <figcaption>{playerStats.champLevel}</figcaption>
                 </div>
-                <figure className="items">
+                {/*<figure className="items">
                     {playerStats.items.map((itemId, index) => 
                     (
                         <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1 ? true : false} itemId={itemId} isTooltip={true}/>
                     ))}
-                </figure>
+                </figure>*/}
             </div>
             <div className="player-stats">
                 <div className="kda">
