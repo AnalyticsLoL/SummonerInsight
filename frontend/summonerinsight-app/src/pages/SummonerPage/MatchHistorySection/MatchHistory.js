@@ -13,9 +13,11 @@ import {api_url} from "../../../constants.js";
 
 function Match({match}){
     const { gameName } = useParams();
+    const [ isOpen, setIsOpen ] = useState(false);
+
     const playerStats = match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName);
     return(
-        <div className={`match ${playerStats.win ? 'win' : 'loss'}`}>
+        <div className={`match ${playerStats.win ? 'win' : 'loss'} ${isOpen?'extended':''}`} onClick={()=>setIsOpen(!isOpen)}>
             <GameStatus playerStats={playerStats} match={match}/>
             <PlayerInfos playerStats={playerStats} match={match}/>
             <div className="team-composition section">

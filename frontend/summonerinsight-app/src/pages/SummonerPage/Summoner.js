@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
 
@@ -10,6 +10,7 @@ import MatchHistory from "./MatchHistorySection/MatchHistory.js";
 import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
 
 export default function Summoner() {
+    const navigate = useNavigate();
     const location = useLocation();
     const isFetching = useRef(false);
     const { regionTag, gameName, tagLine } = useParams();
@@ -39,6 +40,8 @@ export default function Summoner() {
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
+            // Adds the fetched data to the location state so that on reload the data is not lost
+            navigate(".", {state: {summonerInfo: summonerInfo, matchHistory: matchHistory}});
         };
         if (location.state) {
             try {

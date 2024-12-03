@@ -9,4 +9,16 @@ Be on the home network and connect using ssh: `ssh username@ip_address` or use v
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Add a open/close menu to show more elements of games (check op.gg for ref)
 - [ ] Add tags with First Blood, First Tower etc...
-- [ ] Give more match infos on the same view, feeling like infos is to concised right now, (Maybe show less infos for matches when match menu closed)
+
+## Feedbacks
+- Team Summoner names two columns take too much space
+- Add skins in game
+- Add a more general season/split statistique section with draft/aram...
+- Add live games options
+- Use i18next for multiple languages support
+- Win prediction
+- Mobile app
+- match blocks take too much space, should be smaller and ouvrable to allow users to see more than 3 games at once
+- teams player names too big, and too much spacing
+- champion icon too big
+- Add icons from the game for hp, gold, ap, ad, etc...

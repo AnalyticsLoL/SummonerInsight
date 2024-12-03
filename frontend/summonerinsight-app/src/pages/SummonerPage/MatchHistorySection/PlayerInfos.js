@@ -19,19 +19,11 @@ export default function PlayerInfos({playerStats, match}){
     }, 0);
     return (
         <div className="player-infos section">
-            <div className="player-champion-items">
+            <div className="player-stats">
                 <div className="champion-summoner">
                     <ChampionComponent championId={playerStats.championId} isTooltip={true} hasBorder={true}/>
                     <figcaption>{playerStats.champLevel}</figcaption>
                 </div>
-                <figure className="items">
-                    {playerStats.items.map((itemId, index) => 
-                    (
-                        <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1 ? true : false} itemId={itemId} isTooltip={true}/>
-                    ))}
-                </figure>
-            </div>
-            <div className="player-stats">
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
                     <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
@@ -86,6 +78,12 @@ export default function PlayerInfos({playerStats, match}){
                     </div>
                 </div>
             </div>
+            <figure className="items">
+                {playerStats.items.map((itemId, index) => 
+                (
+                    <ItemComponent key={index} isLastItem={index === playerStats.items.length - 1 ? true : false} itemId={itemId} isTooltip={true}/>
+                ))}
+            </figure>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import React from "react";
 import '../../../assets/css/pages/SummonerPage/MatchHistorySection/GameStatus.css';
 
 import {gameTypes,positions} from "../../../constants";
-import {getTimeDifference, getDuration} from "../../../reusable/UnixTimeConvert";
+import {getTimeDifference} from "../../../reusable/UnixTimeConvert";
 
 export default function GameStatus({playerStats, match}){
     let PositionIcon = null;
@@ -16,9 +16,6 @@ export default function GameStatus({playerStats, match}){
             { PositionIcon && (<PositionIcon/>)}
             <p>{gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId)?gameTypes.find(gameType => gameType.queueId === match.metadata.gameTypeId).description:match.metadata.gameTypeId}</p>
             <p>{getTimeDifference(match.metadata.gameStart)}</p>
-            <hr/>
-            <p>{playerStats.win ? 'Victory' : 'Defeat'}</p>
-            <p>{getDuration(match.metadata.gameDuration)}</p>
         </div>
     );
 }

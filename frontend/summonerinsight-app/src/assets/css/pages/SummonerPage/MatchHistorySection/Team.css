@@ -1,9 +1,9 @@
 #match-history .match .team-composition{
     display: flex;
     flex-direction: row;
-    font-size: 14px;
+    font-size: 12px;
     gap: 10px;
-    width: 320px;
+    padding: 0;
 }
 #match-history .match .team-composition .team {
     display: flex;
@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    bottom: 80%;
+    bottom: 110%;
     white-space: nowrap;
 }
 #match-history .match .team-composition .team .player .tooltip p{
@@ -35,14 +35,13 @@
     visibility: visible;
 }
 #match-history .match .team-composition .team .player img{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid #53472f;
+    width: 16px;
+    height: 16px;
+    border-radius: 5%;
+    border: none;
 }
 #match-history .match .team-composition .team .player figcaption{
-    margin-top: 10px;
-    width: 110px;
+    width: 75px;
     height: auto;
     overflow: hidden;
     white-space: nowrap;
