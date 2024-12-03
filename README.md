@@ -23,5 +23,4 @@ Define global flags in Context.js and import them in other components (not const
 - match blocks take too much space, should be smaller and ouvrable to allow users to see more than 3 games at once
 - teams player names too big, and too much spacing
 - champion icon too big
-
-
+- Add icons from the game for hp, gold, ap, ad, etc...
