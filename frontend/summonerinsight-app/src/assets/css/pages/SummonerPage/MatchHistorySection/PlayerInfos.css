@@ -1,27 +1,26 @@
 #match-history .match .player-infos{
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 5px;
     padding: 0px;
 }
-#match-history .match .player-champion-items{
+#match-history .match{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
 }
-#match-history .match .player-champion-items .champion-summoner{
+#match-history .match .champion-summoner{
     width: 80px;
     height: 80px;
     align-items: center;
     margin: 0;
 }
-#match-history .match .player-champion-items .champion-summoner img {
+#match-history .match .champion-summoner img {
     border-radius: 10px;
     border: 2px solid var(--icon-border);
 }
-#match-history .match .player-champion-items .champion-summoner figcaption{
+#match-history .match .champion-summoner figcaption{
     position: relative;
     background-color: var(--icon-border);
     width:30px;
@@ -33,19 +32,11 @@
     bottom:25px;
     left: 55px;
 }
-#match-history .match .player-champion-items .items{
-    display: grid;
-    grid-template-columns: repeat(3, auto) 1fr;
-    grid-template-rows: repeat(2, 40px);
+#match-history .match .items{
+    display: flex;
+    flex-direction: row;
     gap: 5px;
-    height: 85px;
     margin: 0;
-}
-#match-history .match .player-champion-items .items .empty{
-    width: 40px;
-    background-color: rgba(224, 198, 138, 0.3);
-    border-radius: 30%;
-    filter: blur(1px);
 }
 #match-history .match .player-stats{
     display: flex;
@@ -177,4 +168,10 @@
 }
 #match-history .match .player-stats .vision p{
     margin: 0;
+}
+#match-history .match .player-infos .items #item img.item-img,
+#match-history .match .player-infos .items #item.empty{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
 }
