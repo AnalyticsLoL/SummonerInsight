@@ -34,14 +34,14 @@ export default function Summoner() {
                     if (fetchedMatchHistory.length === 0) {
                         throw new Error('No match history found in the last year for this summoner.');
                     }
-                    setSummonerInfo(fetchedSummonerInfo);
-                    setMatchHistory(fetchedMatchHistory);
+
+                    // Adds the fetched data to the location state so that on reload the data is not lost
+                    console.log('Saved data to location state');
+                    navigate(".", {state: {summonerInfo: fetchedSummonerInfo, matchHistory: fetchedMatchHistory}});
                 }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
-            // Adds the fetched data to the location state so that on reload the data is not lost
-            navigate(".", {state: {summonerInfo: summonerInfo, matchHistory: matchHistory}});
         };
         if (location.state) {
             try {
@@ -54,7 +54,7 @@ export default function Summoner() {
             console.log(`Fetching summoner data for ${gameName}#${tagLine}`);
             fetchSummonerData();
         }        
-    }, [regionTag, gameName, tagLine, location.state, summonerInfo, matchHistory]);
+    }, [regionTag, gameName, tagLine, location.state, summonerInfo, matchHistory, navigate]);
 
     // As long as matchHistory and summonerInfo are not updated, don't render
     if ((!matchHistory && !summonerInfo) || (matchHistory && !matchHistory.every(match => match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName)))) { 

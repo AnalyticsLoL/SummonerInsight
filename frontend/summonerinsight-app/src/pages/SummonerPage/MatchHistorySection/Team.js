@@ -5,14 +5,19 @@ import '../../../assets/css/pages/SummonerPage/MatchHistorySection/Team.css';
 
 import ChampionComponent from "../components/ChampionComponent"
 
+import { regions } from "../../../constants";
+
 export default function Team({match, id, gameName}){
     const navigate = useNavigate();
     const regionTag = useParams().regionTag;
 
     const seeOtherSummoner = (gameName, tagLine) => {
         if(gameName.split(' ')[1] === 'bot') return;
-        console.log(gameName);
-        navigate(`../../../summoner/${regionTag}/${gameName.toLowerCase().replace(/\s/g, '')}/${tagLine}`);
+        // To add the 1 in euw1
+        if(regions.find(region => region.regionTag.toLowerCase().replace(/\d/g, '') === tagLine.toLowerCase())) {
+            tagLine = regions.find(region => region.regionTag.toLowerCase().replace(/\d/g, '') === tagLine.toLowerCase()).regionTag;
+        }
+        navigate(`../../../summoner/${regionTag}/${gameName.toLowerCase().replace(/\s/g, '')}/${tagLine.toLowerCase()}`);
     }
 
     return (
