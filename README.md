@@ -25,3 +25,4 @@ Define global flags in Context.js and import them in other components (not const
 - Add icons from the game for hp, gold, ap, ad, etc...
 - Add cookies (detect region of the user)
 - Add 3-5 user names of friend recently played with (when on same team, person appears more than twice) and add the winrate
+- User has a scrolldown arrow appearing in the navbar searchbar
