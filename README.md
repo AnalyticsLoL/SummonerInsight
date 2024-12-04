@@ -23,3 +23,4 @@ Define global flags in Context.js and import them in other components (not const
 - teams player names too big, and too much spacing
 - champion icon too big
 - Add icons from the game for hp, gold, ap, ad, etc...
+- Add cookies (detect region of the user)
