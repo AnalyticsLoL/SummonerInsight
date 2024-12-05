@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {useParams} from "react-router-dom";
 
 import '../../../assets/css/pages/SummonerPage/MatchHistorySection/MatchHistory.css';
@@ -31,17 +31,17 @@ function Match({match}){
 export default function MatchHistory({matchhistory}){
     const { regionTag, gameName, tagLine } = useParams();
     const [matches, setMatches] = React.useState(matchhistory);
-    const [isFetching, setIsFetching] = useState(false);
+    const isFetching = useRef(false);
     const [canLoad, setCanLoad] = useState(true);
     
     const fetchSummonerData = async () => {
-        if(isFetching) return;
+        if(isFetching.current) return;
         const settings = {
             GameName: gameName,
             RegionTag: regionTag.toLowerCase(),
             TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
         }
-        const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, setIsFetching);
+        const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, isFetching);
         if(fetchedMatches.length === 0) setCanLoad(false);
         setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
     };
