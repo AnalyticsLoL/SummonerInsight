@@ -4,7 +4,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import "../../assets/css/pages/SummonerPage/Summoner.css";
 
 import {fetchAPIData} from "../../api.js";
-import {api_url} from "../../constants.js";
+import {api_url, regions} from "../../constants.js";
 
 import MatchHistory from "./MatchHistorySection/MatchHistory.js";
 import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
@@ -24,6 +24,7 @@ export default function Summoner() {
             setMatchHistory(null);
             const settings = {
                 GameName: gameName,
+                Region: regions.find(region => region.regionTag.toLowerCase() === regionTag).regionRoute,
                 RegionTag: regionTag.toLowerCase(),
                 TagLine: tagLine !== null ? tagLine : regionTag.toLowerCase()
             }

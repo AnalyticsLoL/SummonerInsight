@@ -8,7 +8,7 @@ export default function LoadButton({ onClick, text, isFetching, icon }) {
     useEffect(() => {
         const interval = setInterval(() => {
             setLoading(isFetching.current);
-        }, 100);
+        }, 200);
 
         return () => clearInterval(interval);
     }, [isFetching]);
