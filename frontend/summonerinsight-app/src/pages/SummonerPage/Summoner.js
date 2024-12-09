@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
@@ -8,12 +9,13 @@ import {api_url, regions} from "../../constants.js";
 
 import MatchHistory from "./MatchHistorySection/MatchHistory.js";
 import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
-import { useGlobal } from "../../Context.js";
+import { setSummonerData } from "../../redux/summonerSlice.js";
 
 export default function Summoner() {
     const isFetching = useRef(false);
     const { regionTag, gameName, tagLine } = useParams();
-    const { summonerInfo, setSummonerInfo, matchHistory, setMatchHistory } = useGlobal();
+    const dispatch = useDispatch();
+    const summonerData = useSelector((state) => state.summoner);
 
     useEffect(() => {
         const fetchSummonerData = async () => {
@@ -33,59 +35,36 @@ export default function Summoner() {
                     }
 
                     // Adds the fetched data to the location state so that on reload the data is not lost
-                    sessionStorage.setItem('summonerData', JSON.stringify(
+                    dispatch(setSummonerData(
                         {
                             'summonerInfo':fetchedSummonerInfo,
                             'matchHistory':fetchedMatchHistory
                         }
                     ));
-                    setSummonerInfo(fetchedSummonerInfo);
-                    setMatchHistory(fetchedMatchHistory);
+
                 }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
         };
-        // Session storage keeps the data as long as the page isn't closed. getItem returns a string, so it needs to be parsed into Object
-        const storedSummonerData = JSON.parse(sessionStorage.getItem('summonerData'));
-        const storedSummonerInfo = storedSummonerData['summonerInfo'];
-        const storedMatchHistory = storedSummonerData['matchHistory'];
-
-        // Used when setSummonerInfo and setMatchHistory are updated and the page is reloaded
-        if (summonerInfo && summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()===gameName) {
-            return;
-        }
-        // Used when the page is reloaded or accessed from a search bar
-        else if ((storedSummonerInfo && storedSummonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()===gameName) && storedMatchHistory) {
-            setSummonerInfo(storedSummonerInfo);
-            setMatchHistory(storedMatchHistory);
-        } 
-        // Used when the page is loaded for the first time
-        else if (storedSummonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()!==gameName){
-            console.log(`Fetching summoner data for ${gameName}#${tagLine}`);
+        if (!summonerData.summonerInfo || summonerData.summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase() !== gameName) {
+            console.log(`Fetching summoner data: ${gameName}#${tagLine} from ${regionTag}`);
             fetchSummonerData();
-        } else {
-            console.error('Failed to fetch data');
         }
-    }, [regionTag, gameName, tagLine, summonerInfo, matchHistory, setMatchHistory, setSummonerInfo]);
-
-    // As long as matchHistory and summonerInfo are not updated, don't render
-    if ((!matchHistory && !summonerInfo) || (matchHistory && !matchHistory.every(match => match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName)))) { 
-        return(
-            <div id="summoner" className="page">
-                <div className="section">
-                    <span className="spinner"></span>
-                </div>
-            </div>
-        );
-    };
+    }, [regionTag, gameName, tagLine, dispatch, summonerData]);
 
     return (
         <div id="summoner" className="page">
-            <div className="section">
-                <SummonerInfo summonerInfo={summonerInfo} matchHistory={matchHistory}/>
-                <MatchHistory matchhistory={matchHistory}/>
-            </div>
+            {summonerData.summonerInfo && summonerData.summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase() === gameName ? (
+                <div className="section">
+                        <SummonerInfo summonerInfo={summonerData.summonerInfo} matchHistory={summonerData.matchHistory}/>
+                        <MatchHistory matchhistory={summonerData.matchHistory}/>
+                </div>
+            ) : (
+                <div className="section">
+                    <span className="spinner"></span>
+                </div>
+            )}
         </div>
     );
 }

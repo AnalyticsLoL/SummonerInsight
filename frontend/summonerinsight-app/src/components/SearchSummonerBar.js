@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import {api_url, regions} from '../constants.js';
 import { fetchAPIData } from '../api.js';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { setSummonerData } from "../redux/summonerSlice.js";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +26,8 @@ export default function SearchSummonerBar({isSmall}) {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
     const textAreaFocus = useRef(null);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setEntree('');
@@ -52,7 +58,7 @@ export default function SearchSummonerBar({isSmall}) {
                 if (matchHistory.length === 0) {
                     throw new Error('No match history found in the last year for this summoner.');
                 }
-                sessionStorage.setItem('summonerData', JSON.stringify(
+                dispatch(setSummonerData(
                     {
                         'summonerInfo':summonerInfo,
                         'matchHistory':matchHistory
