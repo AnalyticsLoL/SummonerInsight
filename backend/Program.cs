@@ -1,5 +1,4 @@
 using backend;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,5 @@
 .search_button{
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-button);
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 
 import { ranks } from "../../../constants.js";
 
@@ -27,7 +28,10 @@ function RankedElement({rankedStats, emblems}){
     );
 }
 
-export default function RankedSection({rankedStats}){
+export default function RankedSection(){
+    const summonerData = useSelector((state) => state.summoner);
+    const rankedStats=summonerData.summonerInfo.rankedStats;
+
     return(
         <div className="ranked section">
             {rankedStats.length > 0 && 

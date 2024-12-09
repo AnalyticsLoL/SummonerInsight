@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import "../../../assets/css/pages/SummonerPage/SummonerInfoSection/SummonerStatsSection.css";
 
@@ -7,8 +8,14 @@ import ChampionComponent from "../components/ChampionComponent";
 import { getChampionsKDA, getNumberofWins } from "../components/StatsComputations";
 import WinrateCircle from "../../../components/WinrateCircle";
 
-export default function SummonerStats({matchHistory}){
+export default function SummonerStats(){
     const { gameName } = useParams();
+    const summonerData = useSelector((state) => state.summoner);
+    const [matchHistory, setMatchHistory] = useState(summonerData.matchHistory);
+
+    useEffect(() => {
+        setMatchHistory(summonerData.matchHistory);
+    }, [summonerData.matchHistory]);
 
     const totalGames = matchHistory.length;
     const wins = getNumberofWins(matchHistory, gameName);

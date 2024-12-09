@@ -10,6 +10,10 @@
     flex-direction: column;
     gap: 5px;
 }
+#summoner-info .stats .best-champion-kda p{
+    margin: 0;
+    font-size: 12px;
+}
 #summoner-info .stats .champion-kda, #summoner-info .champion-kda div{
     display: inline-flex;
     align-items: center;

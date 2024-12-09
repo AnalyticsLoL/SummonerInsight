@@ -1,5 +1,7 @@
-import React, { useState, useRef } from "react";
-import {useParams} from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+
 
 import '../../../assets/css/pages/SummonerPage/MatchHistorySection/MatchHistory.css';
 
@@ -10,6 +12,7 @@ import Team from "./Team.js";
 
 import {fetchAPIData} from "../../../api.js";
 import {api_url} from "../../../constants.js";
+import { setSummonerData } from "../../../redux/summonerSlice.js";
 
 function Match({match}){
     const { gameName } = useParams();
@@ -28,9 +31,12 @@ function Match({match}){
     );
 }
 
-export default function MatchHistory({matchhistory}){
+export default function MatchHistory(){
     const { regionTag, gameName, tagLine } = useParams();
-    const [matches, setMatches] = React.useState(matchhistory);
+    const summonerData = useSelector((state) => state.summoner);
+    const dispatch = useDispatch();
+
+    const [matches, setMatches] = useState(summonerData.matchHistory);
     const isFetching = useRef(false);
     const [canLoad, setCanLoad] = useState(true);
     
@@ -43,8 +49,20 @@ export default function MatchHistory({matchhistory}){
         }
         const fetchedMatches = await fetchAPIData(`${api_url}/matchhistory?idStartList=${matches.length}&idCount=10`, settings, isFetching);
         if(fetchedMatches.length === 0) setCanLoad(false);
-        setMatches(prevMatches => [...prevMatches, ...fetchedMatches]);
+
+        dispatch(setSummonerData(
+            {
+                'summonerInfo':summonerData.summonerInfo,
+                'matchHistory':[...matches, ...fetchedMatches]
+            }
+        ));
     };
+
+     // Updates the match list when the matchHistory changes
+    useEffect(() => {
+        setMatches(summonerData.matchHistory);
+    }, [summonerData.matchHistory]);
+
     return(
         <div id="match-history">
             {matches.map((match, index) => (

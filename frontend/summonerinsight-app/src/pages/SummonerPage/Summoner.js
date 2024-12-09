@@ -57,8 +57,8 @@ export default function Summoner() {
         <div id="summoner" className="page">
             {summonerData.summonerInfo && summonerData.summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase() === gameName ? (
                 <div className="section">
-                        <SummonerInfo summonerInfo={summonerData.summonerInfo} matchHistory={summonerData.matchHistory}/>
-                        <MatchHistory matchhistory={summonerData.matchHistory}/>
+                        <SummonerInfo />
+                        <MatchHistory />
                 </div>
             ) : (
                 <div className="section">
