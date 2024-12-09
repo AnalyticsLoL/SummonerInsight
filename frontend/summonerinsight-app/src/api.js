@@ -6,11 +6,12 @@ export const fetchAPIData = async (url, settings, isFetching) => {
         settings.Region = regions.find(region => region.regionTag === settings.RegionTag.toUpperCase()).regionRoute;
     }
     console.log('Sending request to: '+url);
+
     const response = await fetch(url, {
         method:'POST',
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://172.28.183.213:5151"
+            "Access-Control-Allow-Origin": "http://dev.summonerinsight.com:5151"
         },
         body: JSON.stringify(settings)
     });

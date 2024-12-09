@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", builder =>
     {
-        builder.WithOrigins("http://localhost:3000", "http://192.168.2.34:3000") // Allow only the React app's URL
+        builder.WithOrigins("http://localhost:3000", "http://192.168.1.58:3000","http://dev.summonerinsight.com") // Allow only the React app's URL
                .AllowAnyMethod() // Allow any HTTP method (GET, POST, etc.)
                .AllowAnyHeader(); // Allow any header
     });
