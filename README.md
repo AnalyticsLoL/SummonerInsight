@@ -7,6 +7,7 @@ Define global flags in Context.js and import them in other components (not const
 
 ## Ideas for next stuff
 - [ ] Add messages on client to explain errors to users
+- [ ] Cancel loading effect on buttons when error
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Add a open/close menu to show more elements of games (check op.gg for ref)
