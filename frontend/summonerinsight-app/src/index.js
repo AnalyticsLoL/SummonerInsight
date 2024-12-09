@@ -7,18 +7,22 @@ import Summoner from './pages/SummonerPage/Summoner.js';
 import NavBar from './components/NavBar.js';
 
 import './assets/css/index.css';
-import {ContextProvider} from './Context.js';
+import {SummonerContext} from './Context.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <ContextProvider>
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/summoner/:regionTag/:gameName/:tagLine' element={<Summoner />} />
-      </Routes>
-    </Router>
-  </ContextProvider>
+  <Router>
+    <NavBar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route 
+        path='/summoner/:regionTag/:gameName/:tagLine' 
+        element={
+          <SummonerContext>
+            <Summoner />
+            </SummonerContext>
+        } />
+    </Routes>
+  </Router>
 );

@@ -52,15 +52,13 @@ export default function SearchSummonerBar({isSmall}) {
                 if (matchHistory.length === 0) {
                     throw new Error('No match history found in the last year for this summoner.');
                 }
-                navigate(
-                    `/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`,
+                sessionStorage.setItem('summonerData', JSON.stringify(
                     {
-                        state: {
-                            summonerInfo: summonerInfo,
-                            matchHistory: matchHistory
-                        }
+                        'summonerInfo':summonerInfo,
+                        'matchHistory':matchHistory
                     }
-                );
+                ));
+                navigate(`/summoner/${settings.RegionTag}/${settings.GameName}/${settings.TagLine}`);
             }
         } catch (error) {
             setMessage(error.message);

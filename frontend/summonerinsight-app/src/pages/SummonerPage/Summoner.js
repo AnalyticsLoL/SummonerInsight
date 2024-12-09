@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import React, {useEffect, useRef} from "react";
+import { useParams } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
 
@@ -8,20 +8,16 @@ import {api_url, regions} from "../../constants.js";
 
 import MatchHistory from "./MatchHistorySection/MatchHistory.js";
 import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
+import { useGlobal } from "../../Context.js";
 
 export default function Summoner() {
-    const navigate = useNavigate();
-    const location = useLocation();
     const isFetching = useRef(false);
     const { regionTag, gameName, tagLine } = useParams();
-    const [summonerInfo, setSummonerInfo] = useState(null);
-    const [matchHistory, setMatchHistory] = useState(null);
+    const { summonerInfo, setSummonerInfo, matchHistory, setMatchHistory } = useGlobal();
 
     useEffect(() => {
         const fetchSummonerData = async () => {
             if(isFetching.current) return;
-            setSummonerInfo(null);
-            setMatchHistory(null);
             const settings = {
                 GameName: gameName,
                 Region: regions.find(region => region.regionTag.toLowerCase() === regionTag).regionRoute,
@@ -37,25 +33,41 @@ export default function Summoner() {
                     }
 
                     // Adds the fetched data to the location state so that on reload the data is not lost
-                    console.log('Saved data to location state');
-                    navigate(".", {state: {summonerInfo: fetchedSummonerInfo, matchHistory: fetchedMatchHistory}});
+                    sessionStorage.setItem('summonerData', JSON.stringify(
+                        {
+                            'summonerInfo':fetchedSummonerInfo,
+                            'matchHistory':fetchedMatchHistory
+                        }
+                    ));
+                    setSummonerInfo(fetchedSummonerInfo);
+                    setMatchHistory(fetchedMatchHistory);
                 }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
         };
-        if (location.state) {
-            try {
-                setSummonerInfo(location.state.summonerInfo);
-                setMatchHistory(location.state.matchHistory);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-            }
-        } else if (!summonerInfo || summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()!==gameName) {
+        // Session storage keeps the data as long as the page isn't closed. getItem returns a string, so it needs to be parsed into Object
+        const storedSummonerData = JSON.parse(sessionStorage.getItem('summonerData'));
+        const storedSummonerInfo = storedSummonerData['summonerInfo'];
+        const storedMatchHistory = storedSummonerData['matchHistory'];
+
+        // Used when setSummonerInfo and setMatchHistory are updated and the page is reloaded
+        if (summonerInfo && summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()===gameName) {
+            return;
+        }
+        // Used when the page is reloaded or accessed from a search bar
+        else if ((storedSummonerInfo && storedSummonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()===gameName) && storedMatchHistory) {
+            setSummonerInfo(storedSummonerInfo);
+            setMatchHistory(storedMatchHistory);
+        } 
+        // Used when the page is loaded for the first time
+        else if (storedSummonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()!==gameName){
             console.log(`Fetching summoner data for ${gameName}#${tagLine}`);
             fetchSummonerData();
-        }        
-    }, [regionTag, gameName, tagLine, location.state, summonerInfo, matchHistory, navigate]);
+        } else {
+            console.error('Failed to fetch data');
+        }
+    }, [regionTag, gameName, tagLine, summonerInfo, matchHistory, setMatchHistory, setSummonerInfo]);
 
     // As long as matchHistory and summonerInfo are not updated, don't render
     if ((!matchHistory && !summonerInfo) || (matchHistory && !matchHistory.every(match => match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName)))) { 

@@ -6,7 +6,6 @@ Website showing users and champion data of League of Legends
 Define global flags in Context.js and import them in other components (not constant functions).
 
 ## Ideas for next stuff
-- [ ] Pass summonerInfos and matchHistory states in context to keep the states on date without using navigate "."
 - [ ] Create a button to reload the last 20 matches
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var

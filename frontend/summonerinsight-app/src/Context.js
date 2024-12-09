@@ -9,16 +9,18 @@ export const useGlobal = () => {
 };
 
 // Provider component
-export const ContextProvider = ({ children }) => {
-    const [isLoadingGlobal, setIsLoadingGlobal] = useState(false);
+export const SummonerContext = ({ children }) => {
+    const [summonerInfo, setSummonerInfo] = useState(null);
+    const [matchHistory, setMatchHistory] = useState(null);
 
     // Reset all states
     const resetState = () => {
-        setIsLoadingGlobal(false);
+        setSummonerInfo(null);
+        setMatchHistory(null);
     };
 
     return (
-        <Context.Provider value={{ isLoadingGlobal, setIsLoadingGlobal, resetState }}>
+        <Context.Provider value={{ summonerInfo, setSummonerInfo, matchHistory, setMatchHistory, resetState }}>
             {children}
         </Context.Provider>
     );
