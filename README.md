@@ -5,7 +5,6 @@ Website showing users and champion data of League of Legends
 Be on the home network and connect using ssh: `ssh username@ip_address` or use vscode extension Remote SSH
 
 ## Ideas for next stuff
-- [ ] Pass summonerInfos and matchHistory states in context to keep the states on date without using navigate "."
 - [ ] Create a button to reload the last 20 matches
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
@@ -27,3 +26,5 @@ Be on the home network and connect using ssh: `ssh username@ip_address` or use v
 - Add cookies (detect region of the user)
 - Add 3-5 user names of friend recently played with (when on same team, person appears more than twice) and add the winrate
 - User has a scrolldown arrow appearing in the navbar searchbar
+- Add mastery champions kda and and winrate
+- add in matches graphs of the gold and and events like deaths and kills, objectives ...

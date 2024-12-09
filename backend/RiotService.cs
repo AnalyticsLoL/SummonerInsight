@@ -1,8 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.Globalization;
-using System.Text.Json;
 
 namespace backend
 {

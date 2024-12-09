@@ -1,5 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import React, {useEffect, useRef} from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import "../../assets/css/pages/SummonerPage/Summoner.css";
 
@@ -8,20 +9,17 @@ import {api_url, regions} from "../../constants.js";
 
 import MatchHistory from "./MatchHistorySection/MatchHistory.js";
 import SummonerInfo from "./SummonerInfoSection/SummonerInfo.js";
+import { setSummonerData } from "../../redux/summonerSlice.js";
 
 export default function Summoner() {
-    const navigate = useNavigate();
-    const location = useLocation();
     const isFetching = useRef(false);
     const { regionTag, gameName, tagLine } = useParams();
-    const [summonerInfo, setSummonerInfo] = useState(null);
-    const [matchHistory, setMatchHistory] = useState(null);
+    const dispatch = useDispatch();
+    const summonerData = useSelector((state) => state.summoner);
 
     useEffect(() => {
         const fetchSummonerData = async () => {
             if(isFetching.current) return;
-            setSummonerInfo(null);
-            setMatchHistory(null);
             const settings = {
                 GameName: gameName,
                 Region: regions.find(region => region.regionTag.toLowerCase() === regionTag).regionRoute,
@@ -37,43 +35,36 @@ export default function Summoner() {
                     }
 
                     // Adds the fetched data to the location state so that on reload the data is not lost
-                    console.log('Saved data to location state');
-                    navigate(".", {state: {summonerInfo: fetchedSummonerInfo, matchHistory: fetchedMatchHistory}});
+                    dispatch(setSummonerData(
+                        {
+                            'summonerInfo':fetchedSummonerInfo,
+                            'matchHistory':fetchedMatchHistory
+                        }
+                    ));
+
                 }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
         };
-        if (location.state) {
-            try {
-                setSummonerInfo(location.state.summonerInfo);
-                setMatchHistory(location.state.matchHistory);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-            }
-        } else if (!summonerInfo || summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase()!==gameName) {
-            console.log(`Fetching summoner data for ${gameName}#${tagLine}`);
+        if (!summonerData.summonerInfo || summonerData.summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase() !== gameName) {
+            console.log(`Fetching summoner data: ${gameName}#${tagLine} from ${regionTag}`);
             fetchSummonerData();
-        }        
-    }, [regionTag, gameName, tagLine, location.state, summonerInfo, matchHistory, navigate]);
-
-    // As long as matchHistory and summonerInfo are not updated, don't render
-    if ((!matchHistory && !summonerInfo) || (matchHistory && !matchHistory.every(match => match.participants.find(participant => participant.gameName.toLowerCase().replace(/\s/g, '') === gameName)))) { 
-        return(
-            <div id="summoner" className="page">
-                <div className="section">
-                    <span className="spinner"></span>
-                </div>
-            </div>
-        );
-    };
+        }
+    }, [regionTag, gameName, tagLine, dispatch, summonerData]);
 
     return (
         <div id="summoner" className="page">
-            <div className="section">
-                <SummonerInfo summonerInfo={summonerInfo} matchHistory={matchHistory}/>
-                <MatchHistory matchhistory={matchHistory}/>
-            </div>
+            {summonerData.summonerInfo && summonerData.summonerInfo.summonerProfile.gameName.replace(/\s/g, '').toLowerCase() === gameName ? (
+                <div className="section">
+                        <SummonerInfo />
+                        <MatchHistory />
+                </div>
+            ) : (
+                <div className="section">
+                    <span className="spinner"></span>
+                </div>
+            )}
         </div>
     );
 }

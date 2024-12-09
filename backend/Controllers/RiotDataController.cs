@@ -80,13 +80,27 @@ namespace backend.Controllers
         public IActionResult GetSummonerInfos([FromBody] RiotSettings settings)
         {
             _riotService.UpdateSettings(settings);
-            _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
-            _riotService.GetSummonerAccount_SummonerID();
-            
-            var summonerInfos = _riotService.GetSummonerInfos();
-            summonerInfos["championMastery"]=_riotService.GetChampionMastery();
-
-            return Ok(summonerInfos);
+            try
+            {
+                _riotService.GetSummonerPuuID_GameName_ProfileIcon_Level();
+                _riotService.GetSummonerAccount_SummonerID();
+                var summonerInfos = _riotService.GetSummonerInfos();
+                summonerInfos["championMastery"]=_riotService.GetChampionMastery();
+                return Ok(summonerInfos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                if (e.Message.Contains("NotFound"))
+                {
+                    return StatusCode(404, "Summoner not found");
+                }
+                else if (e.Message.Contains("TooManyRequests"))
+                {
+                    return StatusCode(429, "Too many requests to the Riot API. Please try again later.");
+                }
+                return StatusCode(500, "Error retrieving summoner information");
+            }
         } 
     }
 }

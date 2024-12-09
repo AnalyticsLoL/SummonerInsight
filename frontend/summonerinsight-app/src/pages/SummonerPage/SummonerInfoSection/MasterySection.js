@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 
 import '../../../assets/css/pages/SummonerPage/SummonerInfoSection/MasterySection.css';
 
@@ -87,7 +88,10 @@ function MasteryElement({mastery}){
     );
 };
 
-export default function MasterySection({initialMasteries}){
+export default function MasterySection(){
+    const summonerData = useSelector((state) => state.summoner);
+    const initialMasteries= summonerData.summonerInfo.championMastery;
+
     const championMasteries = initialMasteries.map(mastery => {
         const champion = Object.values(championFullData.data).find(champion => champion.key === mastery.championId.toString());
         return { ...mastery, champion };

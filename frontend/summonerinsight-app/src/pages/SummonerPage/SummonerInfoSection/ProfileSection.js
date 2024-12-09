@@ -1,12 +1,17 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import "../../../assets/css/pages/SummonerPage/SummonerInfoSection/ProfileSection.css";
 
 import { regions, positions, profileIconPath } from "../../../constants.js";
 
-export default function ProfileSection({ summonerProfile,matchHistory }){
+export default function ProfileSection(){
     const { regionTag } = useParams();
+    const summonerData = useSelector((state) => state.summoner);
+
+    const summonerProfile = summonerData.summonerInfo.summonerProfile;
+    const matchHistory = summonerData.matchHistory;
 
     const find_positions = (matchHistory, summonerProfile) => {
         let positions = {
