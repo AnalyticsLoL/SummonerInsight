@@ -5,7 +5,6 @@ Website showing users and champion data of League of Legends
 Be on the home network and connect using ssh: `ssh username@ip_address` or use vscode extension Remote SSH
 
 ## Ideas for next stuff
-- [ ] Create a button to reload the last 20 matches
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Add a open/close menu to show more elements of games (check op.gg for ref)

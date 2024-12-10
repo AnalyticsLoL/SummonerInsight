@@ -1,4 +1,4 @@
-import { regions, ddragonChampionSpecificPath } from "./constants";
+import { regions, ddragonChampionSpecificPath, errors } from "./constants";
 
 export const fetchAPIData = async (url, settings, isFetching) => {
     isFetching.current = true;
@@ -16,14 +16,12 @@ export const fetchAPIData = async (url, settings, isFetching) => {
         body: JSON.stringify(settings)
     });
     isFetching.current = false;
-    if (response.statusText === "Too Many Requests") {
-        throw new Error('Too many requests. Please try again in a few seconds.');
-    }
-    if (response.statusText === "Not Found") {
-        throw new Error('Please enter your tag numbers using the format #0000 or select the right region.');
-    }
     if (!response.ok) {
-        throw new Error('An error occurred while fetching data.');
+        if (errors.find(error => error.statusText === response.statusText)){
+            throw new Error(errors.find(error => error.statusText === response.statusText).message);
+        } else {
+            throw new Error('An error occurred while fetching data.');
+        }
     }
     return await response.json();
 };

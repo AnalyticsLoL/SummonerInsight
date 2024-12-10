@@ -4,6 +4,10 @@
     gap: 10px;
     align-items: center;
 }
+#summoner-info .ranked p {
+    margin: 0;
+    font-size: 12px;
+}
 #summoner-info .ranked-element {
     position: relative;
     padding: 0 20px 10px;

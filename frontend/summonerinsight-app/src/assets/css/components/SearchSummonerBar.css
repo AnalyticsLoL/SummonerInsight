@@ -73,43 +73,14 @@
 }
 
 .search .message{
-    position: absolute;
     top: 70%;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .small.search .message{
     top: 120%;
 }
-.search .message-content {
-    width: 400px;
-    padding: 10px;
-    background-color: var(--tooltip-bg);
-    border-radius: 5px;
-    text-align: center;
-    transition: opacity 8s ease-in-out;
-    opacity: 1;
-    font-size: 14px;
-}
 .small.search .message-content{
     width: 300px;
     font-size: 12px;
-}
-
-.search .message-content p {
-    color: var(--title-color);
-}
-
-.message:not(:empty) {
-    animation: fadeInOut 8s ease-in-out;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
 }

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import '../assets/css/components/NavBar.css';
 import SearchSummonerBar from './SearchSummonerBar';
 
@@ -7,11 +7,7 @@ export default function NavBar(){
     const location = useLocation();
     const [hasSearchBar, setHasSearchBar] = React.useState(false);
     useEffect(() => {
-        if(location.pathname === '/'){
-            setHasSearchBar(false);
-        } else {
-            setHasSearchBar(true);
-        }
+        setHasSearchBar(location.pathname !== '/');
     }, [location]);
     return(
         <div id="navbar">
