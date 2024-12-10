@@ -9,7 +9,7 @@ export default function LoadButton({ onClick, text, isFetching, icon }) {
         if (!isFetching) return;
         const interval = setInterval(() => {
             setLoading(isFetching.current);
-        }, 200);
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [isFetching]);
