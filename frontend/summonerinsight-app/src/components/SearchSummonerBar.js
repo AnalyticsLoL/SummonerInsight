@@ -12,8 +12,8 @@ import LoadButton from './LoadButton.js';
 import RegionDropdown from './RegionDropdown.js';
 import UserMessage from './UserMessage.js';
 
-function SearchTextArea({regionTag, isSmall, setGameName, setTagLine}) {
-    const [entree, setEntree] = useState('');
+function SearchTextArea({regionTag, isSmall, entree, setEntree}) {
+    
     const location = useLocation();
     const textAreaFocus = useRef(null);
     const navigate = useNavigate();
@@ -21,10 +21,8 @@ function SearchTextArea({regionTag, isSmall, setGameName, setTagLine}) {
 
     useEffect(() => {
         setEntree('');
-        setGameName('');
-        setTagLine('');
         textAreaFocus.current.blur();
-    }, [location, setEntree, setGameName, setTagLine]);
+    }, [location, setEntree]);
 
     const handlePressEnter = (event)=>{
         if (event.key === 'Enter') {
@@ -32,8 +30,6 @@ function SearchTextArea({regionTag, isSmall, setGameName, setTagLine}) {
             if (entree==='') return;
             const gameName = entree.split("#")[0].toLowerCase().replace(/\s/g, '');
             const tagLine = entree.split("#")[1] ? entree.split("#")[1] : regionTag.toLowerCase();
-            setGameName(gameName);
-            setTagLine(tagLine);
             navigate(`/summoner/${regionTag.toLowerCase()}/${gameName}/${tagLine}`)
         }
     };
@@ -64,9 +60,15 @@ function SearchTextArea({regionTag, isSmall, setGameName, setTagLine}) {
 export default function SearchSummonerBar({isSmall}) {
     const location = useLocation();
     const [regionTag, setRegionTag] = useState(location.pathname !== '/' ? location.pathname.split('/')[2].toUpperCase() : 'NA1');
-    const [gameName, setGameName] = useState('');
-    const [tagLine, setTagLine] = useState('');
+    const [entree, setEntree] = useState('');
     const navigate = useNavigate();
+
+    const handleNavigation = () => {
+        if (entree==='') return;
+        const gameName = entree.split("#")[0].toLowerCase().replace(/\s/g, '');
+        const tagLine = entree.split("#")[1] ? entree.split("#")[1] : regionTag.toLowerCase();
+        navigate(`/summoner/${regionTag.toLowerCase()}/${gameName}/${tagLine}`)
+    }
 
     return(
         <div className={`${isSmall? 'small': ''} search`}>
@@ -77,9 +79,9 @@ export default function SearchSummonerBar({isSmall}) {
                     regionTag={isSmall ? regionTag : null}
                 />
                 <div className='divider'/>
-                <SearchTextArea regionTag={regionTag} isSmall={isSmall} setGameName={setGameName} setTagLine={setTagLine} />
+                <SearchTextArea regionTag={regionTag} isSmall={isSmall} entree={entree} setEntree={setEntree}/>
                 <LoadButton 
-                    onClick={() => navigate(`/summoner/${regionTag.toLowerCase()}/${gameName}/${tagLine}`)} 
+                    onClick={handleNavigation} 
                     icon={<FontAwesomeIcon icon={faSearch} />} 
                 />
             </div>
