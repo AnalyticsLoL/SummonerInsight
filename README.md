@@ -1,9 +1,6 @@
 # SummonerInsight
 Website showing users and champion data of League of Legends
 
-## SSL connection
-Be on the home network and connect using ssh: `ssh username@ip_address` or use vscode extension Remote SSH
-
 ## Ideas for next stuff
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
