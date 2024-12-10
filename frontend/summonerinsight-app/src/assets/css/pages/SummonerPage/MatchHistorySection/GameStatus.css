@@ -1,4 +1,4 @@
-#match-history .match .game-status{
+#match-history .match .match-header .game-status{
     display: flex;
     flex-direction: column;
     width: 75px;
@@ -6,4 +6,24 @@
     font-size: 12px;
     align-items: center;
     padding: 0px;
+}
+#match-history .match .match-header .game-status .position {
+    position: relative;
+}
+#match-history .match .match-header .game-status .position .tooltip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    bottom: 110%;
+    white-space: nowrap;
+}
+#match-history .match .match-header .game-status .position .tooltip p{
+    font-size: 14px;
+    width:auto;
+}
+#match-history .match .match-header .game-status .position:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
 }

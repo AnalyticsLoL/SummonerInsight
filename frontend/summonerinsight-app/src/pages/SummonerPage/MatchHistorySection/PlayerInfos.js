@@ -6,19 +6,11 @@ import ItemComponent from "../components/ItemComponent";
 import ChampionComponent from "../components/ChampionComponent";
 import FillBar from "../../../components/FillBar";
 
-export default function PlayerInfos({playerStats, match}){
+export default function PlayerInfos({playerStats, maxDealt, maxTaken, maxHealed}){
     const isSupport = playerStats.damage.totalHealsOnTeammates>=1000 && playerStats.position === "UTILITY";
-    const maxDealt = match.participants.reduce((max, player) => {
-        return Math.max(max, player.damage.totalDamageDealtToChampions);
-    }, 0);
-    const maxTaken = match.participants.reduce((max, player) => {
-        return Math.max(max, player.damage.totalDamageTaken);
-    }, 0);
-    const maxHealed = match.participants.reduce((max, player) => {
-        return Math.max(max, player.damage.totalHealsOnTeammates);
-    }, 0);
+
     return (
-        <div className="player-infos section">
+        <div className="player-infos">
             <div className="player-stats">
                 <div className="champion-summoner">
                     <ChampionComponent championId={playerStats.championId} isTooltip={true} hasBorder={true}/>
@@ -26,7 +18,7 @@ export default function PlayerInfos({playerStats, match}){
                 </div>
                 <div className="kda">
                     <p className="kill_death_assists">{playerStats.kda.kills}/{playerStats.kda.deaths}/{playerStats.kda.assists}</p>
-                    <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)+" KDA"}</p>
+                    <p className={`ratio ${playerStats.kda.kda>=5?'enhance gold':''}`}>{playerStats.kda.kda.toFixed(2)}</p>
                     <div className="tooltip">
                         <p>Kill/Deaths/Assists</p>
                     </div>

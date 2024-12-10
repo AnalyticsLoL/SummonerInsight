@@ -11,27 +11,27 @@ const description = (itemDescription) => {
         <div className='description'>
             {Object.values(descriptionObject.stats).length > 0 && (<div className='stats'>
                 <p>Stats: </p>
-                <ul>
+                <span>
                     {Object.entries(descriptionObject.stats).map(([key, value]) => (
-                        <li key={key}>{key}: {value}</li>
+                        <p key={key}>{key}: {value}</p>
                     ))}
-                </ul>
+                </span>
             </div>)}
             {descriptionObject.passive.length > 0 &&(<div className='passives'>
                 <p>Passive: </p>
-                <ul>
+                <span>
                     {descriptionObject.passive.map((passive, index) => (
-                        <li key={index}>{passive.name}: {passive.description}</li>
+                        <p key={index}>{passive.name}: {passive.description}</p>
                     ))}
-                </ul>
+                </span>
             </div>)}
             {descriptionObject.active.length > 0 &&(<div className='actives'>
                 <p>Active: </p>
-                <ul>
+                <span>
                     {descriptionObject.active.map((active, index) => (
-                        <li key={index}>{active.name}: {active.description}</li>
+                        <p key={index}>{active.name}: {active.description}</p>
                     ))}
-                </ul>
+                </span>
             </div>)}
         </div>
     );

@@ -8,20 +8,36 @@
 #match-history .match p {
     margin: 0;
 }
-#match-history .match{
+#match-history .match {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 730px;
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+#match-history .match .match-header{
     display: flex;
     flex-direction: row;
     gap: 20px;
-    width: 690px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     align-items: center;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.extend-button{
+    color: var(--title-color);
 }
 .win{
     background-color: var(--win-color);
 }
 .loss{
     background-color: var(--loss-color);
+}
+#match-history .match .match-details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

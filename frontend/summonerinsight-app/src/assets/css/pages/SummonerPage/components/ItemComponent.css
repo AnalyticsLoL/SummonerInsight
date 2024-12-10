@@ -16,8 +16,9 @@
 }
 #item .tooltip{
     top: 105%;
+    bottom: auto !important;
+    text-align: initial !important;
     width: 300px;
-    height: auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -28,10 +29,33 @@
     visibility: visible;
 }
 
+#item .tooltip p {
+    white-space: normal;
+}
+
 #item .tooltip .header img {
     width: 40px;
     height: 40px;
     border-radius: 30%;
+}
+
+#item .tooltip .description {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#item .tooltip .description div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#item .tooltip .description span {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#item .tooltip .description span p{
+    margin-left: 10px;
 }
 
 #item .tooltip .from,

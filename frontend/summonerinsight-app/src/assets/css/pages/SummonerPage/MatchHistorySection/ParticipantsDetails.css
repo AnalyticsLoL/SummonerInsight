@@ -1,0 +1,145 @@
+#match-history .match .match-details .participants-table p,
+#match-history .match .match-details .participants-table li {
+    font-size: 12px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+#match-history .match .match-details .participants-table tr {
+    padding: 3px 15px;
+}
+#match-history .match .match-details .participants-table tr.divider {
+    padding: 0;
+}
+#match-history .match .match-details .participants-table .win.enhance {
+    background-color: var(--win-color-enhance);
+}
+#match-history .match .match-details .participants-table .loss.enhance {
+    background-color: var(--loss-color-enhance);
+}
+#match-history .match .match-details .participants-table .player {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+}
+#match-history .match .match-details .participants-table .champion img {
+    width: 35px;
+    height: 35px;
+    border-radius: 10%;
+}
+#match-history .match .match-details .participants-table .player .champion-summoner {
+    position: relative;
+}
+#match-history .match .match-details .participants-table .player .champion-summoner figcaption{
+    position: absolute;
+    margin: 0;
+    background-color: var(--icon-border);
+    width: 20px;
+    border-radius: 50%;
+    padding: 3px 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--icon-text);
+    bottom: -15%;
+    left: 70%;
+}
+#match-history .match .match-details .participants-table tbody td {
+    margin: 2px 0;
+}
+#match-history .match .match-details .participants-table td {
+    position: relative;
+}
+#match-history .match .match-details .participant td .tooltip {
+    white-space: nowrap;
+    bottom: 100%;
+    text-align: center;
+}
+#match-history .match .match-details .participant td .tooltip p{
+    font-size: 11px;
+}
+#match-history .match .match-details .participants-table .player:hover .tooltip,
+#match-history .match .match-details .participants-table .kda:hover .tooltip,
+#match-history .match .match-details .participants-table .cs:hover .tooltip,
+#match-history .match .match-details .participants-table .vision:hover .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+
+#match-history .match .match-details .participants-table td.damage .damage-section {
+    position: relative;
+}
+
+#match-history .match .match-details .participants-table td.damage .damage-section:hover  .tooltip{
+    opacity: 1;
+    visibility: visible;
+}
+
+#match-history .match .match-details .participants-table th {
+    color: var(--text-color);
+    width: 50px;
+    justify-content: center;
+}
+#match-history .match .match-details .participants-table th p {
+    font-size: 14px;
+}
+#match-history .match .match-details .participants-table tr {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+#match-history .match .match-details .participants-table td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50px;
+}
+#match-history .match .match-details .participants-table th.player,
+#match-history .match .match-details .participants-table td.player {
+    width: 150px;
+}
+#match-history .match .match-details .participants-table td.items,
+#match-history .match .match-details .participants-table th.items {
+    width: 210px;
+}
+#match-history .match .match-details .participants-table th.damage,
+#match-history .match .match-details .participants-table td.damage {
+    width: 120px;
+}
+#match-history .match .match-details .participants-table td.damage {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+#match-history .match .match-details .participants-table td.damage .damage-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+#match-history .match .match-details .participants-table td.damage .damage-section .progress {
+    width: 55px;
+}
+#match-history .match .match-details .divider{
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-bg);
+}
+#match-history .match .match-details .participants-table td.items {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+#match-history .match .match-details .participants-table td.items #item img,
+#match-history .match .match-details .participants-table td.items .empty {
+    width: 25px;
+    height: 25px;
+}
+#match-history .match .match-details .participants-table td.items,
+#match-history .match .match-details .participants-table td.items #item {
+    position: relative;
+}

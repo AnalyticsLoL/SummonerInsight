@@ -14,7 +14,9 @@
     --icon-border:#C8AA6E;
     --icon-text:#4A3C2C;
     --win-color: #3A6D78;
+    --win-color-enhance: #4B8B99;
     --loss-color: #784545;
+    --loss-color-enhance: #9D5858;
     --primary-button: #2C3E50;
 }
   
@@ -50,7 +52,7 @@ h4, h5, h6, span {
     font-family: 'Merriweather-Regular';
     color: var(--text-color);
 }
-button, input, textarea, p, figcaption, li{
+button, input, textarea, p, figcaption, li, th, td{
     font-family: 'Roboto-Regular';
     color: var(--text-color);
 }
