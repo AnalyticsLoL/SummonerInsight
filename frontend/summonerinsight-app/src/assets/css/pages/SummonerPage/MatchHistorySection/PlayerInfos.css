@@ -1,26 +1,20 @@
-#match-history .match .player-infos{
+#match-history .match .match-header .player-infos{
     display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 0px;
 }
-#match-history .match{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-#match-history .match .champion-summoner{
+#match-history .match .match-header .champion-summoner{
     width: 80px;
     height: 80px;
     align-items: center;
     margin: 0;
 }
-#match-history .match .champion-summoner img {
+#match-history .match .match-header .champion-summoner img {
     border-radius: 10px;
     border: 2px solid var(--icon-border);
 }
-#match-history .match .champion-summoner figcaption{
+#match-history .match .match-header .champion-summoner figcaption{
     position: relative;
     background-color: var(--icon-border);
     width:30px;
@@ -32,20 +26,20 @@
     bottom:25px;
     left: 55px;
 }
-#match-history .match .items{
+#match-history .match .match-header .items{
     display: flex;
     flex-direction: row;
     gap: 5px;
     margin: 0;
 }
-#match-history .match .player-stats{
+#match-history .match .match-header .player-stats{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 8px;
     font-size: 12px;
 }
-#match-history .match .player-stats .kda {
+#match-history .match .match-header .player-stats .kda {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,7 +47,7 @@
     gap: 10px;
     position: relative;
 }
-#match-history .match .player-stats .kda .tooltip {
+#match-history .match .match-header .player-stats .kda .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,23 +56,23 @@
     bottom: 110%;
     white-space: nowrap;
 }
-#match-history .match .player-stats .kda .tooltip p{
+#match-history .match .match-header .player-stats .kda .tooltip p{
     font-size: 11px;
     width:auto;
 }
-#match-history .match .player-stats .kda:hover .tooltip{
+#match-history .match .match-header .player-stats .kda:hover .tooltip{
     opacity: 1;
     visibility: visible;
 }
-#match-history .match .player-stats .kda .kill_death_assists{
+#match-history .match .match-header .player-stats .kda .kill_death_assists{
     font-size: 14px;
     margin: 0;
 }
-#match-history .match .player-stats .kda .ratio{
+#match-history .match .match-header .player-stats .kda .ratio{
     font-size: 12px;
     margin: 0;
 }
-#match-history .match .player-stats .damage{
+#match-history .match .match-header .player-stats .damage{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -86,14 +80,14 @@
     gap: 15px;
     width: 150px;
 }
-#match-history .match .player-stats .damage .damage-section{
+#match-history .match .match-header .player-stats .damage .damage-section{
     display: flex;
     flex-direction: column;
     gap: 3px;
     text-align: center;
     position: relative;
 }
-#match-history .match .player-stats .damage .damage-section .tooltip {
+#match-history .match .match-header .player-stats .damage .damage-section .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,20 +96,20 @@
     bottom: 110%;
     white-space: nowrap;
 }
-#match-history .match .player-stats .damage .damage-section .tooltip p{
+#match-history .match .match-header .player-stats .damage .damage-section .tooltip p{
     font-size: 11px;
     width:auto;
 }
-#match-history .match .player-stats .damage .damage-section:hover .tooltip{
+#match-history .match .match-header .player-stats .damage .damage-section:hover .tooltip{
     opacity: 1;
     visibility: visible;
 }
-#match-history .match .player-stats .damage p{
+#match-history .match .match-header .player-stats .damage p{
     font-size: 12px;
     margin: 0;
     width:50px;
 }
-#match-history .match .player-stats .cs {
+#match-history .match .match-header .player-stats .cs {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,7 +117,7 @@
     gap: 3px;
     position: relative;
 }
-#match-history .match .player-stats .cs .tooltip {
+#match-history .match .match-header .player-stats .cs .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,17 +126,17 @@
     bottom: 110%;
     white-space: nowrap;
 }
-#match-history .match .player-stats .cs .tooltip p{
+#match-history .match .match-header .player-stats .cs .tooltip p{
     font-size: 11px;
 }
-#match-history .match .player-stats .cs:hover .tooltip{
+#match-history .match .match-header .player-stats .cs:hover .tooltip{
     opacity: 1;
     visibility: visible;
 }
-#match-history .match .player-stats .cs p{
+#match-history .match .match-header .player-stats .cs p{
     margin: 0;
 }
-#match-history .match .player-stats .vision {
+#match-history .match .match-header .player-stats .vision {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -150,7 +144,7 @@
     gap: 3px;
     position: relative;
 }
-#match-history .match .player-stats .vision .tooltip {
+#match-history .match .match-header .player-stats .vision .tooltip {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,18 +153,18 @@
     bottom: 110%;
     white-space: nowrap;
 }
-#match-history .match .player-stats .vision .tooltip p{
+#match-history .match .match-header .player-stats .vision .tooltip p{
     font-size: 11px;
 }
-#match-history .match .player-stats .vision:hover .tooltip{
+#match-history .match .match-header .player-stats .vision:hover .tooltip{
     opacity: 1;
     visibility: visible;
 }
-#match-history .match .player-stats .vision p{
+#match-history .match .match-header .player-stats .vision p{
     margin: 0;
 }
-#match-history .match .player-infos .items #item img.item-img,
-#match-history .match .player-infos .items #item.empty{
+#match-history .match .match-header .player-infos .items #item img.item-img,
+#match-history .match .match-header .player-infos .items #item.empty{
     width: 30px;
     height: 30px;
     border-radius: 5px;

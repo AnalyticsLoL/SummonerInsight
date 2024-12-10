@@ -7,7 +7,6 @@ Be on the home network and connect using ssh: `ssh username@ip_address` or use v
 ## Ideas for next stuff
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
-- [ ] Add a open/close menu to show more elements of games (check op.gg for ref)
 - [ ] Add tags with First Blood, First Tower etc...
 
 ## Feedbacks
