@@ -1,10 +1,6 @@
 # SummonerInsight
 Website showing users and champion data of League of Legends
 
-## Redux
-
-Define global flags in Context.js and import them in other components (not constant functions).
-
 ## Ideas for next stuff
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
