@@ -36,7 +36,7 @@
     overflow-y: scroll;
     background-color: var(--tooltip-bg);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-    z-index: 5;
+    z-index: 3;
 }
 .small.region_dropdown .menu {
     top: 30px;

@@ -44,6 +44,8 @@ import { ReactComponent as ThIcon } from "./assets/svg/region_icons/th.svg";
 import { ReactComponent as TrIcon } from "./assets/svg/region_icons/tr.svg";
 import { ReactComponent as ViIcon } from "./assets/svg/region_icons/vi.svg";
 
+import { faExclamationCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 // Fetch last version number of league of legends
 let league_version;
 try {
@@ -232,3 +234,14 @@ export const gradeGPA = {
     "D": 0,
     "D-": 0
 };
+
+export const messages = [
+    {name: "error", icon: faExclamationCircle},
+    {name: "info", icon: faInfoCircle}
+];
+
+export const errors = [
+    {statusText: "Too Many Requests", message: 'Too many requests. Please try again in a few seconds.'},
+    {statusText: "Not Found", message: 'Summoner not found: Please enter your tag numbers using the format #0000 or select the right region.'},
+    {statusText: "Service Unavailable", message: 'Connection to Riot failed. Please try again.'}
+];

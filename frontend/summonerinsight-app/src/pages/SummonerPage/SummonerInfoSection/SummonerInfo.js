@@ -33,7 +33,7 @@ export default function SummonerInfo(){
         };
         try {
             const summonerInfo = await fetchAPIData(`${api_url}/summonerInfo`, settings, isFetching);
-            const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=20`, settings, isFetching);
+            const matchHistory = await fetchAPIData(`${api_url}/matchhistory?idStartList=0&idCount=10`, settings, isFetching);
             if (summonerInfo && matchHistory) {
                 if (matchHistory.length === 0) {
                     throw new Error('No match history found in the last year for this summoner.');

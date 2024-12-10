@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import SearchSummonerBar from "../components/SearchSummonerBar";
 import "../assets/css/pages/Home.css";
 
 import lol_splash from "../assets/img/pages/home/lol_splash.jpg";
 import noe from "../assets/img/team/noe.jpg";
+import { clearSummonerData } from "../redux/summonerSlice";
 
 import { CiMail } from "react-icons/ci";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -46,6 +48,12 @@ function TeamMember({name, img, description, linkedinUrl, githubUrl, websiteUrl,
 }
 
 export default function Home() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        document.title = "Summoner Insight";
+        dispatch(clearSummonerData());
+    }, [dispatch]);
+
     return (
         <div id="home" className="page">
             <div className="section">

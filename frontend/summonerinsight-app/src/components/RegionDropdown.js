@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
-export default function RegionDropdown({setRegionTag, intialRegionName, setRegionRoute, regionTag}) {
+export default function RegionDropdown({setRegionTag, intialRegionName, regionTag}) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [regionName, setRegionName] = useState(intialRegionName);
     const dropdownRef = useRef(null);
@@ -15,7 +15,6 @@ export default function RegionDropdown({setRegionTag, intialRegionName, setRegio
     const handleDropdownClick = (region) => {
         setDropdownOpen(false);
         setRegionTag(region.regionTag);
-        setRegionRoute(region.regionRoute);
         setRegionName(region.regionName);
     };
 

@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 
 
 export default function LoadButton({ onClick, text, isFetching, icon }) {
-    const [loading, setLoading] = useState(isFetching.current);
+    const [loading, setLoading] = useState(isFetching ? isFetching.current : false);
 
     useEffect(() => {
+        if (!isFetching) return;
         const interval = setInterval(() => {
             setLoading(isFetching.current);
         }, 200);
