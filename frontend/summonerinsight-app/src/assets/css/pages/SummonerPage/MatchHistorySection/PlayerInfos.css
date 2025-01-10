@@ -1,6 +1,7 @@
 #match-history .match .match-header .player-infos{
     display: flex;
     flex-direction: column;
+    min-width: 350px;
     gap: 5px;
     padding: 0px;
 }

@@ -1,6 +1,7 @@
 #match-history .match .team-composition{
     display: flex;
     flex-direction: row;
+    min-width: 200px;
     font-size: 12px;
     gap: 10px;
     padding: 0;
@@ -8,6 +9,7 @@
 #match-history .match .team-composition .team {
     display: flex;
     flex-direction: column;
+    max-width: 95px;
     gap: 4px;
 }
 #match-history .match .team-composition .team .player{

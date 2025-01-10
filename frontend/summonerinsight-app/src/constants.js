@@ -167,28 +167,18 @@ export const gameModes = [
     {gameMode: "ULTBOOK", gameModeName: "Ultimate Spellbook"},
 ]
 
-// To link the queueTypes to their respective type of game and map (gameTypes are a lot more detailed)
-export const gameTypes = [
-    {queueId: 0, map: "Custom games", description: "Custom Game"},
-    {queueId: 76, map: "Summoner's Rift", description: "Ultra Rapid Fire"},
-    {queueId: 400, map: "Summoner's Rift", description: "5v5 Draft"},
-    {queueId: 420, map: "Summoner's Rift", description: "Ranked Solo/Duo"},
-    {queueId: 430, map: "Summoner's Rift", description: "5v5 Blind"},
-    {queueId: 440, map: "Summoner's Rift", description: "Ranked Flex"},
-    {queueId: 450, map: "Howling Abyss", description: "ARAM"},
-    {queueId: 490, map: "Summoner's Rift", description: "Quickplay"},
-    {queueId: 700, map: "Summoner's Rift", description: "Summoner's Rift Clash"},
-    {queueId: 720, map: "Howling Abyss", description: "ARAM Clash"},
-    {queueId: 870, map: "Summoner's Rift", description: "Co-op vs. AI Intro Bot"},
-    {queueId: 880, map: "Summoner's Rift", description: "Co-op vs. AI Beginner Bot"},
-    {queueId: 890, map: "Summoner's Rift", description: "Co-op vs. AI Intermediate Bot"},
-    {queueId: 900, map: "Summoner's Rift", description: "ARURF"},
-    {queueId: 940, map: "Summoner's Rift", description: "Nexus Siege"},
-    {queueId: 1020, map: "Summoner's Rift", description: "One for All"},
-    {queueId: 1400, map: "Summoner's Rift", description: "Ultimate Spellbook"},
-    {queueId: 1700, map: "Rings of Wrath", description: "Arena"},
-    {queueId: 1900, map: "Summoner's Rift", description: "Ultra Rapid Fire"},
-];
+// To link the queueTypes to their respective type of game and map
+export const gameTypesPath = "https://static.developer.riotgames.com/docs/lol/queues.json";
+
+console.log(`Fetching gameTypes from: ${gameTypesPath}`);
+let gameTypes;
+try {
+    let gameTypesResponse = await fetch(gameTypesPath);
+    gameTypes = await gameTypesResponse.json();
+} catch (error) {
+    console.error('Failed to fetch gameTypes data');
+}
+export { gameTypes };
 
 // To link the champions masteries Icon to their respective levels
 export const championMasteriesIcons = [

@@ -10,6 +10,7 @@ import FillBar from "../../../components/FillBar.js";
 import ChampionComponent from "../components/ChampionComponent.js";
 
 function MasteryElement({mastery}){
+    console.log(mastery);
     const requiredGrades = (mastery) => {
         return Object.entries(mastery.nextMilestoneRequirements.requireGradeCounts).map(([grade, count]) => {
             if (!mastery.milestoneGrades) {

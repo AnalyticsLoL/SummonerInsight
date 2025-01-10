@@ -1,7 +1,7 @@
 #match-history .match .match-header .game-status{
     display: flex;
     flex-direction: column;
-    width: 75px;
+    min-width: 75px;
     gap: 10px;
     font-size: 12px;
     align-items: center;
