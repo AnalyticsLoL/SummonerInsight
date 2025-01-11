@@ -48,6 +48,9 @@
     gap: 10px;
     position: relative;
 }
+#match-history .match .match-header .player-stats .kda p {
+    text-wrap: nowrap;
+}
 #match-history .match .match-header .player-stats .kda .tooltip {
     display: flex;
     flex-direction: column;
@@ -88,6 +91,9 @@
     text-align: center;
     position: relative;
 }
+#match-history .match .match-header .player-stats .damage .damage-section p {
+    text-wrap: nowrap;
+}
 #match-history .match .match-header .player-stats .damage .damage-section .tooltip {
     display: flex;
     flex-direction: column;
@@ -117,6 +123,9 @@
     justify-content: center;
     gap: 3px;
     position: relative;
+}
+#match-history .match .match-header .player-stats .cs p {
+    text-wrap: nowrap;
 }
 #match-history .match .match-header .player-stats .cs .tooltip {
     display: flex;
