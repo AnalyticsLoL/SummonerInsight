@@ -2,6 +2,7 @@
 Website showing users and champion data of League of Legends
 
 ## Ideas for next stuff
+- [ ] Finish to implement abortion when changing page while loading
 - [ ] Filter matchhistory by queuetype and gamemode
 - [ ] Make dark mode and day mode pages using css var
 - [ ] Add tags with First Blood, First Tower etc...

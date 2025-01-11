@@ -15,18 +15,25 @@ function ParticipantDetails({participant, maxDealt, maxTaken, maxHealed}){
 
     const isSupport = participant.damage.totalHealsOnTeammates>=1000 && participant.position === "UTILITY";
 
-    const seeOtherSummoner = (gameName, tagLine) => {
+    const seeOtherSummoner = (gameName, tagLine, e) => {
+        if (e.button === 2) return; // Prevent right click
         if(gameName.split(' ')[1] === 'bot') return;
         // To add the 1 in euw1
         if(regions.find(region => region.regionTag.toLowerCase().replace(/\d/g, '') === tagLine.toLowerCase())) {
             tagLine = regions.find(region => region.regionTag.toLowerCase().replace(/\d/g, '') === tagLine.toLowerCase()).regionTag;
+        }
+        if (e.button === 1) {
+            // If middle-click open in new tab
+            e.preventDefault(); // Prevent default behavior
+            window.open(`../../../summoner/${regionTag}/${gameName.toLowerCase().replace(/\s/g, '')}/${tagLine.toLowerCase()}`, '_blank');
+            return;
         }
         navigate(`../../../summoner/${regionTag}/${gameName.toLowerCase().replace(/\s/g, '')}/${tagLine.toLowerCase()}`);
     }
 
     return (
         <tr className={`participant ${participant.win ? 'win' : 'loss'} ${participant.gameName.toLowerCase().replace(/\s/g, '') === gameName ? 'enhance' : ''}`}>
-            <td className="player" onClick={() => seeOtherSummoner(participant.gameName, participant.tagLine)}>
+            <td className="player" onMouseDown={(e) => seeOtherSummoner(participant.gameName, participant.tagLine, e)}>
                 <div className="champion-summoner">
                     <ChampionComponent championId={participant.championId} isTooltip={false} />
                     <figcaption>{participant.champLevel}</figcaption>
