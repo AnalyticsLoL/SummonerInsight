@@ -34,4 +34,4 @@ There are 252 tokens vaocabulary:
 - 50 runes (5 trees * 9 runes + 9 stats runes)
 - =252 tokens size
 
-Using transformer is high cost low reward, better to use simple NN binary classification with sigmoid, reLu and an input embedding layer.
+Using transformer is high cost low reward, better to use simple NN binary classification with sigmoid, reLu and an input embedding layer (potentially self attention layer).
