@@ -24,3 +24,12 @@ Website showing users and champion data of League of Legends
 - User has a scrolldown arrow appearing in the navbar searchbar
 - Add mastery champions kda and and winrate
 - add in matches graphs of the gold and and events like deaths and kills, objectives ...
+
+## Win prediction notes
+By using an encoder only transformer like BERT, there are 252 tokens vaocabulary:
+164 champions +
+27 ranks +
+5 positions +
+50 runes (5 trees * 9 runes + 9 stats runes)
+=252 dataset size
+Chinchilla article says that compute optimal models takes 20x more dataset size than parameters. This isn't possible here but still mean a low number of parameters.
