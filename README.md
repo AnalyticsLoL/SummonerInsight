@@ -27,9 +27,11 @@ Website showing users and champion data of League of Legends
 
 ## Win prediction notes
 By using an encoder only transformer like BERT, there are 252 tokens vaocabulary:
-164 champions +
-27 ranks +
-5 positions +
-50 runes (5 trees * 9 runes + 9 stats runes)
-=252 dataset size
+
+- 164 champions +
+- 27 ranks +
+- 5 positions +
+- 50 runes (5 trees * 9 runes + 9 stats runes)
+- =252 dataset size
+
 Chinchilla article says that compute optimal models takes 20x more dataset size than parameters. This isn't possible here but still mean a low number of parameters.
